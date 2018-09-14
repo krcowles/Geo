@@ -11,6 +11,7 @@ body {
 #inst {
     margin-left: 12px;
     color: brown;
+    text-decoration: underline;
 }
 #crypto {
     text-align: center;
@@ -22,6 +23,9 @@ body {
     height: 22px;
     padding-top: 4px;
 }
+#eons {
+    width: 100%;
+}
 .edivs {
     float: left;
     height: 24px;
@@ -30,7 +34,7 @@ body {
     border-width: 2px;
     margin: 0px;
     cursor: pointer;
-    padding-top: 4px;
+    padding-top: 6px;
 }
 #hadean {
     background-color: aliceblue;
@@ -47,14 +51,27 @@ body {
 #mainline {
     width: 100%;
 }
-#eonic {
+#eonview {
     display: none;
-    margin-left: 24px;
+}
+#eonbox {
+    width: 100%;
+    height: 24px;
+    text-align: center;
+    border-style: inset;
+    border-width: 2px;
+    padding-top: 6px;
+    color: black;
+}
+#eonic {
+    margin-left: 12px;
     color: brown;
     font-size: 18px;
 }
-#eric {
+#eraview {
     display: none;
+}
+#eric {
     margin-left: 24px;
     color: brown;
     font-size: 18px;

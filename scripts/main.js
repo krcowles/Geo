@@ -1,17 +1,28 @@
 // global vars
 var eage;  // estimated earth age (read from html #xopt)
 var title;
-var start;
-var span;
+var rightAge;
+var leftAge;
 var ticks;
 var setNo;
+var color;
+var mainChartEl;
 var resizeFlag = true; // allow re-sizing even
 // Pre-assigned constants for charts:
 const MAINHT = 80;
 const EONHT = 80;
+const ERAHT = 80;
+const PERHT = 100;
+// Display Assignments:
+if (sessionStorage.length === 0) {
+    sessionStorage.setItem('dispEon', 'off');
+    sessionStorage.setItem('dispEra', 'off');
+    sessionStorage.setItem('dispPer', 'off');
+}
 
 // global functions
 function setChartDims(divId, canvasEl, ht) {
+    // At this point, all charts are full width of the page
     var fullWidth = $(window).innerWidth();
     var div = "#" + divId;
     $(div).width(fullWidth);
@@ -27,11 +38,12 @@ function defineData() {
     // data object for the chart:
     var dataDef = {
         title: title,
-        start: start,
-        span: span,
+        right: rightAge,
+        left: leftAge,
         ticks: ticks,
         xLabel: '', 
         yLabel: '',
+        background: color,
         labelFont: '10pt Arial', 
         dataPointFont: '8pt Arial',
         renderTypes: [ChartObj.renderType.lines, ChartObj.renderType.points],
@@ -39,9 +51,23 @@ function defineData() {
     };
     return dataDef;
 }
+function redrawEon() {
+    $('#eonview').show();
+    leftAge = sessionStorage.getItem('left');
+    rightAge = sessionStorage.getItem('right');
+    ticks = sessionStorage.getItem('ticks');
+    setNo = sessionStorage.getItem('setNo');
+    title = sessionStorage.getItem('title');
+    color = sessionStorage.getItem('color');
+    $('#eonbox').css('background-color', color);
+    var el = document.getElementById('eon');
+    setChartDims('eonline', el, EONHT);
+    drawChart('eon');
+    // Eras only shown if eon is shown...
+}
 
 $(document).ready( function() {
-    /* --- Function definitions */
+    /* --- 'page-loaded' function definitions */
     /* Hadean and Phanerozoic require text sizing... */
     function getTextWidth(text, font) {
         // re-use canvas object for better performance
@@ -82,52 +108,64 @@ $(document).ready( function() {
             $('#phan').text("Phanerozoic Eon");
         }
     }
-    /* --- end functions */
+    function mainDefs() {
+        rightAge = 0;
+        leftAge = eage;
+        ticks = 250;
+        setNo = 0
+        title = "Event Timeline";
+        color = "blanchedalmond";
+    }
+    /* --- end 'page-loaded' functions */
+
     eage = $('#xopt').text(); // page startup default for earth's age
     sizes();
-    if (sessionStorage.length === 0) {
-        sessionStorage.setItem('start', 0);
-        sessionStorage.setItem('span', eage);
-        sessionStorage.setItem('ticks', 250);
-        sessionStorage.setItem('setNo', 0);
-        sessionStorage.setItem('title','Event Timeline')
-    } 
-    start = parseInt(sessionStorage.getItem('start'));
-    span = parseInt(sessionStorage.getItem('span'));
-    ticks = parseInt(sessionStorage.getItem('ticks'));
-    setNo = parseInt(sessionStorage.getItem('setNo'));
-    title = sessionStorage.getItem('title');
-    /* This section of code renders the graph itself */
-    var mainChartEl = document.getElementById('mainline');
-    // NOTE: All canvases at this point will have the same chart dims:
+    /* 
+     * This section of code renders the main graph itself:
+     * The main timeline doesn't change with click events;
+     * sessionStorage not defined at this point.
+     */
+    mainDefs();
+    mainChartEl = document.getElementById('mainline');
     setChartDims('events', mainChartEl, MAINHT);
     drawChart('mainline');
+    // Any secondary charts that were clicked on:
+    if (sessionStorage.getItem('dispEon') === 'on') {
+        redrawEon();
+    }
 
     // Clickable EONS:
     $('#hadean').on('click', function() {
-        $('#eonic').show();
-        start = 4000;
-        sessionStorage.setItem('start', start);
-        span = eage - start;
-        sessionStorage.setItem('span', span);
+        sessionStorage.setItem('dispEon', 'on');
+        $('#eonview').show();
+        leftAge = eage;
+        rightAge = 4000;
+        sessionStorage.setItem('left', leftAge);
+        sessionStorage.setItem('right', rightAge);
         ticks = 25;
         sessionStorage.setItem('ticks', ticks);
         setNo = 1;
         sessionStorage.setItem('setNo', 1);
         title = 'Hadean Timeline';
         sessionStorage.setItem('title', title);
+        color = "aliceblue";
+        $('#eonbox').css('background-color', color);
+        sessionStorage.setItem('color', color);
         var hadeanEl = document.getElementById('eon');
         setChartDims('eonline', hadeanEl, EONHT);
         drawChart('eon');
     });
     $(window).resize( function() {
         if (resizeFlag) {
-            sizes();
             resizeFlag = false;
             setTimeout( function() {
-                setChartDims();
-                var chartData = defineData();
-                ChartObj.render('mainline', chartData);
+                mainDefs();
+                setChartDims('events', mainChartEl, MAINHT);
+                drawChart('mainline');
+                if (sessionStorage.getItem('dispEon') === 'on') {
+                    redrawEon();
+                }
+                sizes();
                 resizeFlag = true; 
             }, 300);      
         }  

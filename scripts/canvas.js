@@ -34,7 +34,7 @@ var ChartObj = function() {
             xMax = chartWidth;
             yMax = chartHeight;
             horizon = 0.70 * yMax;
-            MaPerPx = data.span/chartWidth;
+            MaPerPx = (data.left - data.right)/chartWidth;
             context = canvas.getContext("2d");
             renderChart();
         }
@@ -51,7 +51,7 @@ var renderChart = function () {
     renderData(data.renderTypes[1]);
 };
 var renderBackground = function () {
-    context.fillStyle = "BlanchedAlmond";
+    context.fillStyle = data.background;
     // the first two args are the (x,y) coords for the left corner;
     // the last two specify width and height of the fill area:
     context.fillRect(margin.left, margin.top, xMax, yMax);
@@ -100,7 +100,7 @@ var renderLinesAndLabels = function renderLinesAndLabels() {
     var j = 1;
     // print out regularly spaced x-axis ticks from right-hand side:
     while (xPos > xEnd) {
-        txt = j * data.ticks;
+        txt = parseInt(j * data.ticks) + parseInt(data.right);
         txt = txt.toFixed(0) + "M";
         var tsize = context.measureText(txt).width;
         var ulim = xEnd + xPos;
@@ -136,9 +136,9 @@ var renderData = function renderData(type) {
     for (var i = 0; i < data.dataPoints.length; i++) {
         var pt = data.dataPoints[i];
         // remember, age goes from right to left (oldest)
-        var loc = pt.x - data.start
-        var pxLoc = loc/MaPerPx;
-        var ptX = margin.left + (chartWidth - pxLoc);
+        var ptLoc = pt.x - data.right;
+        var pxMA = ptLoc/MaPerPx;
+        var ptX = margin.left + (chartWidth - pxMA);
         var ptY = horizon - yLevel[i % 3];
         var etxt = pt.txt;
         var epos = ptX + 10;
