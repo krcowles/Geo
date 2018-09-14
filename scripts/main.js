@@ -9,6 +9,10 @@ var color;
 var mainChartEl;
 var resizeFlag = true; // allow re-sizing even
 // Pre-assigned constants for charts:
+const MAIN = 0;
+const HADEAN = 1;
+const ARCHEAN = 2;
+const PERIOD = 3;
 const MAINHT = 80;
 const EONHT = 80;
 const ERAHT = 80;
@@ -51,7 +55,7 @@ function defineData() {
     };
     return dataDef;
 }
-function redrawEon() {
+function drawEon() {
     $('#eonview').show();
     leftAge = sessionStorage.getItem('left');
     rightAge = sessionStorage.getItem('right');
@@ -64,6 +68,14 @@ function redrawEon() {
     setChartDims('eonline', el, EONHT);
     drawChart('eon');
     // Eras only shown if eon is shown...
+}
+function storeChartParms() {
+    sessionStorage.setItem('left', leftAge);
+    sessionStorage.setItem('right', rightAge);
+    sessionStorage.setItem('ticks', ticks);
+    sessionStorage.setItem('setNo', 1);
+    sessionStorage.setItem('title', title);
+    sessionStorage.setItem('color', color);
 }
 
 $(document).ready( function() {
@@ -108,13 +120,17 @@ $(document).ready( function() {
             $('#phan').text("Phanerozoic Eon");
         }
     }
-    function mainDefs() {
-        rightAge = 0;
-        leftAge = eage;
-        ticks = 250;
-        setNo = 0
-        title = "Event Timeline";
-        color = "blanchedalmond";
+    function chartDefs(chartNo) {
+        rightAge = chartParms[chartNo].right;
+        if (chartNo < 2) {
+            leftAge = eage;
+        } else {
+            leftAge = chartParms[chartNo].left;
+        }
+        ticks = chartParms[chartNo].ticks;
+        setNo = chartParms[chartNo].setNo;
+        title = chartParms[chartNo].title;
+        color = chartParms[chartNo].color;
     }
     /* --- end 'page-loaded' functions */
 
@@ -125,45 +141,43 @@ $(document).ready( function() {
      * The main timeline doesn't change with click events;
      * sessionStorage not defined at this point.
      */
-    mainDefs();
+    chartDefs(MAIN);
     mainChartEl = document.getElementById('mainline');
     setChartDims('events', mainChartEl, MAINHT);
     drawChart('mainline');
     // Any secondary charts that were clicked on:
     if (sessionStorage.getItem('dispEon') === 'on') {
-        redrawEon();
+        drawEon();
     }
 
     // Clickable EONS:
     $('#hadean').on('click', function() {
         sessionStorage.setItem('dispEon', 'on');
         $('#eonview').show();
-        leftAge = eage;
-        rightAge = 4000;
-        sessionStorage.setItem('left', leftAge);
-        sessionStorage.setItem('right', rightAge);
-        ticks = 25;
-        sessionStorage.setItem('ticks', ticks);
-        setNo = 1;
-        sessionStorage.setItem('setNo', 1);
-        title = 'Hadean Timeline';
-        sessionStorage.setItem('title', title);
-        color = "aliceblue";
+        chartDefs(HADEAN);
+        $('#eonbox').text("Hadean Eon (No Era's Defined)");
         $('#eonbox').css('background-color', color);
-        sessionStorage.setItem('color', color);
-        var hadeanEl = document.getElementById('eon');
-        setChartDims('eonline', hadeanEl, EONHT);
-        drawChart('eon');
+        storeChartParms();
+        drawEon();
+    });
+    $('#archean').on('click', function() {
+        sessionStorage.setItem('dispEon', 'on');
+        $('#eonview').show();
+        chartDefs(ARCHEAN);
+        $('#eonbox').css('background-color', color);
+        $('#eonbox').text("Archean Eon");
+        storeChartParms();
+        drawEon();
     });
     $(window).resize( function() {
         if (resizeFlag) {
             resizeFlag = false;
             setTimeout( function() {
-                mainDefs();
+                chartDefs(MAIN);
                 setChartDims('events', mainChartEl, MAINHT);
                 drawChart('mainline');
                 if (sessionStorage.getItem('dispEon') === 'on') {
-                    redrawEon();
+                    drawEon();
                 }
                 sizes();
                 resizeFlag = true; 
