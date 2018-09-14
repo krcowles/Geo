@@ -1,0 +1,67 @@
+body {
+    margin-left: auto;
+    margin-right: auto;
+    font-family: Arial, Verdana;
+    background-color: white;
+    font-size: 14px;
+}
+#xopt {
+    display: none;
+}
+#inst {
+    margin-left: 12px;
+    color: brown;
+}
+#crypto {
+    text-align: center;
+    border-style: dotted;
+    border-color: gray;
+    border-width: 1px;
+    border-color: gray;
+    color: gray;
+    height: 22px;
+    padding-top: 4px;
+}
+.edivs {
+    float: left;
+    height: 24px;
+    text-align: center;
+    border-style: inset;
+    border-width: 2px;
+    margin: 0px;
+    cursor: pointer;
+    padding-top: 4px;
+}
+#hadean {
+    background-color: aliceblue;
+}
+#archean {
+    background-color: honeydew;
+}
+#proto {
+    background-color: cornsilk;
+}
+#phan {
+    background-color: #ffe6e9;
+}
+#mainline {
+    width: 100%;
+}
+#eonic {
+    display: none;
+    margin-left: 24px;
+    color: brown;
+    font-size: 18px;
+}
+#eric {
+    display: none;
+    margin-left: 24px;
+    color: brown;
+    font-size: 18px;
+}
+#peric {
+    display: none;
+    margin-left: 24px;
+    color: brown;
+    font-size: 18px;
+}

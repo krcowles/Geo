@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <title>Geo Timeline</title>
+    <meta charset="utf-8" />
+    <meta name="description" content="Expandable Geological Timeline" />
+    <meta name="author" content="Ken Cowles" />
+    <meta name="robots" content="nofollow" />
+    <link href="styles/main.css" type="text/css" rel="stylesheet" />
+    <script src="scripts/canvas.js"></script>
+    <script src="scripts/timelines.js"></script>
+</head>
+<body>
+<div id="main">
+    <p id="xopt">4500</p> <!-- value in MYrs for age of earth -->
+    <p id="inst">Click to Expand an EON</p>
+    <br />
+    <div id="crypto">
+        Cryptozoic (aka PreCambrian) SuperEON
+    </div>
+    <div id="eons">
+        <div id="hadean" class="edivs">
+            Hadean Eon
+        </div>
+        <div id="archean" class="edivs">
+            Archean Eon
+        </div>
+        <div id="proto" class="edivs">
+            Proterozoic Eon
+        </div>
+        <div id="phan" class="edivs">
+            Phanerozoic Eeon
+        </div>
+    </div>
+    <div id="events">
+        <canvas id="mainline"></canvas>
+    </div><br />
+    <div id="eonview">
+        <p id="eonic">EON View:</p>
+        <div id="eonline">
+            <canvas id="eon"></canvas>
+        </div>
+    </div>
+    <div id="eraview">
+        <p id="eric">ERA View:</p>
+        <div id="eraline">
+            <canvas id="era"></canvas>
+        </div>
+    </div>
+    <div id="periodic">
+        <p id="peric">PERIOD View:</p>
+        <div id="periodline">
+            <canvas id="period"></canvas>
+        </div>
+    </div>
+</div>  <!-- MAIN -->
+<script src="scripts/jquery-1.12.1.js"></script>
+<script src="scripts/main.js"></script>
+</body>
+</html>
