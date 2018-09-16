@@ -13,6 +13,7 @@ body {
     color: brown;
     text-decoration: underline;
 }
+/* The 'main' section view CSS items: */
 #crypto {
     text-align: center;
     border-style: dotted;
@@ -22,19 +23,6 @@ body {
     color: gray;
     height: 22px;
     padding-top: 4px;
-}
-#eons {
-    width: 100%;
-}
-.edivs {
-    float: left;
-    height: 24px;
-    text-align: center;
-    border-style: inset;
-    border-width: 2px;
-    margin: 0px;
-    cursor: pointer;
-    padding-top: 6px;
 }
 #hadean {
     background-color: aliceblue;
@@ -48,37 +36,26 @@ body {
 #phan {
     background-color: #ffe6e9;
 }
-#mainline {
-    width: 100%;
-}
-#eonview {
+/* The 'eon' section view CSS items: */
+#hadbox, #archbox, #protobox, #phanbox {
+    height: 24px;
     display: none;
 }
-#eonbox {
-    width: 100%;
+.edivs, .archdivs, .protodivs, .phandivs {
+    float: left;
     height: 24px;
     text-align: center;
     border-style: inset;
     border-width: 2px;
+    margin: 0px;
+    cursor: pointer;
     padding-top: 6px;
-    color: black;
 }
-#eonic {
+#eontext, #eratext, #periodtext {
     margin-left: 12px;
     color: brown;
     font-size: 18px;
 }
-#eraview {
-    display: none;
-}
-#eric {
-    margin-left: 24px;
-    color: brown;
-    font-size: 18px;
-}
-#peric {
-    display: none;
-    margin-left: 24px;
-    color: brown;
-    font-size: 18px;
-}
+/* The 'era' section view CSS items: */
+
+/* The 'period' section view CSS items: */

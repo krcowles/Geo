@@ -9,6 +9,7 @@
     <link href="styles/main.css" type="text/css" rel="stylesheet" />
     <script src="scripts/canvas.js"></script>
     <script src="scripts/timelines.js"></script>
+    <script src="scripts/constants.js"></script>
 </head>
 <body>
 <div id="main">
@@ -35,21 +36,40 @@
     <div id="events">
         <canvas id="mainline"></canvas>
     </div><br />
+    <!-- EON SECTION -->
     <div id="eonview">
-        <p id="eonic">EON View:</p>
-        <div id="eonbox"></div>
+        <p id="eontext">EON View:</p>
+        <div id="hadbox" class="eonht"></div>
+        <div id="archbox" class="eonht">
+            <div id="areo" class="archdivs"></div>
+            <div id="arpaleo" class="archdivs"></div>
+            <div id="armeso" class="archdivs"></div>
+            <div id="arneo" class="archdivs"></div>
+        </div>
+        <div id="protobox" class="eonht">
+            <div id="prpaleo" class="protodivs"></div>
+            <div id="prmeso" class="protodivs"></div>
+            <div id="prneo" class="protodivs"></div>
+        </div>
+        <div id="phanbox" class="eonht">
+            <div id="phpaleo" class="phandivs"></div>
+            <div id="phmeso" class="phandivs"></div>
+            <div id="phceno" class="phandivs"></div>
+        </div>
         <div id="eonline">
             <canvas id="eon"></canvas>
         </div>
     </div>
+    <!-- ERA VIEW -->
     <div id="eraview">
-        <p id="eric">ERA View:</p>
+        <p id="eratext">ERA View:</p>
         <div id="eraline">
             <canvas id="era"></canvas>
         </div>
     </div>
-    <div id="periodic">
-        <p id="peric">PERIOD View:</p>
+    <!-- PERIOD VIEW -->
+    <div id="periodview">
+        <p id="periodtext">PERIOD View:</p>
         <div id="periodline">
             <canvas id="period"></canvas>
         </div>

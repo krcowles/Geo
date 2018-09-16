@@ -1,4 +1,5 @@
 // global vars
+var pgwidth;
 var eage;  // estimated earth age (read from html #xopt)
 var title;
 var rightAge;
@@ -7,16 +8,8 @@ var ticks;
 var setNo;
 var color;
 var mainChartEl;
-var resizeFlag = true; // allow re-sizing even
-// Pre-assigned constants for charts:
-const MAIN = 0;
-const HADEAN = 1;
-const ARCHEAN = 2;
-const PERIOD = 3;
-const MAINHT = 80;
-const EONHT = 80;
-const ERAHT = 80;
-const PERHT = 100;
+var resizeFlag = true; // prevents rapid-fire events in resize
+
 // Display Assignments:
 if (sessionStorage.length === 0) {
     sessionStorage.setItem('dispEon', 'off');
@@ -55,18 +48,44 @@ function defineData() {
     };
     return dataDef;
 }
-function drawEon() {
-    $('#eonview').show();
+function resetEonDisplays() {
+    $('#hadbox').hide();
+    $('#archbox').hide();
+    $('#protobox').hide();
+    $('#phanbox').hide();
+}
+function drawEon(id) {
+    var eonId = '#' + id + 'box';
+    $(eonId).show();
     leftAge = sessionStorage.getItem('left');
     rightAge = sessionStorage.getItem('right');
     ticks = sessionStorage.getItem('ticks');
     setNo = sessionStorage.getItem('setNo');
     title = sessionStorage.getItem('title');
     color = sessionStorage.getItem('color');
-    $('#eonbox').css('background-color', color);
     var el = document.getElementById('eon');
     setChartDims('eonline', el, EONHT);
     drawChart('eon');
+    // if not hadean, inner boxes must be drawn...
+    var bwpx = $('.archdivs').css('border-left-width'); // has 'px' appended
+    var bwidth = 2 * parseInt(bwpx);
+    if (id === 'arch') {
+        var archlgth = chartParms[ARCHEAN].left - chartParms[ARCHEAN].right;
+        var scale = pgwidth/archlgth;
+        $('#archbox').show(); // temp for debug (on in drawEon())
+        var eo = Math.floor(400 * scale);
+        $('#areo').width(eo - bwidth);
+        $('#areo').css('background-color', ARCHCOLOR);
+        var paleo = Math.floor(400 * scale);
+        $('#arpaleo').width(paleo - bwidth);
+        $('#arpaleo').css('background-color', ARCHCOLOR);
+        var meso = Math.floor(400 * scale);
+        $('#armeso').width(meso - bwidth);
+        $('#armeso').css('background-color', ARCHCOLOR);
+        var neo = pgwidth - (eo + paleo + meso);
+        $('#arneo').width(neo - bwidth);
+        $('#arneo').css('background-color', ARCHCOLOR);
+    }
     // Eras only shown if eon is shown...
 }
 function storeChartParms() {
@@ -89,9 +108,9 @@ $(document).ready( function() {
         var metrics = context.measureText(text);
         return metrics.width;
     }
-    function sizes() {
+    function mainSizes() {
         // text size
-        var pgwidth = $(window).innerWidth();
+        pgwidth = $(window).width();
         var opt = $('#xopt').text();
         var scale = pgwidth/opt;  // px per Million Years (MY)
         var bwpx = $('.edivs').css('border-left-width'); // has 'px' appended
@@ -130,12 +149,30 @@ $(document).ready( function() {
         ticks = chartParms[chartNo].ticks;
         setNo = chartParms[chartNo].setNo;
         title = chartParms[chartNo].title;
-        color = chartParms[chartNo].color;
+        switch (chartNo) {
+            case MAIN:
+                color = MAINCOLOR;
+                break;
+            case HADEAN:
+                color = HADCOLOR;
+                break;
+            case ARCHEAN:
+                color = ARCHCOLOR;
+                break;
+            case PROTO:
+                color = PROTOCOLOR;
+                break;
+            case PHAN:
+                color = PHANCOLOR;
+                break;
+            default:
+                color = 'darkblue';
+        }
     }
     /* --- end 'page-loaded' functions */
 
     eage = $('#xopt').text(); // page startup default for earth's age
-    sizes();
+    mainSizes();
     /* 
      * This section of code renders the main graph itself:
      * The main timeline doesn't change with click events;
@@ -145,29 +182,30 @@ $(document).ready( function() {
     mainChartEl = document.getElementById('mainline');
     setChartDims('events', mainChartEl, MAINHT);
     drawChart('mainline');
-    // Any secondary charts that were clicked on:
-    if (sessionStorage.getItem('dispEon') === 'on') {
-        drawEon();
+    // Any secondary charts clicked on previously (refresh or resize)
+    var sub = sessionStorage.getItem('dispEon');
+    if (sub !=='off') {
+        drawEon(sub);
     }
 
     // Clickable EONS:
     $('#hadean').on('click', function() {
-        sessionStorage.setItem('dispEon', 'on');
-        $('#eonview').show();
+        sessionStorage.setItem('dispEon', 'had');
+        resetEonDisplays();
         chartDefs(HADEAN);
-        $('#eonbox').text("Hadean Eon (No Era's Defined)");
-        $('#eonbox').css('background-color', color);
+        $('#hadbox').text("Hadean Eon (No Era's Defined)");
+        $('#hadbox').css('text-align','center');
+        $('#hadbox').css('padding-top','6px');
+        $('#hadbox').css('background-color',HADCOLOR);
         storeChartParms();
-        drawEon();
+        drawEon('had');
     });
     $('#archean').on('click', function() {
-        sessionStorage.setItem('dispEon', 'on');
-        $('#eonview').show();
+        sessionStorage.setItem('dispEon', 'arch');
+        resetEonDisplays();
         chartDefs(ARCHEAN);
-        $('#eonbox').css('background-color', color);
-        $('#eonbox').text("Archean Eon");
         storeChartParms();
-        drawEon();
+        drawEon('arch');
     });
     $(window).resize( function() {
         if (resizeFlag) {
@@ -176,10 +214,11 @@ $(document).ready( function() {
                 chartDefs(MAIN);
                 setChartDims('events', mainChartEl, MAINHT);
                 drawChart('mainline');
-                if (sessionStorage.getItem('dispEon') === 'on') {
-                    drawEon();
+                mainSizes();
+                var eondisp = sessionStorage.getItem('dispEon');
+                if (eondisp !== 'off') {
+                    drawEon(eondisp);
                 }
-                sizes();
                 resizeFlag = true; 
             }, 300);      
         }  
