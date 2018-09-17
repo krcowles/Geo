@@ -37,6 +37,10 @@ body {
     background-color: #ffe6e9;
 }
 /* The 'eon' section view CSS items: */
+#hadbox {
+    border-style: inset;
+    border-width: 2px;
+}
 #hadbox, #archbox, #protobox, #phanbox {
     height: 24px;
     display: none;

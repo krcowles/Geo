@@ -1,11 +1,9 @@
 // Parameter settings for chart viewing areas:
 chartParms = [
-    {right:0, left:0, ticks:250, setNo:0, title:"Event Timeline",
-        color:"blanchedalmond"},
-    {right:4000, left:0, ticks:25, setNo:1, title:"Hadean Timeline",
-        color:"aliceblue"},
-    {right:2500, left:4000, ticks:100, setNo:2, title:"Archean Timeline",
-        color:"honeydew"}
+    {right:0, left:0, ticks:250, setNo:0, title:"Event Timeline"},
+    {right:4000, left:0, ticks:25, setNo:1, title:"Hadean Timeline"},
+    {right:2500, left:4000, ticks:100, setNo:2, title:"Archean Timeline"},
+    {right:541, left:2500, ticks:100, setNo: 3, title:"Proterozoic Timeline"}
 ];
 // Data sets of events corresponding to clickable timelines:
 dataSets = [
@@ -16,8 +14,27 @@ dataSets = [
     [{x:4400, txt: "early water; zircon crystals (Australia)"},
         {x:4200, txt: "earliest life (1-celled)"}],
 // Archean Eon:
-    [{x:2700, txt:"Arch1 Event"},
-        {x:3200, txt:"Arch2 Event"}]
+    [{x:3950, txt:"Oldest Rock Belt (NW Territories) & impact events"},
+        {x:3500, txt:"Earliest oxygen; photosynthesis"},
+        {x:2700, txt:"Oldest magnetic rock"},
+        {x:2700, txt:"Pangola ice age"}],
 // Proterozoic Eon:
+    [{x:2450, txt:"Great oxygenation event"}, 
+        {x:2450, txt:"Plate tectonics begin"},
+        {x:2400, txt:"Huronian ice age (1st major)"},
+        {x:1700, txt:"Oldest NM Rocks"},
+        {x:1600, txt:"Mazatzql Orogeny"},
+        {x:1480, txt:"Grenville Orogeny"},
+        {x:1500, txt:"1st Multicellular life & sexual reproduction"},
+        {x:1100, txt:"Rodinia Supercontinent"},
+        {x:850, txt:"Sturtian-Varangian ice Age"},
+        {x:850, txt:"Expand Era to see more"}]
 // Phanerozoic Eon:
 ];
+
+/*
+{x:750, txt:"1st Protozoa"},
+{x:650, txt:"All Snow"},
+{x:600, txt:"Pan-African:"},
+{x:600, txt:"Gondwana,Panotia"
+*/

@@ -9,6 +9,7 @@ const MAIN = 0;
 const HADEAN = 1;
 const ARCHEAN = 2;
 const PROTO = 3;
+
 const PERIOD = 4;
 // Section heights:
 const MAINHT = 80;

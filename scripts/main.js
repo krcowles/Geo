@@ -85,6 +85,19 @@ function drawEon(id) {
         var neo = pgwidth - (eo + paleo + meso);
         $('#arneo').width(neo - bwidth);
         $('#arneo').css('background-color', ARCHCOLOR);
+    } else if (id === 'proto') {
+        var protolgth = chartParms[PROTO].left - chartParms[PROTO].right;
+        var scale = pgwidth/protolgth;
+        $('#protobox').show();
+        var paleo = Math.floor(900 * scale);
+        $('#prpaleo').width(paleo - bwidth);
+        $('#prpaleo').css('background-color', PROTOCOLOR);
+        var meso = Math.floor(600 * scale);
+        $('#prmeso').width(meso - bwidth);
+        $('#prmeso').css('background-color', PROTOCOLOR);
+        var neo = pgwidth - (paleo + meso);
+        $('#prneo').width(neo - bwidth);
+        $('#prneo').css('background-color', PROTOCOLOR);
     }
     // Eras only shown if eon is shown...
 }
@@ -92,7 +105,7 @@ function storeChartParms() {
     sessionStorage.setItem('left', leftAge);
     sessionStorage.setItem('right', rightAge);
     sessionStorage.setItem('ticks', ticks);
-    sessionStorage.setItem('setNo', 1);
+    sessionStorage.setItem('setNo', setNo);
     sessionStorage.setItem('title', title);
     sessionStorage.setItem('color', color);
 }
@@ -207,6 +220,13 @@ $(document).ready( function() {
         storeChartParms();
         drawEon('arch');
     });
+    $('#proto').on('click', function() {
+        sessionStorage.setItem('dispEon', 'proto');
+        resetEonDisplays();
+        chartDefs(PROTO);
+        storeChartParms();
+        drawEon('proto');
+    });
     $(window).resize( function() {
         if (resizeFlag) {
             resizeFlag = false;
@@ -214,7 +234,7 @@ $(document).ready( function() {
                 chartDefs(MAIN);
                 setChartDims('events', mainChartEl, MAINHT);
                 drawChart('mainline');
-                mainSizes();
+                mainSizes(); // this redefines global 'pgwidth'
                 var eondisp = sessionStorage.getItem('dispEon');
                 if (eondisp !== 'off') {
                     drawEon(eondisp);
