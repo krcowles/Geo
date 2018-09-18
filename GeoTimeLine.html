@@ -36,20 +36,27 @@
     <div id="events">
         <canvas id="mainline"></canvas>
     </div><br />
-    <!-- EON SECTION -->
-    <div id="eonview">
-        <p id="eontext">EON View:</p>
+    <div id="overall">You are viewing <span id="percent"></span> of earth's age
+        <br />
+        <div id="box1"></div>
+        <div id="box2"></div>
+        <div id="box3"></div>
+    </div>
+    <br /><br />
+    <!-- EON VIEW SECTION -->
+    <div class="clearfix" id="eonview">
+        <p id="eontext">EON View: <span id="eonadder"></span></p>
         <div id="hadbox" class="eonht"></div>
         <div id="archbox" class="eonht">
-            <div id="areo" class="archdivs"> EO Era</div>
-            <div id="arpaleo" class="archdivs">PALEO Era</div>
-            <div id="armeso" class="archdivs">MESO Era</div>
-            <div id="arneo" class="archdivs">NEO Era</div>
+            <div id="areo" class="archdivs">Eo Era</div>
+            <div id="arpaleo" class="archdivs">Paleo Era</div>
+            <div id="armeso" class="archdivs">Meso Era</div>
+            <div id="arneo" class="archdivs">Neo Era</div>
         </div>
         <div id="protobox" class="eonht">
-            <div id="prpaleo" class="protodivs">PALEO Era</div>
-            <div id="prmeso" class="protodivs">MESO Era</div>
-            <div id="prneo" class="protodivs">NEO Era</div>
+            <div id="prpaleo" class="protodivs">Paleo Era</div>
+            <div id="prmeso" class="protodivs">Meso Era</div>
+            <div id="prneo" class="protodivs">Neo Era</div>
         </div>
         <div id="phanbox" class="eonht">
             <div id="phpaleo" class="phandivs"></div>
@@ -60,14 +67,14 @@
             <canvas id="eon"></canvas>
         </div>
     </div>
-    <!-- ERA VIEW -->
+    <!-- ERA VIEW SECTION -->
     <div id="eraview">
         <p id="eratext">ERA View:</p>
         <div id="eraline">
             <canvas id="era"></canvas>
         </div>
     </div>
-    <!-- PERIOD VIEW -->
+    <!-- PERIOD VIEW SECTION -->
     <div id="periodview">
         <p id="periodtext">PERIOD View:</p>
         <div id="periodline">
