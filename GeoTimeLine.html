@@ -38,6 +38,7 @@
     </div><br />
     <div id="overall">You are viewing <span id="percent"></span> of earth's age
         <br />
+        <div id="box0"></div>
         <div id="box1"></div>
         <div id="box2"></div>
         <div id="box3"></div>
@@ -59,9 +60,9 @@
             <div id="prneo" class="protodivs">Neo Era</div>
         </div>
         <div id="phanbox" class="eonht">
-            <div id="phpaleo" class="phandivs"></div>
-            <div id="phmeso" class="phandivs"></div>
-            <div id="phceno" class="phandivs"></div>
+            <div id="phpaleo" class="phandivs">Paleo Era</div>
+            <div id="phmeso" class="phandivs">Meso Era</div>
+            <div id="phceno" class="phandivs">Ceno Era</div>
         </div>
         <div id="eonline">
             <canvas id="eon"></canvas>
@@ -69,7 +70,10 @@
     </div>
     <!-- ERA VIEW SECTION -->
     <div id="eraview">
-        <p id="eratext">ERA View:</p>
+        <p id="eratext">ERA View: <span id="eraadder"></span></p>
+        <div id="eraprpaleo"></div>
+        <div id="eraprmeso"></div>
+        <div id="eramprneo"></div>
         <div id="eraline">
             <canvas id="era"></canvas>
         </div>

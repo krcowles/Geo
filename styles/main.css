@@ -37,23 +37,30 @@ body {
     background-color: #ffe6e9;
 }
 #overall {
-    margin-left: 12px;
+    text-align: center;
     font-size: 16px;
 }
 #percent {
     color: blue;
+}
+#box0 {
+    float: left;
+    height: 40px;
+    margin-top: 4px;
 }
 #box1, #box3 {
     float: left;
     background-color: lightgray;
     border: 1px;
     height: 40px;
+    margin-top: 4px;
 }
 #box2 {
     float: left;
     background-color: darkblue;
     border: 1px;
     height: 40px;
+    margin-top: 4px;
 }
 /* The 'eon' section view CSS items: */
 .clearfix {

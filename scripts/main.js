@@ -130,6 +130,8 @@ function getTextWidth(text, font) {
 function drawPortion() {
     var portionPx = PCHART * pgwidth;
     var curreon = sessionStorage.getItem('dispEon');
+    var marg = (pgwidth - portionPx)/2;
+    $('#box0').width(marg);
     $('#box1').show();
     $('#box2').show();
     $('#box3').show();
@@ -199,32 +201,53 @@ function drawEon(id) {
         $('#archbox').show(); // temp for debug (on in drawEon())
         var eo = Math.floor(400 * scale);
         $('#areo').width(eo - bwidth);
-        $('#areo').css('background-color', ARCHCOLOR);
+        $('#areo').css('background-color', AREOCOLOR);
         var paleo = Math.floor(400 * scale);
         $('#arpaleo').width(paleo - bwidth);
-        $('#arpaleo').css('background-color', ARCHCOLOR);
+        $('#arpaleo').css('background-color', ARPALEOCOLOR);
         var meso = Math.floor(400 * scale);
         $('#armeso').width(meso - bwidth);
-        $('#armeso').css('background-color', ARCHCOLOR);
+        $('#armeso').css('background-color', ARMESOCOLOR);
         var neo = pgwidth - (eo + paleo + meso);
         $('#arneo').width(neo - bwidth);
-        $('#arneo').css('background-color', ARCHCOLOR);
+        $('#arneo').css('background-color', ARNEOCOLOR);
     } else if (id === 'proto') {
         var protolgth = chartParms[PROTO].left - chartParms[PROTO].right;
         var scale = pgwidth/protolgth;
         $('#protobox').show();
         var paleo = Math.floor(900 * scale);
         $('#prpaleo').width(paleo - bwidth);
-        $('#prpaleo').css('background-color', PROTOCOLOR);
+        $('#prpaleo').css('background-color', PRPALEOCOLOR);
         var meso = Math.floor(600 * scale);
         $('#prmeso').width(meso - bwidth);
-        $('#prmeso').css('background-color', PROTOCOLOR);
+        $('#prmeso').css('background-color', PRMESOCOLOR);
         var neo = pgwidth - (paleo + meso);
         $('#prneo').width(neo - bwidth);
-        $('#prneo').css('background-color', PROTOCOLOR);
+        $('#prneo').css('background-color', PRNEOCOLOR);
+    } else if (id === 'phan') {
+        var phanlgth = chartParms[PHAN].left - chartParms[PHAN].right;
+        var scale = pgwidth/phanlgth;
+        $('#phanbox').show();
+        var paleo = Math.floor(311 * scale);
+        $('#phpaleo').width(paleo - bwidth);
+        $('#phpaleo').css('background-color', PHPALEOCOLOR);
+        var meso = Math.floor(165 * scale);
+        $('#phmeso').width(meso - bwidth);
+        $('#phmeso').css('background-color', PHMESOCOLOR);
+        var ceno = pgwidth - (paleo + meso);
+        $('#phceno').width(ceno - bwidth);
+        $('#phceno').css('background-color', PHCENOCOLOR);
     }
     // Eras only shown if eon is shown...
 }
+function drawEra(era) {
+    var eraid = "#" + era + "box";
+}
+function drawArea(section, subs, ) {
+    var divID = "#" + section + "view";
+    
+}
+
 
 $(document).ready( function() {
     // Display Assignments:
@@ -273,14 +296,14 @@ $(document).ready( function() {
         $('#hadbox').css('text-align','center');
         $('#hadbox').css('padding-top','6px');
         $('#hadbox').css('background-color',HADCOLOR);
-        $('#eonadder').text("No Era's Defined in Hadean Eon");
+        $('#eonadder').text("Hadean Eon [No Eras in Hadean]");
         storeChartParms();
         drawEon('had');
         drawPortion();
     });
     $('#archean').on('click', function() {
         sessionStorage.setItem('dispEon', 'arch');
-        $('#eonadder').text("No Periods Defined for Archean Eras")
+        $('#eonadder').text("Archean Eon [No Periods in Archean Eras]")
         resetEonDisplays();
         chartDefs(ARCHEAN);
         storeChartParms();
@@ -289,7 +312,7 @@ $(document).ready( function() {
     });
     $('#proto').on('click', function() {
         sessionStorage.setItem('dispEon', 'proto');
-        $('#eonadder').text("");
+        $('#eonadder').text("Proterozoic Eon");
         resetEonDisplays();
         chartDefs(PROTO);
         storeChartParms();
@@ -298,7 +321,7 @@ $(document).ready( function() {
     });
     $('#phan').on('click', function() {
         sessionStorage.setItem('dispEon', 'phan');
-        $('#eonadder').text("");
+        $('#eonadder').text("Phanerozoic Eon");
         resetEonDisplays();
         chartDefs(PHAN);
         storeChartParms();

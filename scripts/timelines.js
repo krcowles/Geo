@@ -4,7 +4,8 @@ chartParms = [
     {right:4000, left:0, ticks:25, setNo:1, title:"Hadean Timeline"},
     {right:2500, left:4000, ticks:100, setNo:2, title:"Archean Timeline"},
     {right:541, left:2500, ticks:100, setNo: 3, title:"Proterozoic Timeline"},
-    {right:0, left:541, ticks:25, setNo:4, title:"Phanerozoic Timeline"}
+    {right:0, left:541, ticks:25, setNo:4, title:"Phanerozoic Timeline"},
+    {right:2300, left:2500, ticks: 10, setNo:5, title:"Paleo Timeline"}
 ];
 // Data sets of events corresponding to clickable timelines:
 dataSets = [
@@ -31,7 +32,7 @@ dataSets = [
         {x:850, txt:"Sturtian-Varangian ice Age"},
         {x:850, txt:"Expand Era to see more"}],
 // Phanerozoic Eon:
-    [{x:25, txt:"Phan1"}]
+    [{x:30, txt:"Rifting"}]
 ];
 
 /*
