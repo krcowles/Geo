@@ -146,7 +146,9 @@ function mainChartDefs() {
 }
 // ---------- EON DISPLAY ----------
 function eonDefs(eon) {
-    $('#eonview').show();
+    // because pgwidth can change when scroll bars appear:
+    pgwidth = $(window).width();
+    //$('#eonview').show();
     sessionStorage.setItem('dispEon', eon);
     resetDisplays('eon');
     for (var i=0; i<eons.length; i++) {
@@ -198,7 +200,8 @@ function eonDefs(eon) {
     $('#eonadder').text(adder);
 }
 function eraDefs(era) {
-    $('#eraview').show();
+    pgwidth = $(window).width();
+    //$('#eraview').show();
     sessionStorage.setItem('dispEra', era); // NECESSARY?????
     resetDisplays('era');
     for (var i=0; i<eras.length; i++) {
@@ -300,12 +303,18 @@ $(document).ready( function() {
     mainChartEl = document.getElementById('mainline');
     setChartDims('events', mainChartEl, MAINHT);
     drawChart('mainline');
+    $('div[id$="box"').hide();
     if (subs) {
         // pg refresh: if any settings are on, dispEon must be also
         currEon = sessionStorage.getItem('dispEon');
         if (currEon !== 'off') {
             drawArea('eon', currEon);
             drawPortion();
+            currEra = sessionStorage.getItem('dispEra');
+            if (currEra !== 'off') {
+                drawArea('era', currEra);
+                drawPortion();
+            }
         }
     } 
 

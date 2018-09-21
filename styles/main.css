@@ -66,9 +66,6 @@ body {
 .clearfix {
     clear: both;
 }
-#eonview {
-    display: none;
-}
 .eonht {
     padding-top: 6px;
 }
@@ -102,13 +99,7 @@ body {
     color: brown;
 }
 /* The 'era' section view CSS items: */
-#eraview {
-    display: none;
-}
 .eraht {
     padding-top: 6px;
 }
 /* The 'period' section view CSS items: */
-#periodview {
-    display: none;
-}
