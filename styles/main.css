@@ -45,26 +45,35 @@ body {
 }
 #box0 {
     float: left;
-    height: 40px;
+    height: 30px;
     margin-top: 4px;
 }
 #box1, #box3 {
     float: left;
     background-color: lightgray;
     border: 1px;
-    height: 40px;
+    height: 30px;
     margin-top: 4px;
 }
 #box2 {
     float: left;
     background-color: darkblue;
     border: 1px;
-    height: 40px;
+    height: 30px;
     margin-top: 4px;
 }
 /* The 'eon' section view CSS items: */
 .clearfix {
     clear: both;
+}
+#eonview {
+    display: none;
+}
+.eonht {
+    padding-top: 6px;
+}
+.clicks {
+    cursor: pointer;
 }
 #hadbox {
     border-style: inset;
@@ -74,17 +83,18 @@ body {
     height: 24px;
     display: none;
 }
-.edivs, .archdivs, .protodivs, .phandivs {
+.maindivs, .eondivs {
     float: left;
     height: 24px;
     text-align: center;
     border-style: inset;
     border-width: 2px;
     margin: 0px;
-    cursor: pointer;
     padding-top: 6px;
 }
 #eontext, #eratext, #periodtext {
+    margin-top: 30px;
+    margin-bottom: 2px;
     margin-left: 12px;
     font-size: 18px;
 }
@@ -92,5 +102,11 @@ body {
     color: brown;
 }
 /* The 'era' section view CSS items: */
+#eraview {
+    display: none;
+}
 
 /* The 'period' section view CSS items: */
+#periodview {
+    display: none;
+}

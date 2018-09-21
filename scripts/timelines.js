@@ -1,11 +1,17 @@
 // Parameter settings for chart viewing areas:
 chartParms = [
-    {right:0, left:0, ticks:250, setNo:0, title:"Event Timeline"},
-    {right:4000, left:0, ticks:25, setNo:1, title:"Hadean Timeline"},
-    {right:2500, left:4000, ticks:100, setNo:2, title:"Archean Timeline"},
-    {right:541, left:2500, ticks:100, setNo: 3, title:"Proterozoic Timeline"},
-    {right:0, left:541, ticks:25, setNo:4, title:"Phanerozoic Timeline"},
-    {right:2300, left:2500, ticks: 10, setNo:5, title:"Paleo Timeline"}
+    {right:0, left:0, ticks:250, setNo:0, title:"Event Timeline",
+        color:MAINCOLOR, adder:''},
+    {right:4000, left:0, ticks:25, setNo:1, title:"Hadean Timeline",
+        color:HADCOLOR, adder:'Hadean Eon [No Eras Defined]'},
+    {right:2500, left:4000, ticks:100, setNo:2, title:"Archean Timeline",
+        color:ARCHCOLOR, adder:'Archean Eon [No Periods Defined for Eras]'},
+    {right:541, left:2500, ticks:100, setNo: 3, title:"Proterozoic Timeline",
+        color:PROTOCOLOR, adder:'Proterozoic Eon'},
+    {right:0, left:541, ticks:25, setNo:4, title:"Phanerozoic Timeline",
+        color:PHANCOLOR, adder:'Phanerozoic Eon'},
+    {right:2300, left:2500, ticks: 10, setNo:5, title:"Paleo Timeline",
+        color:AREOCOLOR, adder:''}
 ];
 // Data sets of events corresponding to clickable timelines:
 dataSets = [

@@ -8,9 +8,10 @@ var ticks;
 var setNo;
 var color;
 var mainChartEl;
-var currEon;
-var currEra;
-var currPer;
+var eons = ['had', 'arch', 'proto', 'phan'];
+var currEon = 'off';
+var currEra = 'off';
+var currPer = 'off';
 var portion; // portion of earth's age being viewed
 var percentchart;
 var resizeFlag = true; // prevents rapid-fire events during resize
@@ -49,51 +50,13 @@ function drawChart(canvasId) {
     var chartData = defineData();
     ChartObj.render(canvasId, chartData);
 }
-function storeChartParms() {
-    sessionStorage.setItem('left', leftAge);
-    sessionStorage.setItem('right', rightAge);
-    sessionStorage.setItem('ticks', ticks);
-    sessionStorage.setItem('setNo', setNo);
-    sessionStorage.setItem('title', title);
-    sessionStorage.setItem('color', color);
-}
-function chartDefs(chartNo) {
-    rightAge = chartParms[chartNo].right;
-    if (chartNo < 2) {
-        leftAge = eage;
-    } else {
-        leftAge = chartParms[chartNo].left;
-    }
-    ticks = chartParms[chartNo].ticks;
-    setNo = chartParms[chartNo].setNo;
-    title = chartParms[chartNo].title;
-    switch (chartNo) {
-        case MAIN:
-            color = MAINCOLOR;
-            break;
-        case HADEAN:
-            color = HADCOLOR;
-            break;
-        case ARCHEAN:
-            color = ARCHCOLOR;
-            break;
-        case PROTO:
-            color = PROTOCOLOR;
-            break;
-        case PHAN:
-            color = PHANCOLOR;
-            break;
-        default:
-            color = 'darkblue';
-    }
-}
 // -------- SETUP "MAIN" SECTION OF DISPLAY ----------
 function mainSizes() {
     // text size
     pgwidth = $(window).width();
     var opt = $('#xopt').text();
     var scale = pgwidth/opt;  // px per Million Years (MY)
-    var bwpx = $('.edivs').css('border-left-width'); // has 'px' appended
+    var bwpx = $('.maindivs').css('border-left-width'); // has 'px' appended
     var bwidth = 2 * parseInt(bwpx);
     var crypto = Math.floor(pgwidth - 541 * scale);
     $('#crypto').width(crypto - 2);  // border-width for crypto fixed at 1
@@ -129,17 +92,15 @@ function getTextWidth(text, font) {
 }
 function drawPortion() {
     var portionPx = PCHART * pgwidth;
-    var curreon = sessionStorage.getItem('dispEon');
     var marg = (pgwidth - portionPx)/2;
     $('#box0').width(marg);
-    $('#box1').show();
-    $('#box2').show();
+    // some boxes may have been turned off previously...
+    $('#box1').show(); 
+    $('#box2').show(); 
     $('#box3').show();
-    if (curreon !== 'off') { // then chartDefs are set
-        var currera = sessionStorage.getItem('dispEra');
-        if (currera !== 'off') {
-            var currper = sessionStorage.getItem('dispPer');
-            if (currper !== 'off') { // period as percentage
+    if (currEon !== 'off') { // then chartDefs are set
+        if (currEra !== 'off') {
+            if (currPer !== 'off') { // period as percentage
 
             } else { // era as percentage
 
@@ -173,79 +134,99 @@ function drawPortion() {
     }
     $('#percent').text(portion + "%");
 }
+function mainChartDefs() {
+    rightAge = 0;
+    leftAge = eage;
+    ticks = chartParms[0].ticks;
+    setNo = 0;
+    title = chartParms[0].title;
+    color = chartParms[0].color;
+}
 // ---------- EON DISPLAY ----------
+function eonDefs(eon) {
+    $('#eonview').show();
+    sessionStorage.setItem('dispEon', eon);
+    resetEonDisplays();
+    for (var i=0; i<eons.length; i++) {
+        if (eons[i] === eon) {
+            var chartNo = i + 1; // 0 => Main Chart
+            break;
+        }
+    }
+    rightAge = chartParms[chartNo].right;
+    if (chartNo === 1) {
+        leftAge = eage;
+    } else {
+        leftAge = chartParms[chartNo].left;
+    }
+    ticks = chartParms[chartNo].ticks;
+    setNo = chartParms[chartNo].setNo;
+    title = chartParms[chartNo].title;
+    color = chartParms[chartNo].color;
+    // eon chart settings:
+    sessionStorage.setItem('eonleft', leftAge);
+    sessionStorage.setItem('eonright', rightAge);
+    sessionStorage.setItem('eonticks', ticks);
+    sessionStorage.setItem('eonsetNo', setNo);
+    sessionStorage.setItem('eontitle', title);
+    sessionStorage.setItem('eoncolor', color);
+    // eon box settings:
+    var boxborder = $('.eondivs').css('border-left-width');
+    var borders = 2 * parseInt(boxborder);
+    var eondiv = "#" + eon + "box";
+    var eonparts = $(eondiv).children().length;
+    var eonscale = pgwidth/(chartParms[chartNo].left - chartParms[chartNo].right);
+    if (eonparts === 0) { // eon is hadean
+        $('#hadbox').width = pgwidth;
+        $('#hadbox').css('background-color',HADCOLOR);
+        $('#hadbox').text("Hadean Eon");
+        $('#hadbox').css('text-align','center');
+    } else {
+        var accumbox = 0;
+        for (var j=0; j<eonparts; j++) {
+            var subeon = "#" + eon + j;
+            if (j !== eonparts -1) {
+                var subwidth = eraSizes[eon][j].left - eraSizes[eon][j].right;
+                subwidth = Math.floor(eonscale * subwidth);
+                accumbox += subwidth;
+            } else { // last item:
+                subwidth = pgwidth - accumbox;
+            }
+            var subcolor = eraSizes[eon][j].color;
+            $(subeon).width(subwidth - borders);
+            $(subeon).css('background-color',subcolor);
+        }
+    }
+    $(eondiv).show();
+    var adder = chartParms[chartNo].adder;
+    $('#eonadder').text(adder);
+}
 function resetEonDisplays() {
     $('#hadbox').hide();
     $('#archbox').hide();
     $('#protobox').hide();
     $('#phanbox').hide();
 }
-function drawEon(id) {
-    var eonId = '#' + id + 'box';
-    $(eonId).show();
-    leftAge = sessionStorage.getItem('left');
-    rightAge = sessionStorage.getItem('right');
-    ticks = sessionStorage.getItem('ticks');
-    setNo = sessionStorage.getItem('setNo');
-    title = sessionStorage.getItem('title');
-    color = sessionStorage.getItem('color');
-    var el = document.getElementById('eon');
-    setChartDims('eonline', el, EONHT);
-    drawChart('eon');
-    // if not hadean, inner boxes must be drawn...
-    var bwpx = $('.archdivs').css('border-left-width'); // has 'px' appended
-    var bwidth = 2 * parseInt(bwpx);
-    if (id === 'arch') {
-        var archlgth = chartParms[ARCHEAN].left - chartParms[ARCHEAN].right;
-        var scale = pgwidth/archlgth;
-        $('#archbox').show(); // temp for debug (on in drawEon())
-        var eo = Math.floor(400 * scale);
-        $('#areo').width(eo - bwidth);
-        $('#areo').css('background-color', AREOCOLOR);
-        var paleo = Math.floor(400 * scale);
-        $('#arpaleo').width(paleo - bwidth);
-        $('#arpaleo').css('background-color', ARPALEOCOLOR);
-        var meso = Math.floor(400 * scale);
-        $('#armeso').width(meso - bwidth);
-        $('#armeso').css('background-color', ARMESOCOLOR);
-        var neo = pgwidth - (eo + paleo + meso);
-        $('#arneo').width(neo - bwidth);
-        $('#arneo').css('background-color', ARNEOCOLOR);
-    } else if (id === 'proto') {
-        var protolgth = chartParms[PROTO].left - chartParms[PROTO].right;
-        var scale = pgwidth/protolgth;
-        $('#protobox').show();
-        var paleo = Math.floor(900 * scale);
-        $('#prpaleo').width(paleo - bwidth);
-        $('#prpaleo').css('background-color', PRPALEOCOLOR);
-        var meso = Math.floor(600 * scale);
-        $('#prmeso').width(meso - bwidth);
-        $('#prmeso').css('background-color', PRMESOCOLOR);
-        var neo = pgwidth - (paleo + meso);
-        $('#prneo').width(neo - bwidth);
-        $('#prneo').css('background-color', PRNEOCOLOR);
-    } else if (id === 'phan') {
-        var phanlgth = chartParms[PHAN].left - chartParms[PHAN].right;
-        var scale = pgwidth/phanlgth;
-        $('#phanbox').show();
-        var paleo = Math.floor(311 * scale);
-        $('#phpaleo').width(paleo - bwidth);
-        $('#phpaleo').css('background-color', PHPALEOCOLOR);
-        var meso = Math.floor(165 * scale);
-        $('#phmeso').width(meso - bwidth);
-        $('#phmeso').css('background-color', PHMESOCOLOR);
-        var ceno = pgwidth - (paleo + meso);
-        $('#phceno').width(ceno - bwidth);
-        $('#phceno').css('background-color', PHCENOCOLOR);
+function drawArea(section, member) {
+    // section = viewing area; member = member to display
+    if (section === 'eon') {
+        currEon = member;
+        eonDefs(member); // includes children of member
+        var eonDiv = 'eonline';
+        var eonChartId = 'eon';
+        var eonChartEl = document.getElementById(eonChartId);
+        setChartDims(eonDiv, eonChartEl, EONHT);
+        drawChart(eonChartId);
+    } else if (section === 'era') {
+        if (key === 'proto') {
+            var subs = periodSizes.proto.protos;
+        } else {
+            var subs = periodSizes.phan.phans;
+        }
+    } else if (section === 'period') {
+        // later...
+        var subs = 0;
     }
-    // Eras only shown if eon is shown...
-}
-function drawEra(era) {
-    var eraid = "#" + era + "box";
-}
-function drawArea(section, subs, ) {
-    var divID = "#" + section + "view";
-    
 }
 
 
@@ -257,75 +238,51 @@ $(document).ready( function() {
         sessionStorage.setItem('dispPer', 'off');
         var subs = false;
     } else {
-        var subs = true;
+        var subs = true; // this is a page refresh...
     }
     eage = $('#xopt').text(); // page startup default for earth's age
     mainSizes();
-    if (subs) {
-        // pg refresh: if any settings are on, dispEon must be also
-        var refeon = sessionStorage.getItem('dispEon');
-        if (refeon !== 'off') {
-            drawEon(refeon);
-        }
-    } 
     drawPortion(); // pgwidth not defined until mainSizes is invoked
     /* 
      * This section of code renders the main graph itself:
      * The main timeline doesn't change with click events;
      * sessionStorage not defined at this point.
      */
-    chartDefs(MAIN);
+    mainChartDefs();
     mainChartEl = document.getElementById('mainline');
     setChartDims('events', mainChartEl, MAINHT);
     drawChart('mainline');
-    // Any secondary charts clicked on previously (refresh or resize)
-    var sub = sessionStorage.getItem('dispEon');
-    if (sub !=='off') {
-        drawEon(sub);
-    }
+    if (subs) {
+        // pg refresh: if any settings are on, dispEon must be also
+        currEon = sessionStorage.getItem('dispEon');
+        if (currEon !== 'off') {
+            drawArea('eon', currEon);
+            drawPortion();
+        }
+    } 
 
     /*
      * EVENT DEFINITIONS
      */
     // Clickable EONS:
     $('#hadean').on('click', function() {
-        sessionStorage.setItem('dispEon', 'had');
-        resetEonDisplays();
-        chartDefs(HADEAN);
-        $('#hadbox').text("Hadean Eon");
-        $('#hadbox').css('text-align','center');
-        $('#hadbox').css('padding-top','6px');
-        $('#hadbox').css('background-color',HADCOLOR);
-        $('#eonadder').text("Hadean Eon [No Eras in Hadean]");
-        storeChartParms();
-        drawEon('had');
+        sessionStorage.setItem('dispEon','had');
+        drawArea('eon', 'had');
         drawPortion();
     });
     $('#archean').on('click', function() {
-        sessionStorage.setItem('dispEon', 'arch');
-        $('#eonadder').text("Archean Eon [No Periods in Archean Eras]")
-        resetEonDisplays();
-        chartDefs(ARCHEAN);
-        storeChartParms();
-        drawEon('arch');
+        sessionStorage.setItem('dispEon','arch');
+        drawArea('eon', 'arch');
         drawPortion();
     });
     $('#proto').on('click', function() {
-        sessionStorage.setItem('dispEon', 'proto');
-        $('#eonadder').text("Proterozoic Eon");
-        resetEonDisplays();
-        chartDefs(PROTO);
-        storeChartParms();
-        drawEon('proto');
+        sessionStorage.setItem('dispEon','proto');
+        drawArea('eon', 'proto');
         drawPortion();
     });
     $('#phan').on('click', function() {
-        sessionStorage.setItem('dispEon', 'phan');
-        $('#eonadder').text("Phanerozoic Eon");
-        resetEonDisplays();
-        chartDefs(PHAN);
-        storeChartParms();
-        drawEon('phan');
+        sessionStorage.setItem('dispEon','phan');
+        drawArea('eon', 'phan');
         drawPortion();
     });
     // Clickable ERAS (Proterozoic & Phanerozoic)
@@ -344,13 +301,12 @@ $(document).ready( function() {
         if (resizeFlag) {
             resizeFlag = false;
             setTimeout( function() {
-                chartDefs(MAIN);
+                mainChartDefs();
                 setChartDims('events', mainChartEl, MAINHT);
                 drawChart('mainline');
                 mainSizes(); // this redefines global 'pgwidth'
-                var eondisp = sessionStorage.getItem('dispEon');
-                if (eondisp !== 'off') {
-                    drawEon(eondisp);
+                if (currEon !== 'off') {
+                    drawArea('eon', currEon);
                 }
                 drawPortion();
                 resizeFlag = true; 

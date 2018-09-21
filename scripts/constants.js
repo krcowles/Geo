@@ -15,14 +15,13 @@ const PRNEOCOLOR = '#ffcc00';
 const PHPALEOCOLOR = '#ffe6e9';
 const PHMESOCOLOR = '#ffccd4';
 const PHCENOCOLOR = '#ff99a8'
+// Chart ID's:
+const HADEAN = 0;
+const ARCHEAN = 1;
+const PROTO = 2;
+const PHAN = 3;
 // 'Percent Chart' Width as Fraction of Page Width:
 const PCHART = 0.75;
-// Chart Id's for EONs
-const MAIN = 0;
-const HADEAN = 1;
-const ARCHEAN = 2;
-const PROTO = 3;
-const PHAN = 4;
 
 // Section heights:
 const MAINHT = 80;

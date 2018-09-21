@@ -8,8 +8,6 @@
     <meta name="robots" content="nofollow" />
     <link href="styles/main.css" type="text/css" rel="stylesheet" />
     <script src="scripts/canvas.js"></script>
-    <script src="scripts/timelines.js"></script>
-    <script src="scripts/constants.js"></script>
 </head>
 <body>
 <div id="main">
@@ -20,16 +18,16 @@
         Cryptozoic (aka PreCambrian) SuperEON
     </div>
     <div id="eons">
-        <div id="hadean" class="edivs">
+        <div id="hadean" class="maindivs clicks">
             Hadean Eon
         </div>
-        <div id="archean" class="edivs">
+        <div id="archean" class="maindivs clicks">
             Archean Eon
         </div>
-        <div id="proto" class="edivs">
+        <div id="proto" class="maindivs clicks">
             Proterozoic Eon
         </div>
-        <div id="phan" class="edivs">
+        <div id="phan" class="maindivs clicks">
             Phanerozoic Eeon
         </div>
     </div>
@@ -44,25 +42,26 @@
         <div id="box3"></div>
     </div>
     <br /><br />
+
     <!-- EON VIEW SECTION -->
     <div class="clearfix" id="eonview">
         <p id="eontext">EON View: <span id="eonadder"></span></p>
         <div id="hadbox" class="eonht"></div>
         <div id="archbox" class="eonht">
-            <div id="areo" class="archdivs">Eo Era</div>
-            <div id="arpaleo" class="archdivs">Paleo Era</div>
-            <div id="armeso" class="archdivs">Meso Era</div>
-            <div id="arneo" class="archdivs">Neo Era</div>
+            <div id="arch0" class="eondivs">Eo Era</div>
+            <div id="arch1" class="eondivs">Paleo Era</div>
+            <div id="arch2" class="eondivs">Meso Era</div>
+            <div id="arch3" class="eondivs">Neo Era</div>
         </div>
         <div id="protobox" class="eonht">
-            <div id="prpaleo" class="protodivs">Paleo Era</div>
-            <div id="prmeso" class="protodivs">Meso Era</div>
-            <div id="prneo" class="protodivs">Neo Era</div>
+            <div id="proto0" class="eondivs clicks">Paleo Era</div>
+            <div id="proto1" class="eondivs clicks">Meso Era</div>
+            <div id="proto2" class="eondivs clicks">Neo Era</div>
         </div>
         <div id="phanbox" class="eonht">
-            <div id="phpaleo" class="phandivs">Paleo Era</div>
-            <div id="phmeso" class="phandivs">Meso Era</div>
-            <div id="phceno" class="phandivs">Ceno Era</div>
+            <div id="phan0" class="eondivs clicks">Paleo Era</div>
+            <div id="phan1" class="eondivs clicks">Meso Era</div>
+            <div id="phan2" class="eondivs clicks">Ceno Era</div>
         </div>
         <div id="eonline">
             <canvas id="eon"></canvas>
@@ -87,6 +86,9 @@
     </div>
 </div>  <!-- MAIN -->
 <script src="scripts/jquery-1.12.1.js"></script>
+<script src="scripts/constants.js"></script>
+<script src="scripts/ageParms.js"></script>
+<script src="scripts/timelines.js"></script>
 <script src="scripts/main.js"></script>
 </body>
 </html>
