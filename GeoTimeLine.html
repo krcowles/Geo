@@ -70,9 +70,17 @@
     <!-- ERA VIEW SECTION -->
     <div id="eraview">
         <p id="eratext">ERA View: <span id="eraadder"></span></p>
-        <div id="eraprpaleo"></div>
-        <div id="eraprmeso"></div>
-        <div id="eramprneo"></div>
+        <div id="proto_paleobox" class="eraht">
+            <div id="proto_paleo0" class="eradivs clicks">Siderian Period</div>
+            <div id="proto_paleo1" class="eradivs clicks">Rhyacian Perioc</div>
+            <div id="proto_paleo2" class="eradivs clicks">Orosirian Period</div>
+            <div id="proto_paleo3" class="eradivs clicks">Statherian Period</div>
+        </div>
+        <div id="proto_mesobox" class="eraht"></div>
+        <div id="proto_neobox" class="eraht"></div>
+        <div id="phan_paleobox" class="eraht"></div>
+        <div id="phan_mesobox" class="eraht"></div>
+        <div id="phan_cenobox" class="eraht"></div>
         <div id="eraline">
             <canvas id="era"></canvas>
         </div>
@@ -87,8 +95,7 @@
 </div>  <!-- MAIN -->
 <script src="scripts/jquery-1.12.1.js"></script>
 <script src="scripts/constants.js"></script>
-<script src="scripts/ageParms.js"></script>
-<script src="scripts/timelines.js"></script>
+<script src="scripts/objectDefs.js"></script>
 <script src="scripts/main.js"></script>
 </body>
 </html>

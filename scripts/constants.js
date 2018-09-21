@@ -15,6 +15,11 @@ const PRNEOCOLOR = '#ffcc00';
 const PHPALEOCOLOR = '#ffe6e9';
 const PHMESOCOLOR = '#ffccd4';
 const PHCENOCOLOR = '#ff99a8'
+// PERIOD Display colors:
+const SIDERIANCOLOR = '#f8eed3'; // shades of GoldenRod
+const RHYACIANCOLOR = '#f2dca6';
+const OROSIRIANCOLOR = '#ebcb7a';
+const STATHERIANCOLOR = '#e4ba4e';
 // Chart ID's:
 const HADEAN = 0;
 const ARCHEAN = 1;

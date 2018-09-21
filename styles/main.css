@@ -83,7 +83,7 @@ body {
     height: 24px;
     display: none;
 }
-.maindivs, .eondivs {
+.maindivs, .eondivs, .eradivs {
     float: left;
     height: 24px;
     text-align: center;
@@ -98,14 +98,16 @@ body {
     margin-left: 12px;
     font-size: 18px;
 }
-#eonadder {
+#eonadder, #eraadder {
     color: brown;
 }
 /* The 'era' section view CSS items: */
 #eraview {
     display: none;
 }
-
+.eraht {
+    padding-top: 6px;
+}
 /* The 'period' section view CSS items: */
 #periodview {
     display: none;
