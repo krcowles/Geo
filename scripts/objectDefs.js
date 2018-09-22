@@ -25,21 +25,33 @@ var periodSizes = {
       {left:1800, right:1600, color:STATHERIANCOLOR}
     ],
     'proto_meso':[
-      {left:1600,right:1400},{left:1400,right:1200},{left:1200,right:1000}
+      {left:1600,right:1400, color:CALYMMIANCOLOR},
+      {left:1400,right:1200, color:ECTASIANCOLOR},
+      {left:1200,right:1000, color:STENIANCOLOR}
     ],
     'proto_neo':[
-        {left:1000,right:720},{left:720,right:635},{left:635,right:541}
+        {left:1000,right:720, color:TONIANCOLOR},
+        {left:720,right:635, color:CRYOGENIANCOLOR},
+        {left:635,right:541, color:EDIACARANCOLOR}
     ],
     'phan_paleo':[
-        {left:541,right:500},{left:500,right:485},{left:485,right:435},
-        {left:435,right:410},{left:410,right:350},{left:350,right:320},
-        {left:320,right:290},{left:290,right:230}
+        {left:541,right:500, color:EOCAMBRIANCOLOR},
+        {left:500,right:485, color:CAMBRIANCOLOR},
+        {left:485,right:435, color:ORDOVICIANCOLOR},
+        {left:435,right:410, color:SILURIANCOLOR},
+        {left:410,right:350, color:DEVONIANCOLOR},
+        {left:350,right:320, color:MISSISSIPPIANCOLOR},
+        {left:320,right:290, color:PENNSYLVANIANCOLOR},
+        {left:290,right:230, color:PERMIANCOLOR}
     ],
     'phan_meso':[
-        {left:230,right:192},{left:192,right:135},{left:135,right:65}
+        {left:230,right:192, color:TRIASSICCOLOR},
+        {left:192,right:135, color:JURASSICCOLOR},
+        {left:135,right:65, color:CRETACEOUSCOLOR}
     ],
     'phan_ceno':[
-        {left:65,right:25},{left:25,right:0}
+        {left:65,right:25, color:PALEOGENECOLOR},
+        {left:25,right:0, color:NEOGENECOLOR}
     ]
     };
     
@@ -62,12 +74,21 @@ chartParms = [
         color:PHANCOLOR, adder:'Phanerozoic Eon'},
     // Eras:
     // Proterozoic (no Hadean or Archean):
-    {right:1600, left:2500, ticks: 50, setNo:5, title:"Paleo Timeline",
+    {right:1600, left:2500, ticks:50, setNo:5, title:"Paleo Timeline",
         color:PRPALEOCOLOR, adder:'Paleo Era'},
-    {right:1000, left:1600, ticks: 50, setNo:6, title:"Meso Timeline",
+    {right:1000, left:1600, ticks:50, setNo:6, title:"Meso Timeline",
         color:PRMESOCOLOR, adder:'Meso Era'},
     {right:541, left:1000, ticks:50, setNo:7, title:"Neo Timeline",
-        color:PRNEOCOLOR, adder:'Neo Era'}
+        color:PRNEOCOLOR, adder:'Neo Era'},
+    // Phanerozoic:
+    {right:230, left:541, ticks:20, setNo:8, title:"Paleozoic Timeline",
+        color:PHPALEOCOLOR, adder:'Paleozoic Era'},
+    {right:65, left:230, ticks:20, setNo:9, title:"Mesozoic Timeline",
+        color:PHMESOCOLOR},
+    {right:0, left:65, ticks:5, setNo:10, title:"Cenozoic Timeline",
+        color:PHCENOCOLOR}
+    // Periods
+
 ];
 // Data sets of events corresponding to clickable timelines:
 dataSets = [
@@ -95,7 +116,19 @@ dataSets = [
     {x:850, txt:"Expand Era to see more"}],
 // Phanerozoic Eon:
 [{x:30, txt:"Rifting"}],
-[{x:1800, txt:"Any"}]
+// Proto Paleo Era
+[{x:1800, txt:"Any"}],
+// Proto Meso Era
+[{x:1300, txt:"Meso"}],
+// Proto Neo Era
+[{x:900, txt:"Neo"}],
+// Phan Paleo Era
+[{x:270, txt:"Paleozoic"}],
+// Phan Mesozoic Era
+[{x:100, txt:"Mesozoic"}],
+// Phan Cenozoic Era
+[{x:30, txt:"Cenozoic"}]
+
 ];
 
 /*

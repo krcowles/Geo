@@ -100,12 +100,18 @@ function drawPortion() {
     $('#box1').show(); 
     $('#box2').show(); 
     $('#box3').show();
-    if (currEon !== 'off') { // then chartDefs are set
+    if (currEon !== 'off') {
         if (currEra !== 'off') {
             if (currPer !== 'off') { // period as percentage
-
+                
             } else { // era as percentage
-
+                var box1 = portionPx * (eage - leftAge)/eage;
+                var box2 = (leftAge - rightAge)/eage;
+                var portion = 100 * box2;
+                portion = portion.toFixed(2);
+                box2 *= portionPx;
+                box3 = portionPx - (box1 + box2);
+                $('#segment').text("Era");
             }
         } else { // eon as percentage
             if (leftAge === eage) {
@@ -124,15 +130,17 @@ function drawPortion() {
             } else {
                 var box3 = portionPx - (box1 + box2);
             }
-            $('#box1').width(box1);
-            $('#box2').width(box2);
-            $('#box3').width(box3);
+            $('#segment').text("Eon");
         }
+        $('#box1').width(box1);
+        $('#box2').width(box2);
+        $('#box3').width(box3);
     } else {
         $('#box1').hide();
         $('#box2').width(portionPx);
         $('#box3').hide();
         var portion = 100;
+        $('#segment').text("span");
     }
     $('#percent').text(portion + "%");
 }
@@ -206,7 +214,7 @@ function eraDefs(era) {
     resetDisplays('era');
     for (var i=0; i<eras.length; i++) {
         if (eras[i] === era) {
-            var chartNo = eons.length + 1; // 0 => Main Chart
+            var chartNo = i + eons.length + 1; // 0 => Main Chart
             break;
         }
     }
@@ -279,7 +287,10 @@ function drawArea(section, member) {
         var subs = 0;
     }
 }
-
+function expandArea(loc, content) {
+    drawArea(loc, content);
+    drawPortion();
+}
 
 $(document).ready( function() {
     // Display Assignments:
@@ -303,7 +314,7 @@ $(document).ready( function() {
     mainChartEl = document.getElementById('mainline');
     setChartDims('events', mainChartEl, MAINHT);
     drawChart('mainline');
-    $('div[id$="box"').hide();
+    $('div[id$="box"]').hide();
     if (subs) {
         // pg refresh: if any settings are on, dispEon must be also
         currEon = sessionStorage.getItem('dispEon');
@@ -323,43 +334,61 @@ $(document).ready( function() {
      */
     // Clickable EONS in MAIN VIEW (Always only one set of boxes):
     $('#hadean').on('click', function() {
-        drawArea('eon', 'had');
-        drawPortion();
+        expandArea('eon', 'had');
+        // Since these have no defined era, turn off those as
+        // they may already have been displayed
+        $('div[id^="era"] div[id$="box"]').hide();
+        $('div[id^="per"] div[id$="box]').hide();
+        if (currEra !== 'off') {
+            $('#era').remove();
+            $('#eraline').append('<canvas id="era"></canvas>');
+            if (currPer !== 'off') {
+                $('#period').remove();
+                $('#periodline').append('<canvas id="period"></canvas>');
+            }
+        }
     });
     $('#archean').on('click', function() {
-        drawArea('eon', 'arch');
-        drawPortion();
+        expandArea('eon', 'arch');
+        // Since these have no clickable eras, turn off those as
+        // they may already have been displayed
+        $('div[id^="era"] div[id$="box"]').hide();
+        $('div[id^="per"] div[id$="box]').hide();
+        if (currEra !== 'off') {
+            $('#era').remove();
+            $('#eraline').append('<canvas id="era"></canvas>');
+            if (currPer !== 'off') {
+                $('#period').remove();
+                $('#periodline').append('<canvas id="period"></canvas>');
+            }
+        }
     });
     $('#proto').on('click', function() {
-        drawArea('eon', 'proto');
-        drawPortion();
+        expandArea('eon', 'proto');
     });
     $('#phan').on('click', function() {
-        drawArea('eon', 'phan');
-        drawPortion();
+        expandArea('eon', 'phan');
     });
     // Clickable ERAS (Proterozoic & Phanerozoic) IN EON VIEW:
     $('#proto0').on('click', function() {
-        drawArea('era','proto_paleo');
-        drawPortion();
+        expandArea('era','proto_paleo');
     });
     $('#proto1').on('click', function() {
-        drawArea('era', 'proto_meso');
-        drawPortion();
+        expandArea('era', 'proto_meso');
     });
     $('#proto2').on('click', function() {
-        drawArea('era', 'proto_neo');
-        drawPortion();
+        expandArea('era', 'proto_neo');
     });
     $('#phan0').on('click', function() {
-
+        expandArea('era', 'phan_paleo');
     });
     $('#phan1').on('click', function() {
-
+        expandArea('era', 'phan_meso');
     });
     $('#phan2').on('click', function() {
-
+        expandArea('era', 'phan_ceno');
     });
+    // Clickable PERIODS in ERA VIEW:
 
     // RESIZING OF WINDOW:
     $(window).resize( function() {
