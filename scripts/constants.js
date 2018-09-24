@@ -40,7 +40,10 @@ const CRETACEOUSCOLOR = '#d8bfd8';
 const PALEOGENECOLOR = '#f5d6f4'; // shades of Orchid
 const NEOGENECOLOR = '#eaaee8';
 // Chart ID's:
-const HADEAN = 0;
+const MAIN = 0;
+const HADEAN = 1;
+
+
 const ARCHEAN = 1;
 const PROTO = 2;
 const PHAN = 3;
@@ -51,3 +54,4 @@ const PCHART = 0.75;
 const MAINHT = 80;
 const EONHT = 80;
 const ERAHT = 80;
+const PERHT = 80;

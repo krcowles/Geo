@@ -10,6 +10,11 @@
     <script src="scripts/canvas.js"></script>
 </head>
 <body>
+<div id="scrollTest">This div is used only to test if a scroll bar exists;
+    it will be filled with sufficient text to ensure that the overflow of
+    content will occur requiring a scrollbar. For that reason, it's default
+    state is going to be display:none
+</div>
 <div id="main">
     <p id="xopt">4500</p> <!-- value in MYrs for age of earth -->
     <p id="inst">Click to Expand an EON</p>
@@ -47,12 +52,12 @@
     <!-- EON VIEW SECTION -->
     <div class="clearfix" id="eonview">
         <p id="eontext">EON View: <span id="eonadder"></span></p>
-        <div id="hadbox" class="eonht"></div>
-        <div id="archbox" class="eonht">
-            <div id="arch0" class="eondivs">Eo Era</div>
-            <div id="arch1" class="eondivs">Paleo Era</div>
-            <div id="arch2" class="eondivs">Meso Era</div>
-            <div id="arch3" class="eondivs">Neo Era</div>
+        <div id="hadeanbox" class="eonht"></div>
+        <div id="archeanbox" class="eonht">
+            <div id="archean0" class="eondivs">Eo Era</div>
+            <div id="archean1" class="eondivs">Paleo Era</div>
+            <div id="archean2" class="eondivs">Meso Era</div>
+            <div id="archean3" class="eondivs">Neo Era</div>
         </div>
         <div id="protobox" class="eonht">
             <div id="proto0" class="eondivs clicks">Paleo Era</div>
@@ -60,9 +65,9 @@
             <div id="proto2" class="eondivs clicks">Neo Era</div>
         </div>
         <div id="phanbox" class="eonht">
-            <div id="phan0" class="eondivs clicks">Paleo Era</div>
-            <div id="phan1" class="eondivs clicks">Meso Era</div>
-            <div id="phan2" class="eondivs clicks">Ceno Era</div>
+            <div id="phan0" class="eondivs clicks">Paleozoic Era</div>
+            <div id="phan1" class="eondivs clicks">Mesozoic Era</div>
+            <div id="phan2" class="eondivs clicks">Cenozoic Era</div>
         </div>
         <div id="eonline">
             <canvas id="eon"></canvas>
@@ -112,7 +117,87 @@
     </div>
     <!-- PERIOD VIEW SECTION -->
     <div id="periodview">
-        <p id="periodtext">PERIOD View:</p>
+        <p id="periodtext">PERIOD View: <span id="peradder"></span></p>
+        <div id="siderianbox"></div>
+        <div id="rhyacianbox"></div>
+        <div id="orosirianbox"></div>
+        <div id="statherianbox"></div>
+        <div id="calymmianbox"></div>
+        <div id="ectasianbox"></div>
+        <div id="stenianbox"></div>
+        <div id="tonianbox"></div>
+        <div id="cryogenianbox"></div>
+        <div id="ediacaranbox"></div>
+        <div id="eocambrianbox">
+            <div id="eocambrian0" class="perioddivs"></div>
+            <div id="eocambrian1" class="perioddivs"></div>
+        </div>
+        <div id="cambrianbox" class="clearfix">
+            <div id="cambrian0" class="perioddivs"></div>
+            <div id="cambrian1" class="perioddivs"></div>
+            <div id="cambrian2" class="perioddivs"></div>
+        </div>
+        <div id="ordovicianbox" class="clearfix">
+            <div id="ordovician0" class="perioddivs"></div>
+            <div id="ordovician1" class="perioddivs"></div>
+            <div id="ordovician2" class="perioddivs"></div>
+        </div>
+        <div id="silurianbox" class="clearfix">
+            <div id="silurian0" class="perioddivs"></div>
+            <div id="silurian1" class="perioddivs"></div>
+            <div id="silurian2" class="perioddivs"></div>
+            <div id="silurian3" class="perioddivs"></div>
+        </div>
+        <div id="devonianbox" class="clearfix">
+            <div id="devonian0" class="perioddivs"></div>
+            <div id="devonian1" class="perioddivs"></div>
+            <div id="devonian2" class="perioddivs"></div>
+            <div id="devonian3" class="perioddivs"></div>
+            <div id="devonian4" class="perioddivs"></div>
+            <div id="devonian5" class="perioddivs"></div>
+            <div id="devonian6" class="perioddivs"></div>
+        </div>
+        <div id="mississippianbox" class="clearfix">
+            <div id="mississipian0" class="perioddivs"></div>
+            <div id="mississipian1" class="perioddivs"></div>
+            <div id="mississipian2" class="perioddivs"></div>
+        </div>
+        <div id="pennsylvanianbox" class="clearfix">
+            <div id="pennsylvanian0" class="perioddivs"></div>
+            <div id="pennsylvanian1" class="perioddivs"></div>
+            <div id="pennsylvanian2" class="perioddivs"></div>
+            <div id="pennsylvanian3" class="perioddivs"></div>
+            <div id="pennsylvanian4" class="perioddivs"></div>
+        </div>
+        <div id="permianbox" class="clearfix">
+            <div id="permian0" class="perioddivs"></div>
+            <div id="permian1" class="perioddivs"></div>
+        </div>
+        <div id="triassicbox" class="clearfix">
+            <div id="triassic0" class="perioddivs"></div>
+            <div id="triassic1" class="perioddivs"></div>
+            <div id="triassic2" class="perioddivs"></div>
+        </div>
+        <div id="jurassicbox" class="clearfix">
+            <div id="jurassic0" class="perioddivs"></div>
+            <div id="jurassic1" class="perioddivs"></div>
+            <div id="jurassic2" class="perioddivs"></div>
+        </div>
+        <div id="cretaceousbox" class="clearfix">
+            <div id="cretaceous0" class="perioddivs"></div>
+            <div id="cretaceous1" class="perioddivs"></div>
+        </div>
+        <div id="paleogenebox" class="clearfix">
+            <div id="paleogene0" class="perioddivs"></div>
+            <div id="paleogene1" class="perioddivs"></div>
+            <div id="paleogene2" class="perioddivs"></div>
+        </div>
+        <div id="neogenebox" class="clearfix">
+            <div id="neogene0" class="perioddivs"></div>
+            <div id="neogene1" class="perioddivs"></div>
+            <div id="neogene2" class="perioddivs"></div>
+            <div id="neogene3" class="perioddivs"></div>
+        </div>
         <div id="periodline">
             <canvas id="period"></canvas>
         </div>

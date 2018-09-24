@@ -5,6 +5,16 @@ body {
     background-color: white;
     font-size: 14px;
 }
+.scrollbar-measure {
+    width: 100px;
+    height: 100px;
+    overflow: scroll;
+    position: absolute;
+    top: -9999px;
+}
+#scrollTest {
+    display: none;
+}
 #xopt {
     display: none;
 }
@@ -72,15 +82,15 @@ body {
 .clicks {
     cursor: pointer;
 }
-#hadbox {
+#hadeanbox {
     border-style: inset;
     border-width: 2px;
 }
-#hadbox, #archbox, #protobox, #phanbox {
+#hadeanbox, #archeanbox, #protobox, #phanbox {
     height: 24px;
     display: none;
 }
-.maindivs, .eondivs, .eradivs {
+.maindivs, .eondivs, .eradivs, .perioddivs {
     float: left;
     height: 24px;
     text-align: center;
@@ -98,7 +108,7 @@ body {
     margin-left: 12px;
     font-size: 18px;
 }
-#eonadder, #eraadder {
+#eonadder, #eraadder, #peradder {
     color: brown;
 }
 /* The 'era' section view CSS items: */
