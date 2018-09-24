@@ -99,9 +99,6 @@ body {
     margin: 0px;
     padding-top: 6px;
 }
-.eradivs {
-    height: 34px;
-}
 #eontext, #eratext, #periodtext {
     margin-top: 30px;
     margin-bottom: 2px;
@@ -112,7 +109,15 @@ body {
     color: brown;
 }
 /* The 'era' section view CSS items: */
+.eradivs {
+    height: 34px;
+}
 .eraht {
     padding-top: 6px;
 }
 /* The 'period' section view CSS items: */
+.perht {
+    height: 24px;
+    padding-top: 6px;
+    text-align: center;
+}

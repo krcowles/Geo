@@ -272,7 +272,7 @@ function eraDefs(era) {
     $('#eraadder').show();
 }
 function periodDefs(per) {
-    sessionStorage.setItem('dispPer', era);
+    sessionStorage.setItem('dispPer', per);
     resetDisplays('period');
     for (var i=0; i<periods.length; i++) {
         if (periods[i] === per) {
@@ -433,7 +433,7 @@ function displaySection(loc, content) {
 
 $(document).ready( function() {
     // Display Assignments:
-    pgwidth = $(window).width() - scrollBars;
+    pgwidth = window.innerWidth - scrollBars;
     if (sessionStorage.length === 0) {
         sessionStorage.setItem('dispEon', 'off');
         sessionStorage.setItem('dispEra', 'off');
@@ -448,49 +448,26 @@ $(document).ready( function() {
         // pg refresh: if any settings are on, dispEon must be also
         currEon = sessionStorage.getItem('dispEon');
         if (currEon !== 'off') {
-            drawArea('eon', currEon);
-            drawPortion();
+            displaySection('eon', currEon);
             currEra = sessionStorage.getItem('dispEra');
             if (currEra !== 'off') {
-                drawArea('era', currEra);
-                drawPortion();
+                displaySection('era', currEra);
+                currPer = sessionStorage.getItem('dispPer');
+                if (currPer !== 'off') {
+                    displaySection('period', currPer);
+                }
             }
         }
     } 
-
     /*
      * EVENT DEFINITIONS
      */
     // Clickable EONS in MAIN VIEW (Always only one set of boxes):
     $('#hadean').on('click', function() {
         displaySection('eon', 'hadean');
-        // Since these have no defined era, turn off those as
-        // they may already have been displayed
-        $('div[id^="era"] div[id$="box"]').hide();
-        $('div[id^="per"] div[id$="box]').hide();
-        if (currEra !== 'off') {
-            $('#era').remove();
-            $('#eraline').append('<canvas id="era"></canvas>');
-            if (currPer !== 'off') {
-                $('#period').remove();
-                $('#periodline').append('<canvas id="period"></canvas>');
-            }
-        }
     });
     $('#archean').on('click', function() {
         displaySection('eon', 'archean');
-        // Since these have no clickable eras, turn off those as
-        // they may already have been displayed
-        $('div[id^="era"] div[id$="box"]').hide();
-        $('div[id^="per"] div[id$="box]').hide();
-        if (currEra !== 'off') {
-            $('#era').remove();
-            $('#eraline').append('<canvas id="era"></canvas>');
-            if (currPer !== 'off') {
-                $('#period').remove();
-                $('#periodline').append('<canvas id="period"></canvas>');
-            }
-        }
     });
     $('#proto').on('click', function() {
         displaySection('eon', 'proto');
@@ -593,15 +570,20 @@ $(document).ready( function() {
         if (resizeFlag) {
             resizeFlag = false;
             setTimeout( function() {
-                pgwidth = $(window).width() - scrollBars;
+                pgwidth = window.innerWidth - scrollBars;
                 displaySection('main','');
+                currEon = sessionStorage.getItem('dispEon');
                 if (currEon !== 'off') {
-                    drawArea('eon', currEon);
+                    displaySection('eon', currEon);
+                    currEra = sessionStorage.getItem('dispEra');
                     if (currEra !== 'off') {
-                        drawArea('era',currEra);
+                        displaySection('era', currEra);
+                        currPer = sessionStorage.getItem('dispPer');
+                        if (currPer !== 'off') {
+                            displaySection('period', currPer);
+                        }
                     }
                 }
-                drawPortion();
                 resizeFlag = true; 
             }, 400);      
         }  
