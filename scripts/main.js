@@ -20,9 +20,9 @@ var eras = ['proto_paleo', 'proto_meso', 'proto_neo', 'phan_paleo',
     'phan_meso', 'phan_ceno'];
 var periods = ['siderian', 'rhyacian', 'orosirian', 'statherian',
     'calymmian', 'ectasian', 'stenian', 'tonian', 'cryogenian',
-    'ediacaran', 'eocambrian', 'cambrian', 'ordovician', 'silurian',
-    'devonian', 'mississippian', 'pennsylvanian', 'permian',
-    'triassic', 'jurassic', 'cretaceous', 'paleogene', 'neogene' ];
+    'ediacaran', 'cambrian', 'ordovician', 'silurian',
+    'devonian', 'carboniferous', 'permian', 'triassic', 'jurassic', 
+    'cretaceous', 'paleogene', 'neogene', 'quaternary'];
 var currEon = 'off';
 var currEra = 'off';
 var currPer = 'off';
@@ -534,28 +534,23 @@ $(document).ready( function() {
     $('#proto_neo2').on('click', function() {
         displaySection('period', 'ediacaran');
     });
+
     $('#phan_paleo0').on('click', function() {
-        displaySection('period', 'eocambrian');
-    });
-    $('#phan_paleo1').on('click', function() {
         displaySection('period', 'cambrian');
     });
-    $('#phan_paleo2').on('click', function() {
+    $('#phan_paleo1').on('click', function() {
         displaySection('period', 'ordovician');
     });
-    $('#phan_paleo3').on('click', function() {
+    $('#phan_paleo2').on('click', function() {
         displaySection('period', 'silurian');
     });
-    $('#phan_paleo4').on('click', function() {
+    $('#phan_paleo3').on('click', function() {
         displaySection('period', 'devonian');
     });
+    $('#phan_paleo4').on('click', function() {
+        displaySection('period', 'carboniferous');
+    });
     $('#phan_paleo5').on('click', function() {
-        displaySection('period', 'mississippian');
-    });
-    $('#phan_paleo6').on('click', function() {
-        displaySection('period', 'pennsylvanian');
-    });
-    $('#phan_paleo7').on('click', function() {
         displaySection('period', 'permian');
     });
     $('#phan_meso0').on('click', function() {
@@ -572,6 +567,9 @@ $(document).ready( function() {
     });
     $('#phan_ceno1').on('click', function() {
         displaySection('period', 'neogene');
+    });
+    $('#phan_ceno2').on('click', function() {
+        displaySection('period', 'quaternary');
     });
 
     // RESIZING OF WINDOW:

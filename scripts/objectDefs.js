@@ -62,9 +62,6 @@ var periodShapes = {
         {left:2.5, right:0, color:QUATERNARYCOLOR}
     ]
 };
-
-
-
 // These are the boxes appearing within the named period in PERIOD View:
 var epochShapes = {
     'cambrian': [
@@ -190,7 +187,7 @@ var chartParms = [
     {ticks:5, setNo:24, title:"Devonian Timeline", color:ALLCHARTS,
         adder:'Devonian Period'},
     {ticks:5, setNo:25, title:"Carboniferous Timeline", color:ALLCHARTS,
-        adder:'Mississippian Period'},
+        adder:'Carboniferous Period'},
     {ticks:5, setNo:26, title:"Permian Timeline", color:ALLCHARTS,
         adder:'Permian Period'},
     {ticks:5, setNo:27, title:"Triassic Timeline", color:ALLCHARTS,

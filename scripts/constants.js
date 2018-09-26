@@ -31,12 +31,14 @@ const SILURIANCOLOR = '#e0f0c2';
 const DEVONIANCOLOR = '#ff8000';
 const CARBONIFEROUSCOLOR = '#85e0e0';
 const PERMIANCOLOR = '#ff0000';
-const TRIASSICCOLOR = '#ecdfec'; // shades of Thistle
-const JURASSICCOLOR = '#e2d0e2';
-const CRETACEOUSCOLOR = '#d8bfd8';
-const PALEOGENECOLOR = '#f5d6f4'; // shades of Orchid
-const NEOGENECOLOR = '#eaaee8';
-const QUATERNARYCOLOR = '#ffe6e9'; // 95% Light Pink
+
+
+const TRIASSICCOLOR = '#a871a8'; // 55% Thistle
+const JURASSICCOLOR = '#51b8e1'; // 50% Sky Blue
+const CRETACEOUSCOLOR = '#AABB44'; // 40% Lime Green
+const PALEOGENECOLOR = '#ffb499'; // 80% Orange Red
+const NEOGENECOLOR = '#f8a800'; // 45% Orange
+const QUATERNARYCOLOR = '#ffdb99'; // 80% Orange
 // EPOCH Colors:
 
 
