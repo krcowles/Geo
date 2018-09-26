@@ -1,3 +1,4 @@
+// The following shapes appear as boxes with the MAIN View:
 var eonShapes = {
     // hadean left will be set to eage, which is a variable
     'hadean': {left:0, right:4000, color: HADCOLOR},
@@ -5,7 +6,7 @@ var eonShapes = {
     'proto': {left:2500, right:541, color:PROTOCOLOR},
     'phan': {left:541, right:0, color:PHANCOLOR}
 };
-
+// These shapes are the boxes (eras) within the named eon in EON View:
 var eraShapes = {
     'archean': [
       {left:4000, right:3600, color:AREOCOLOR},
@@ -16,15 +17,15 @@ var eraShapes = {
     'proto':[
       {left:2500, right:1600, color:PRPALEOCOLOR},
       {left:1600, right:1000, color:PRMESOCOLOR},
-      {left:541, right:0, color:PRNEOCOLOR}
+      {left:1000, right:541, color:PRNEOCOLOR}
     ],
     'phan':[
-      {left:541, right:230, color:PHPALEOCOLOR},
-      {left:230, right:65, color:PHMESOCOLOR},
-      {left:65, right:0, color:PHCENOCOLOR}
+      {left:541, right:251, color:PHPALEOCOLOR},
+      {left:251, right:66, color:PHMESOCOLOR},
+      {left:66, right:0, color:PHCENOCOLOR}
     ]
 };
-    
+// These are the boxes (periods) within the named era in ERA View: 
 var periodShapes = {
     'proto_paleo':[
       {left:2500, right:2300, color:SIDERIANCOLOR},
@@ -43,174 +44,166 @@ var periodShapes = {
         {left:635,right:541, color:EDIACARANCOLOR}
     ],
     'phan_paleo':[
-        {left:541,right:500, color:EOCAMBRIANCOLOR},
-        {left:500,right:485, color:CAMBRIANCOLOR},
-        {left:485,right:435, color:ORDOVICIANCOLOR},
-        {left:435,right:410, color:SILURIANCOLOR},
-        {left:410,right:350, color:DEVONIANCOLOR},
-        {left:350,right:320, color:MISSISSIPPIANCOLOR},
-        {left:320,right:290, color:PENNSYLVANIANCOLOR},
-        {left:290,right:230, color:PERMIANCOLOR}
+        {left:541,right:485, color:CAMBRIANCOLOR},
+        {left:485,right:443, color:ORDOVICIANCOLOR},
+        {left:443,right:419, color:SILURIANCOLOR},
+        {left:419,right:359, color:DEVONIANCOLOR},
+        {left:359,right:299, color:CARBONIFEROUSCOLOR},
+        {left:299,right:252, color:PERMIANCOLOR}
     ],
     'phan_meso':[
-        {left:230,right:192, color:TRIASSICCOLOR},
-        {left:192,right:135, color:JURASSICCOLOR},
-        {left:135,right:65, color:CRETACEOUSCOLOR}
+        {left:252 ,right:201, color:TRIASSICCOLOR},
+        {left:201, right:145, color:JURASSICCOLOR},
+        {left:145,right:66, color:CRETACEOUSCOLOR}
     ],
     'phan_ceno':[
-        {left:65,right:25, color:PALEOGENECOLOR},
-        {left:25,right:0, color:NEOGENECOLOR}
+        {left:66,right:23, color:PALEOGENECOLOR},
+        {left:23,right:2.5, color:NEOGENECOLOR},
+        {left:2.5, right:0, color:QUATERNARYCOLOR}
     ]
 };
-    
+
+
+
+// These are the boxes appearing within the named period in PERIOD View:
 var epochShapes = {
-    'eocambrian': [
-        {left:541, right:540.5, color:EOCAMBRIANCOLOR},
-        {left:540.5, right:540, color:EOCAMBRIANCOLOR}
-    ],
     'cambrian': [
-        {left:540, right:520, color:CAMBRIANCOLOR},
-        {left:520, right:500, color:CAMBRIANCOLOR},
-        {left:500, right:485, color:CAMBRIANCOLOR}
+        {left:540, right:521, color:CAMBRIANCOLOR},
+        {left:521, right:509, color:CAMBRIANCOLOR},
+        {left:509, right:497, color:CAMBRIANCOLOR},
+        {left:497, right:485, color:CAMBRIANCOLOR}
+
     ],
     'ordovician': [
-        {left:485, right:465, color:ORDOVICIANCOLOR},
-        {left:465, right:450, color:ORDOVICIANCOLOR},
-        {left:450, right:435, color:ORDOVICIANCOLOR}
+        {left:485, right:470, color:ORDOVICIANCOLOR},
+        {left:470, right:458, color:ORDOVICIANCOLOR},
+        {left:458, right:443, color:ORDOVICIANCOLOR}
     ],
     'silurian': [
-        {left:435, right:430, color:SILURIANCOLOR},
-        {left:430, right:425, color:SILURIANCOLOR},
-        {left:425, right:420, color:SILURIANCOLOR},
-        {left:420, right:410, color:SILURIANCOLOR}
+        {left:443, right:433, color:SILURIANCOLOR},
+        {left:433, right:427, color:SILURIANCOLOR},
+        {left:427, right:423, color:SILURIANCOLOR},
+        {left:423, right:419, color:SILURIANCOLOR}
     ],
     'devonian': [
-        {left:410, right:400, color:DEVONIANCOLOR},
-        {left:400, right:390, color:DEVONIANCOLOR},
-        {left:390, right:380, color:DEVONIANCOLOR},
-        {left:380, right:375, color:DEVONIANCOLOR},
-        {left:375, right:365, color:DEVONIANCOLOR},
-        {left:365, right:360, color:DEVONIANCOLOR},
-        {left:360, right:350, color:DEVONIANCOLOR}
+        {left:419, right:393, color:DEVONIANCOLOR},
+        {left:393, right:382, color:DEVONIANCOLOR},
+        {left:382, right:359, color:DEVONIANCOLOR},
     ],
-    'mississippian': [
-        {left:350, right:340, color:MISSISSIPPIANCOLOR},
-        {left:340, right:330, color:MISSISSIPPIANCOLOR},
-        {left:330, right:320, color:MISSISSIPPIANCOLOR}
-    ],
-    'pennsylvanian': [
-        {left:320, right:315, color:PENNSYLVANIANCOLOR},
-        {left:315, right:310, color:PENNSYLVANIANCOLOR},
-        {left:310, right:305, color:PENNSYLVANIANCOLOR},
-        {left:305, right:300, color:PENNSYLVANIANCOLOR},
-        {left:300, right:290, color:PENNSYLVANIANCOLOR}
+    'carboniferous': [
+        {left:359, right:347, color:CARBONIFEROUSCOLOR},
+        {left:347, right:331, color:CARBONIFEROUSCOLOR},
+        {left:331, right:323, color:CARBONIFEROUSCOLOR},
+        {left:323, right:315, color:CARBONIFEROUSCOLOR},
+        {left:315, right:307, color:CARBONIFEROUSCOLOR},
+        {left:307, right:299, color:CARBONIFEROUSCOLOR}
     ],
     'permian': [
-        {left:290, right:260, color:PERMIANCOLOR},
-        {left:260, right:230, color:PERMIANCOLOR},
+        {left:299, right:273, color:PERMIANCOLOR},
+        {left:273, right:259, color:PERMIANCOLOR},
+        {left:259, right:251, color:PERMIANCOLOR}
     ],
     'triassic': [
-        {left:230, right:210, color:TRIASSICCOLOR},
-        {left:210, right:200, color:TRIASSICCOLOR},
-        {left:200, right:192, color:TRIASSICCOLOR}
+        {left:251, right:247, color:TRIASSICCOLOR},
+        {left:247, right:237, color:TRIASSICCOLOR},
+        {left:237, right:201, color:TRIASSICCOLOR}
     ],
     'jurassic': [
-        {left:192, right:170, color:JURASSICCOLOR},
-        {left:170, right:150, color:JURASSICCOLOR},
-        {left:150, right:135, color:JURASSICCOLOR}
+        {left:201, right:174, color:JURASSICCOLOR},
+        {left:174, right:163, color:JURASSICCOLOR},
+        {left:163, right:145, color:JURASSICCOLOR}
     ],
     'cretaceous': [
-        {left:135, right:100, color:CRETACEOUSCOLOR},
-        {left:100, right:65, color:CRETACEOUSCOLOR}
+        {left:145, right:100, color:CRETACEOUSCOLOR},
+        {left:100, right:66, color:CRETACEOUSCOLOR}
     ],
     'paleogene': [
-        {left:65, right:50, color:PALEOGENECOLOR},
-        {left:50, right:40, color:PALEOGENECOLOR},
-        {left:40, right:25, color:PALEOGENECOLOR}
+        {left:65, right:56, color:PALEOGENECOLOR},
+        {left:56, right:34, color:PALEOGENECOLOR},
+        {left:34, right:23, color:PALEOGENECOLOR}
     ],
     'neogene': [
-        {left:25, right:20, color:NEOGENECOLOR},
-        {left:20, right:15, color:NEOGENECOLOR},
-        {left:15, right:10, color:NEOGENECOLOR},
-        {left:10, right:0, color:NEOGENECOLOR},
+        {left:23, right:5, color:NEOGENECOLOR},
+        {left:5, right:2.5, color:NEOGENECOLOR}
+    ],
+    'quaternary': [
+        {left:2.5, right:0.0117, color:QUATERNARYCOLOR},
+        {left:0.0117, right:0, color:QUATERNARYCOLOR}
     ]
 };
     
 var chartParms = [
     // Main viewing area:
-    {ticks:250, setNo:0, title:"Event Timeline",color:MAINCOLOR,
+    {ticks:250, setNo:0, title:"Event Timeline",color:ALLCHARTS,
         adder:''},
     // Eons:
-    {ticks:25, setNo:1, title:"Hadean Timeline", color:HADCOLOR,
+    {ticks:25, setNo:1, title:"Hadean Timeline", color:ALLCHARTS,
         adder:'Hadean Eon [No Eras Defined]'},
-    {ticks:100, setNo:2, title:"Archean Timeline", color:ARCHCOLOR,
+    {ticks:100, setNo:2, title:"Archean Timeline", color:ALLCHARTS,
         adder:'Archean Eon [No Periods Defined for Eras]'},
-    {ticks:100, setNo: 3, title:"Proterozoic Timeline", color:PROTOCOLOR,
+    {ticks:100, setNo: 3, title:"Proterozoic Timeline", color:ALLCHARTS,
         adder:'Proterozoic Eon'},
-    {ticks:25, setNo:4, title:"Phanerozoic Timeline", color:PHANCOLOR,
+    {ticks:25, setNo:4, title:"Phanerozoic Timeline", color:ALLCHARTS,
         adder:'Phanerozoic Eon'},
     // Eras:
     // Proterozoic (no Hadean or Archean):
-    {ticks:50, setNo:5, title:"Paleo Timeline", color:PRPALEOCOLOR,
+    {ticks:50, setNo:5, title:"Paleo Timeline", color:ALLCHARTS,
         adder:'Paleo Era'},
-    {ticks:50, setNo:6, title:"Meso Timeline", color:PRMESOCOLOR,
+    {ticks:50, setNo:6, title:"Meso Timeline", color:ALLCHARTS,
         adder:'Meso Era'},
-    {ticks:50, setNo:7, title:"Neo Timeline", color:PRNEOCOLOR,
+    {ticks:50, setNo:7, title:"Neo Timeline", color:ALLCHARTS,
         adder:'Neo Era'},
     // Phanerozoic:
-    {ticks:20, setNo:8, title:"Paleozoic Timeline", color:PHPALEOCOLOR,
+    {ticks:20, setNo:8, title:"Paleozoic Timeline", color:ALLCHARTS,
         adder:'Paleozoic Era'},
-    {ticks:20, setNo:9, title:"Mesozoic Timeline", color:PHMESOCOLOR,
+    {ticks:20, setNo:9, title:"Mesozoic Timeline", color:ALLCHARTS,
         adder:'Mesozoic Era'},
-    {ticks:5, setNo:10, title:"Cenozoic Timeline", color:PHCENOCOLOR,
+    {ticks:5, setNo:10, title:"Cenozoic Timeline", color:ALLCHARTS,
         adder:'Cenozoic Era'},
     // Periods
-    {ticks:10, setNo:11, title:"Siderian Timeline", color:SIDERIANCOLOR,
+    {ticks:10, setNo:11, title:"Siderian Timeline", color:ALLCHARTS,
         adder:'Siderian Period [No Epochs Defined]'},
-    {ticks:10, setNo:12, title:"Rhyacian Timeline", color:RHYACIANCOLOR,
+    {ticks:10, setNo:12, title:"Rhyacian Timeline", color:ALLCHARTS,
         adder:'Rhyacian Period [No Epochs Defined]'},
-    {ticks:10, setNo:13, title:"Orosirian Timeline", color:OROSIRIANCOLOR,
+    {ticks:10, setNo:13, title:"Orosirian Timeline", color:ALLCHARTS,
         adder:'Orosirian Period [No Epochs Defined]'},
-    {ticks:10, setNo:14, title:"Statherian Timeline", color:STATHERIANCOLOR,
+    {ticks:10, setNo:14, title:"Statherian Timeline", color:ALLCHARTS,
         adder:'Statherian Period [No Epochs Defined]'},
-    {ticks:10, setNo:15, title:"Calymmian Timeline", color:CALYMMIANCOLOR,
+    {ticks:10, setNo:15, title:"Calymmian Timeline", color:ALLCHARTS,
         adder:'Calymmian Period [No Epochs Defined]'},
-    {ticks:10, setNo:16, title:"Ectasian Timeline", color:ECTASIANCOLOR,
+    {ticks:10, setNo:16, title:"Ectasian Timeline", color:ALLCHARTS,
         adder:'Ectasian Period [No Epochs Defined]'},
-    {ticks:10, setNo:17, title:"Stenian Timeline", color:STENIANCOLOR,
+    {ticks:10, setNo:17, title:"Stenian Timeline", color:ALLCHARTS,
         adder:'Stenian Period [No Epochs Defined]'},
-    {ticks:10, setNo:18, title:"Tonian Timeline", color:TONIANCOLOR,
+    {ticks:10, setNo:18, title:"Tonian Timeline", color:ALLCHARTS,
         adder:'Tonian Period [No Epochs Defined]'},
-    {ticks:5, setNo:19, title:"Cryogenian Timeline", color:CRYOGENIANCOLOR,
+    {ticks:5, setNo:19, title:"Cryogenian Timeline", color:ALLCHARTS,
         adder:'Cryogenian Period [No Epochs Defined]'},
-    {ticks:5, setNo:20, title:"Ediacaran Timeline", color:EDIACARANCOLOR,
+    {ticks:5, setNo:20, title:"Ediacaran Timeline", color:ALLCHARTS,
         adder:'Ediacaran Period [No Epochs Defined]'},
-    {ticks:5, setNo:21, title:"Eocambrian Timeline", color:EOCAMBRIANCOLOR,
-        adder:'Eocambrian Period'},
-    {ticks:5, setNo:22, title:"Cambrian Timeline", color:CAMBRIANCOLOR,
+    {ticks:5, setNo:21, title:"Cambrian Timeline", color:ALLCHARTS,
         adder:'Cambrian Period'},
-    {ticks:5, setNo:23, title:"Ordovician Timeline", color:ORDOVICIANCOLOR,
-        adder:'Ordovicin Period'},
-    {ticks:5, setNo:24, title:"Silurian Timeline", color:SILURIANCOLOR,
+    {ticks:5, setNo:22, title:"Ordovician Timeline", color:ALLCHARTS,
+        adder:'Ordovician Period'},
+    {ticks:5, setNo:23, title:"Silurian Timeline", color:ALLCHARTS,
         adder:'Silurian Period'},
-    {ticks:5, setNo:25, title:"Devonian Timeline", color:DEVONIANCOLOR,
+    {ticks:5, setNo:24, title:"Devonian Timeline", color:ALLCHARTS,
         adder:'Devonian Period'},
-    {ticks:5, setNo:26, title:"Mississippian Timeline", color:MISSISSIPPIANCOLOR,
+    {ticks:5, setNo:25, title:"Carboniferous Timeline", color:ALLCHARTS,
         adder:'Mississippian Period'},
-    {ticks:5, setNo:27, title:"Pennsylvanian Timeline", color:PENNSYLVANIANCOLOR,
-        adder:'Pennsylvanian Period'},
-    {ticks:5, setNo:28, title:"Permian Timeline", color:PERMIANCOLOR,
+    {ticks:5, setNo:26, title:"Permian Timeline", color:ALLCHARTS,
         adder:'Permian Period'},
-    {ticks:5, setNo:29, title:"Triassic Timeline", color:TRIASSICCOLOR,
+    {ticks:5, setNo:27, title:"Triassic Timeline", color:ALLCHARTS,
         adder:'Triassic Period'},
-    {ticks:5, setNo:30, title:"Jurassic Timeline", color:JURASSICCOLOR,
+    {ticks:5, setNo:28, title:"Jurassic Timeline", color:ALLCHARTS,
         adder:'Jurassic Period'},
-    {ticks:5, setNo:31, title:"Cretaceous Timeline", color:CRETACEOUSCOLOR,
+    {ticks:5, setNo:29, title:"Cretaceous Timeline", color:ALLCHARTS,
         adder:'Cretaceous Period'},
-    {ticks:5, setNo:32, title:"Paleogene Timeline", color:PALEOGENECOLOR,
+    {ticks:5, setNo:30, title:"Paleogene Timeline", color:ALLCHARTS,
         adder:'Paleogene Period'},
-    {ticks:5, setNo:33, title:"Neogene Timeline", color:NEOGENECOLOR,
-        adder:'Neogene Period'}
+    {ticks:5, setNo:31, title:"Neogene Timeline", color:ALLCHARTS,
+        adder:'Neogene Period'},
+    {ticks:0.5, setNo:32, title:"Quaternary Timeline", color:ALLCHARTS}
 ];
 // Data sets of events corresponding to clickable timelines:
 dataSets = [

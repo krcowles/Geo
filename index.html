@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <title>Geo Timeline</title>
+    <meta charset="utf-8" />
+    <meta name="description" content="Expandable Geological Timeline" />
+    <meta name="author" content="Ken Cowles" />
+    <meta name="robots" content="nofollow" />
+    <link href="styles/main.css" type="text/css" rel="stylesheet" />
+    <script src="scripts/canvas.js"></script>
+</head>
+<body>
+<div id="src">The timeline presented corresponds with the International
+    Chronostratigraphic Chart (w/similar colors)<br />
+    [<span id="url">http://www.stratigraphy.org/ICSchart/ChronostratChart2017-02.pdf]</span>]
+</div>
+</div>
+<div id="main">
+    <p id="xopt">4500</p> <!-- value in MYrs for age of earth -->
+    <p id="inst">Click to Expand (When Enabled)</p>
+    <p id="maintext">MAIN View (Earth's Entire History)</p>
+    <div id="crypto">
+        Cryptozoic (aka PreCambrian) SuperEON
+    </div>
+    <div id="eons">
+        <div id="hadean" class="maindivs clicks">
+            Hadean Eon
+        </div>
+        <div id="archean" class="maindivs clicks">
+            Archean Eon
+        </div>
+        <div id="proto" class="maindivs clicks">
+            Proterozoic Eon
+        </div>
+        <div id="phan" class="maindivs clicks">
+            Phanerozoic Eeon
+        </div>
+    </div>
+    <div id="events">
+        <canvas id="mainline"></canvas>
+    </div><br />
+    <div id="overall">The <span id="segment"></span> you are viewing is
+            <span id="percent"></span> of earth's age
+        <br />
+        <div id="box0"></div>
+        <div id="box1"></div>
+        <div id="box2"></div>
+        <div id="box3"></div>
+    </div>
+    <br /><br />
+
+    <!-- EON VIEW SECTION -->
+    <div class="clearfix" id="eonview">
+        <p id="eontext">EON View: <span id="eonadder"></span></p>
+        <div id="hadeanbox" class="eonht"></div>
+        <div id="archeanbox" class="eonht">
+            <div id="archean0" class="eondivs">Eo Era</div>
+            <div id="archean1" class="eondivs">Paleo Era</div>
+            <div id="archean2" class="eondivs">Meso Era</div>
+            <div id="archean3" class="eondivs">Neo Era</div>
+        </div>
+        <div id="protobox" class="eonht">
+            <div id="proto0" class="eondivs clicks">Paleo Era</div>
+            <div id="proto1" class="eondivs clicks">Meso Era</div>
+            <div id="proto2" class="eondivs clicks">Neo Era</div>
+        </div>
+        <div id="phanbox" class="eonht">
+            <div id="phan0" class="eondivs clicks">Paleozoic Era</div>
+            <div id="phan1" class="eondivs clicks">Mesozoic Era</div>
+            <div id="phan2" class="eondivs clicks">Cenozoic Era</div>
+        </div>
+        <div id="eonline">
+            <canvas id="eon"></canvas>
+        </div>
+    </div>
+    <!-- ERA VIEW SECTION -->
+    <div id="eraview">
+        <p id="eratext">ERA View: <span id="eraadder"></span></p>
+        <div id="proto_paleobox" class="eraht">
+            <div id="proto_paleo0" class="eradivs">Siderian Period</div>
+            <div id="proto_paleo1" class="eradivs">Rhyacian Perioc</div>
+            <div id="proto_paleo2" class="eradivs">Orosirian Period</div>
+            <div id="proto_paleo3" class="eradivs">Statherian Period</div>
+        </div>
+        <div id="proto_mesobox" class="eraht">
+            <div id="proto_meso0" class="eradivs">Calymmian Period</div>
+            <div id="proto_meso1" class="eradivs">Ectasian Period</div>
+            <div id="proto_meso2" class="eradivs">Stenian Period</div>
+        </div>
+        <div id="proto_neobox" class="eraht">
+            <div id="proto_neo0" class="eradivs">Tonian Period</div>
+            <div id="proto_neo1" class="eradivs">Cryogenian</div>
+            <div id="proto_neo2" class="eradivs">Ediacaran Period</div>
+        </div>
+        <div id="phan_paleobox" class="eraht">
+            <div id="phan_paleo0" class="eradivs clicks">Cambrian</div>
+            <div id="phan_paleo1" class="eradivs clicks">Ordovician</div>
+            <div id="phan_paleo2" class="eradivs clicks">Silurian</div>
+            <div id="phan_paleo3" class="eradivs clicks">Devonian</div>
+            <div id="phan_paleo4" class="eradivs clicks">Carboniferous</div>
+            <div id="phan_paleo5" class="eradivs clicks">Permian</div>
+        </div>
+        <div id="phan_mesobox" class="eraht">
+            <div id="phan_meso0" class="eradivs clicks">Triassic Period</div>
+            <div id="phan_meso1" class="eradivs clicks">Jurassic Period</div>
+            <div id="phan_meso2" class="eradivs clicks">Cretaceous Period</div>
+        </div>
+        <div id="phan_cenobox" class="eraht">
+            <div id="phan_ceno0" class="eradivs clicks">Paleogene Period</div>
+            <div id="phan_ceno1" class="eradivs clicks">Neogene Period</div>
+            <div id="phan_ceno2" class="eradivs clicks">Quaternary Period</div>
+        </div>
+        <div id="eraline">
+            <canvas id="era"></canvas>
+        </div>
+    </div>
+    <!-- PERIOD VIEW SECTION -->
+    <div id="periodview">
+        <p id="periodtext">PERIOD View: <span id="peradder"></span></p>
+        <div id="siderianbox" class="perht">Siderian Period</div>
+        <div id="rhyacianbox" class="perht">Rhyacian Period</div>
+        <div id="orosirianbox" class="perht">Orosirian Period</div>
+        <div id="statherianbox" class="perht">Statherian Period</div>
+        <div id="calymmianbox" class="perht">Calymmian Period</div>
+        <div id="ectasianbox" class="perht">Ectasian Period</div>
+        <div id="stenianbox" class="perht">Stenian Period</div>
+        <div id="tonianbox" class="perht">Tonian Period</div>
+        <div id="cryogenianbox" class="perht">Cryogenian Period</div>
+        <div id="ediacaranbox" class="perht">Ediacaran Period</div>
+        <div id="cambrianbox" class="clearfix">
+            <div id="cambrian0" class="perioddivs">Terrenuevian Epoch</div>
+            <div id="cambrian1" class="perioddivs">Series2 Epoch</div>
+            <div id="cambrian2" class="perioddivs">Series3 Epoch</div>
+            <div id="cambrian3" class="perioddivs">Furongian Epoch</div>
+        </div>
+        <div id="ordovicianbox" class="clearfix">
+            <div id="ordovician0" class="perioddivs">Lower Epoch</div>
+            <div id="ordovician1" class="perioddivs">Middle Epoch</div>
+            <div id="ordovician2" class="perioddivs">Upper Epoch</div>
+        </div>
+        <div id="silurianbox" class="clearfix">
+            <div id="silurian0" class="perioddivs">Llandovery Epoch</div>
+            <div id="silurian1" class="perioddivs">Wenlock Epoch</div>
+            <div id="silurian2" class="perioddivs">Ludlow Epoch</div>
+            <div id="silurian3" class="perioddivs">Pridoli Epoch</div>
+        </div>
+        <div id="devonianbox" class="clearfix">
+            <div id="devonian0" class="perioddivs">Lower Epoch</div>
+            <div id="devonian1" class="perioddivs">Middle Epoch</div>
+            <div id="devonian2" class="perioddivs">Upper Epoch</div>
+        </div>
+        <div id="carboniferousbox" class="clearfix">
+            <div id="carboniferous0" class="perioddivs">Lower Mississippian Epoch</div>
+            <div id="carboniferous1" class="perioddivs">Middle Mississippian Epoch</div>
+            <div id="carboniferous2" class="perioddivs">Upper Mississippian Epoch</div> 
+            <div id="carboniferous3" class="perioddivs">Lower Pennsylvanian Epoch</div>
+            <div id="carboniferous4" class="perioddivs">Middle Pennsylvanian Epoch</div>
+            <div id="carboniferous5" class="perioddivs">Upper Pennsylvanian Epoch</div>   
+        </div>
+        <div id="permianbox" class="clearfix">
+            <div id="permian0" class="perioddivs">Cisuralian Epoch</div>
+            <div id="permian1" class="perioddivs">Guadalupian Epoch</div>
+            <div id="permian2" class="perioddivs">Lopingian Epoch</div>
+        </div>
+        <div id="triassicbox" class="clearfix">
+            <div id="triassic0" class="perioddivs">Lower Epoch</div>
+            <div id="triassic1" class="perioddivs">Middle Epoch</div>
+            <div id="triassic2" class="perioddivs">Upper Epoch</div>
+        </div>
+        <div id="jurassicbox" class="clearfix">
+            <div id="jurassic0" class="perioddivs">Lower Epoch</div>
+            <div id="jurassic1" class="perioddivs">Middle Epoch</div>
+            <div id="jurassic2" class="perioddivs">Upper Epoch</div>
+        </div>
+        <div id="cretaceousbox" class="clearfix">
+            <div id="cretaceous0" class="perioddivs">Lower Epoch</div>
+            <div id="cretaceous1" class="perioddivs">Upper Epoch</div>
+        </div>
+        <div id="paleogenebox" class="clearfix">
+            <div id="paleogene0" class="perioddivs">Paleocene Epoch</div>
+            <div id="paleogene1" class="perioddivs">Eocene Epoch</div>
+            <div id="paleogene2" class="perioddivs">Oligocene Epoch</div>
+        </div>
+        <div id="neogenebox" class="clearfix">
+            <div id="neogene0" class="perioddivs">Miocene Epoch</div>
+            <div id="neogene1" class="perioddivs">Pliocene Epoch</div>
+        </div>
+        <div id="quaternarybox" class="clearfix">
+            <div id="quaternary0" class="perioddivs">Pleistocene Epoch</div>
+            <div id="quaternary1" class="perioddivs">Holocene Epoch</div>
+        </div>
+        <div id="periodline">
+            <canvas id="period"></canvas>
+        </div>
+    </div>
+</div>  <!-- MAIN -->
+<script src="scripts/jquery-1.12.1.js"></script>
+<script src="scripts/constants.js"></script>
+<script src="scripts/objectDefs.js"></script>
+<script src="scripts/main.js"></script>
+</body>
+</html>

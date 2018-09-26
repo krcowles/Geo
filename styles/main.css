@@ -12,8 +12,13 @@ body {
     position: absolute;
     top: -9999px;
 }
-#scrollTest {
-    display: none;
+#src {
+    margin-left: 12px;
+    font-size: 16px;
+}
+#url {
+    color: blue;
+    text-decoration: underline;
 }
 #xopt {
     display: none;
@@ -24,27 +29,56 @@ body {
     text-decoration: underline;
 }
 /* The 'main' section view CSS items: */
+#maintext, #eontext, #eratext, #periodtext {
+    margin-top: 30px;
+    margin-bottom: 2px;
+    margin-left: 12px;
+    font-size: 18px;
+}
+#maintext {
+    margin-top: 12px;
+}
 #crypto {
     text-align: center;
     border-style: dotted;
-    border-color: gray;
+    border-color: blue;
     border-width: 1px;
     border-color: gray;
     color: gray;
     height: 22px;
     padding-top: 4px;
 }
+#eons {
+    height: 24px;
+    margin: 0px;
+}
+.maindivs, .eondivs, .eradivs, .perioddivs {
+    float: left;
+    height: 24px;
+    text-align: center;
+    border-style: inset;
+    border-width: 2px;
+    margin: 0px;
+    padding: 0;
+    padding-top: 6px;
+}
 #hadean {
-    background-color: aliceblue;
+    background-color: FireBrick;
+    color: White;
+    border-color: Gray;
 }
 #archean {
-    background-color: honeydew;
+    background-color: Crimson;
+    color: White;
+    border-color: Gray;
 }
 #proto {
-    background-color: cornsilk;
+    background-color: #ff3333; /* 60% Red */
+    border-color: Gray;
 }
 #phan {
-    background-color: #ffe6e9;
+    background-color: PowderBlue;
+    border-color: Gray;
 }
 #overall {
     text-align: center;
@@ -77,33 +111,20 @@ body {
     clear: both;
 }
 .eonht {
+    height: 24px;
     padding-top: 6px;
 }
 .clicks {
     cursor: pointer;
 }
+#hadeanbox, #archeanbox, #protobox, #phanbox {
+    display: none;
+    text-align: center;
+}
 #hadeanbox {
     border-style: inset;
     border-width: 2px;
-}
-#hadeanbox, #archeanbox, #protobox, #phanbox {
-    height: 24px;
-    display: none;
-}
-.maindivs, .eondivs, .eradivs, .perioddivs {
-    float: left;
-    height: 24px;
-    text-align: center;
-    border-style: inset;
-    border-width: 2px;
-    margin: 0px;
-    padding-top: 6px;
-}
-#eontext, #eratext, #periodtext {
-    margin-top: 30px;
-    margin-bottom: 2px;
-    margin-left: 12px;
-    font-size: 18px;
+    margin-top: 8px;
 }
 #eonadder, #eraadder, #peradder {
     color: brown;
@@ -120,4 +141,7 @@ body {
     height: 24px;
     padding-top: 6px;
     text-align: center;
+    border-style: inset;
+    border-width: 2px;
+    margin: 0px;
 }

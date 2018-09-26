@@ -89,18 +89,19 @@ var renderLinesAndLabels = function renderLinesAndLabels() {
     // X AXIS: evenly spaced ticks based on tick spec.
     var xInc = data.ticks/MaPerPx; // tick increment in px
     var xEnd = margin.left; //  max value for x axis, in pixels
+    var off = Math.floor(data.tickOffset/MaPerPx); // offset px for ticks
     context.fillStyle = 'Black';
     context.font = "8pt arial";
      // place x-axis labels just below x-axis horizontal line, ie.
      // from the chart top: top y margin + horizon + 16px further down
     var ty = margin.top + horizon + 16;
-    var xPos = chartWidth - xInc; // 1st 250 MA tick
+    var xPos = chartWidth - (xInc - off); // first tick won't show up
     var txt;  // the x-axis tick label
     context.textAlign = "center";
     var j = 1;
     // print out regularly spaced x-axis ticks from right-hand side:
     while (xPos > xEnd) {
-        txt = parseInt(j * data.ticks) + parseInt(data.right);
+        txt = parseInt(j * data.ticks) + parseInt(data.right) - parseInt(data.tickOffset);
         txt = txt.toFixed(0) + "M";
         var tsize = context.measureText(txt).width;
         var ulim = xEnd + xPos;

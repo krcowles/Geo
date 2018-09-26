@@ -10,8 +10,9 @@ var eage;  // estimated earth age (read from html #xopt)
 var title;
 var rightAge;
 var leftAge;
-var ticks;
-var setNo;
+var ticks; // Spacing of ticks in mya
+var toff;  // when boundary starts at an odd number, offset chart ticks
+var setNo; // event definitions (see objectDefs.js)
 var color;
 var mainChartEl;
 var eons = ['hadean', 'archean', 'proto', 'phan'];
@@ -48,6 +49,7 @@ function defineData() {
         right: rightAge,
         left: leftAge,
         ticks: ticks,
+        tickOffset: toff,
         xLabel: '', 
         yLabel: '',
         background: color,
@@ -83,9 +85,9 @@ function mainDefs() {
     rightAge = 0;
     leftAge = eage;
     setChartProps(MAIN);
+    toff = 0; // no offset for main chart
     // boxes:
-    var opt = $('#xopt').text();
-    var scale = pgwidth/opt;  // px per Million Years (MY)
+    var scale = pgwidth/eage;  // px per Million Years (MY)
     var bwpx = $('.maindivs').css('border-left-width'); // has 'px' appended
     var bwidth = 2 * parseInt(bwpx);
     var crypto = Math.floor(pgwidth - eonShapes['proto'].right * scale);
@@ -198,6 +200,7 @@ function eonDefs(eon) {
         leftAge = eonShapes[eon].left;
     }
     rightAge = eonShapes[eon].right;
+    toff = rightAge % ticks;
     // eon's children's box settings (eras):
     var boxborder = $('.eondivs').css('border-left-width');
     var borders = 2 * parseInt(boxborder);
@@ -206,7 +209,8 @@ function eonDefs(eon) {
     var eonscale = pgwidth/(leftAge - rightAge);
     if (eonparts === 0) { // eon is hadean - it has no children
         $('#hadeanbox').width(pgwidth - borders);
-        $('#hadeanbox').css('background-color',HADCOLOR);
+        $('#hadeanbox').css('background-color', HADCOLOR);
+        $('#hadeanbox').css('color', 'White')
         $('#hadeanbox').text("Hadean Eon");
     } else {
         var accumbox = 0;
@@ -246,6 +250,7 @@ function eraDefs(era) {
     rightAge = eraShapes[currEon][eraNo].right;
     leftAge = eraShapes[currEon][eraNo].left;
     setChartProps(chartNo);
+    toff = rightAge % ticks;
     // era's children's box settings (periods):
     var boxborder = $('.eradivs').css('border-left-width');
     var borders = 2 * parseInt(boxborder);
@@ -306,6 +311,7 @@ function periodDefs(per) {
     rightAge = periodShapes[currEra][perNo].right;
     leftAge = periodShapes[currEra][perNo].left;
     setChartProps(chartNo);
+    toff = rightAge % ticks;
     // period's children's box settings (epochs):
     var boxborder = $('.perioddivs').css('border-left-width');
     var borders = 2 * parseInt(boxborder);
@@ -359,6 +365,9 @@ function resetDisplays(section) {
             $(box).hide();
         }
     }
+}
+function getTickOffset(tint, lbound) {
+    return lbound % tint;
 }
 function drawArea(section, member) {
     // section = viewing area; member = member to display

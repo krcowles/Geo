@@ -1,44 +1,48 @@
 // EON Display colors:
-const MAINCOLOR = 'blanchedalmond';
-const HADCOLOR = 'aliceblue';
-const ARCHCOLOR = 'honeydew';
-const PROTOCOLOR = 'cornsilk';
-const PHANCOLOR = '#ffe6e9';
+const HADCOLOR = 'FireBrick';
+const ARCHCOLOR = 'Crimson';
+const PROTOCOLOR = '#ff3333'; // 60% Red
+const PHANCOLOR = '#d8f0f3'; // 90% PowderBlue
 // ERA Display colors:
-const AREOCOLOR = '#f0fff0';
-const ARPALEOCOLOR = '#e6ffe6';
-const ARMESOCOLOR = '#ccffcc';
-const ARNEOCOLOR = '#b3ffb3';
-const PRPALEOCOLOR = '#fff5cc'; // shades of CornSilk
-const PRMESOCOLOR = '#ffeb99';
-const PRNEOCOLOR = '#ffe066';
-const PHPALEOCOLOR = '#ffe6e9'; // shades of LightPink
-const PHMESOCOLOR = '#ffccd4';
-const PHCENOCOLOR = '#ff99a8'
+const AREOCOLOR = '#d62929'; // 50% FireBrick
+const ARPALEOCOLOR = '#ff4d4d'; // 65% Maroon
+const ARMESOCOLOR = '#ff8080'; // 75% Red
+const ARNEOCOLOR = '#ffcccc'; // 90% Maroon
+const PRPALEOCOLOR = '#ff3333'; // 60% Red
+const PRMESOCOLOR = '#FAA14D';
+const PRNEOCOLOR = '#EC8A2C';
+const PHPALEOCOLOR = '#dde8ca'; // 85% DarkOliveGreen
+const PHMESOCOLOR = '#ccf2ff'; // 90% DeepSkyBlue
+const PHCENOCOLOR = 'Orange';
 // PERIOD Display colors:
-const SIDERIANCOLOR = '#f8eed3'; // shades of GoldenRod
-const RHYACIANCOLOR = '#f2dca6';
-const OROSIRIANCOLOR = '#ebcb7a';
-const STATHERIANCOLOR = '#e4ba4e';
-const CALYMMIANCOLOR = '#ffd280'; // shades of Orange
-const ECTASIANCOLOR = '#ffc14d';
-const STENIANCOLOR = '#ffa600';
-const TONIANCOLOR = '#e0b385'; // shades of Peru
-const CRYOGENIANCOLOR = '#e0b385';
-const EDIACARANCOLOR = '#cb8034';
-const EOCAMBRIANCOLOR = '#ffe8e6'; // shades of MistyRose
-const CAMBRIANCOLOR = '#ffe4e1';
-const ORDOVICIANCOLOR = '#ffd1cc';
-const SILURIANCOLOR = '#ffbab3';
-const DEVONIANCOLOR = '#ffa399';
-const MISSISSIPPIANCOLOR = '#ff8c80';
-const PENNSYLVANIANCOLOR = '#ff7566';
-const PERMIANCOLOR = '#ff5e4d';
+const SIDERIANCOLOR = '#ff3333'; // 60% Red
+const RHYACIANCOLOR = '#ff4d4d'; // 65% Red
+const OROSIRIANCOLOR = '#ff6666'; // 70% Red
+const STATHERIANCOLOR = '#ff8080'; // 75% Maroon
+const CALYMMIANCOLOR = '#FF994B'; // shades of Orange
+const ECTASIANCOLOR = '#FFAD6E';
+const STENIANCOLOR = '#FFB26E';
+const TONIANCOLOR = '#FF9E42';
+const CRYOGENIANCOLOR = '#FFA957';
+const EDIACARANCOLOR = '#FFB671';
+const CAMBRIANCOLOR = '#8db14e'; // 50% DarkOliveGreen
+const ORDOVICIANCOLOR = '#009973';
+const SILURIANCOLOR = '#e0f0c2';
+const DEVONIANCOLOR = '#ff8000';
+const CARBONIFEROUSCOLOR = '#85e0e0';
+const PERMIANCOLOR = '#ff0000';
 const TRIASSICCOLOR = '#ecdfec'; // shades of Thistle
 const JURASSICCOLOR = '#e2d0e2';
 const CRETACEOUSCOLOR = '#d8bfd8';
 const PALEOGENECOLOR = '#f5d6f4'; // shades of Orchid
 const NEOGENECOLOR = '#eaaee8';
+const QUATERNARYCOLOR = '#ffe6e9'; // 95% Light Pink
+// EPOCH Colors:
+
+
+
+// CHART TIMELINES Colors:
+const ALLCHARTS = 'OldLace';
 // Chart ID's:
 const MAIN = 0;
 const HADEAN = 1;
