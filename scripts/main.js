@@ -286,19 +286,19 @@ function periodDefs(per) {
             // a bit hacky, but can't come up with a better solution right now
             switch (currEra) {
                 case 'proto_meso':
-                    offset = 4
+                    offset = eons.length;
                     break;
                 case 'proto_neo':
-                    offset = 7
+                    offset = eons.length + 3
                     break;
                 case 'phan_paleo':
                     offset = 10;
                     break;
                 case 'phan_meso':
-                    offset = 18;
+                    offset = 16;
                     break;
                 case 'phan_ceno':
-                    offset = 21;
+                    offset = 19;
                     break;
                 default:
                     offset = 0;

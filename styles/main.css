@@ -131,7 +131,8 @@ body {
 }
 /* The 'era' section view CSS items: */
 .eradivs {
-    height: 34px;
+    height: 28px;
+    border-color: gray;
 }
 .eraht {
     padding-top: 6px;
