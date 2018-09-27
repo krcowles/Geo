@@ -14,7 +14,6 @@
     Chronostratigraphic Chart (w/similar colors)<br />
     [<span id="url">http://www.stratigraphy.org/ICSchart/ChronostratChart2017-02.pdf]</span>]
 </div>
-</div>
 <div id="main">
     <p id="xopt">4500</p> <!-- value in MYrs for age of earth -->
     <p id="inst">Click to Expand (When Enabled)</p>
@@ -38,7 +37,8 @@
     </div>
     <div id="events">
         <canvas id="mainline"></canvas>
-    </div><br />
+    </div>
+    <br />
     <div id="overall">The <span id="segment"></span> you are viewing is
             <span id="percent"></span> of earth's age
         <br />
@@ -47,7 +47,46 @@
         <div id="box2"></div>
         <div id="box3"></div>
     </div>
-    <br /><br />
+    <div id="maintbl" class="clearfix">
+        <br />
+        <table>
+            <tr>
+                <th>Event</th>
+                <th>Time (MYA)</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>A</td>
+                <td>4400</td>
+                <td>Early crust formation; cooling begins</td>
+            </tr>
+            <tr>
+                <td>A</td>
+                <td>4400</td>
+                <td>Zircon Crystals - Western Australia</td>
+            </tr>
+            <tr>
+                <td>A</td>
+                <td>4400</td>
+                <td>Earliest water</td>
+            </tr>
+            <t>
+                <td>B</td>
+                <td>4200</td>
+                <td>Earliest Possible Single-celled Life</td>
+            </t>
+            <tr>
+                <td>C</td>
+                <td>2500</td>
+                <td>Proterozoic Eon Begins</td>
+            </tr>
+            <tr>
+                <td>D</td>
+                <td>541</td>
+                <td>Panerozoic Eon Begins</td>
+            </tr>
+        </table>
+    </div>
 
     <!-- EON VIEW SECTION -->
     <div class="clearfix" id="eonview">
@@ -72,6 +111,121 @@
         <div id="eonline">
             <canvas id="eon"></canvas>
         </div>
+    </div>
+    <div id="eontbl" class="clearfix">
+        <br />
+        <table>
+            <tr>
+                <th>Event</th>
+                <th>Time (MYA)</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>A</td>
+                <td>4000</td>
+                <td>Oldest rock belt: Canadian Northwest Territories</td>
+            </tr>
+            <tr>
+                <td>A</td>
+                <td>4000</td>
+                <td>Earth impact events</td>
+            </tr>
+            <tr>
+                <td>B</td>
+                <td>3500</td>
+                <td>Earliest Oxygen; Photosynthesis</td>
+            </tr>
+            <tr>
+                <td>B</td>
+                <td>3500</td>
+                <td>Split between bacteria and archeae</td>
+            </tr>
+            <tr>
+                <td>C</td>
+                <td>2700</td>
+                <td>Oldest Magnetic Rocks</td>
+            </tr>
+            <tr>
+                <td>C</td>
+                <td>2700</td>
+                <td>Pongola Ice Age</td>
+            </tr>
+            <tr>
+                <td>D</td>
+                <td>2500</td>
+                <td>Great Oxygenation Event</td>
+            </tr>
+            <tr>
+                <td>D</td>
+                <td>2500</td>
+                <td>Commencement of Plate Tectonics</td>
+            </tr>
+            <tr>
+                <td>E</td>
+                <td>2300</td>
+                <td>1st Major Ice Age (Huronian: 2100-2400)</td>
+            </tr>
+            <tr>
+                <td>F</td>
+                <td>1700</td>
+                <td>Oldest New Mexico Rocks</td>
+            </tr>
+            <tr>
+                <td>G</td>
+                <td>1650</td>
+                <td>Mazatzal Orogeny (1650-1670)</td>
+            </tr>
+            <tr>
+                <td>H</td>
+                <td>1500</td>
+                <td>First Multi-cellular Life/Sexual Reproduction</td>
+            </tr>
+            <tr>
+                <td>I</td>
+                <td>1400</td>
+                <td>Grenville Orogeny (1350-1480)</td>
+            </tr>
+            <tr>
+                <td>J</td>
+                <td>1000</td>
+                <td>Rodinia Supercontinent (750-1100)</td>
+            </tr>
+            <tr>
+                <td>K</td>
+                <td>800</td>
+                <td>Sturtian-Varangian Ice Age</td>
+            </tr>
+            <tr>
+                <td>L</td>
+                <td>750</td>
+                <td>First Protozoa</td>
+            </tr>
+            <tr>
+                <td>M</td>
+                <td>650</td>
+                <td>Snowball Earth</td>
+            </tr>
+            <tr>
+                <td>N</td>
+                <td>600</td>
+                <td>Pan-African Orogeny: Gondwana & Pannotia Supercontinents </td>
+            </tr>
+            <tr>
+                <td>O</td>
+                <td>541</td>
+                <td>Lantian Formation Southern Chinea - complex fossils</td>
+            </tr>
+            <tr>
+                <td>P</td>
+                <td>540</td>
+                <td>Beginning of Hard-Shelled Forms</td>
+            </tr>
+            <tr>
+                <td>Q</td>
+                <td>30</td>
+                <td>Rio Grande Rifting Begins</td>
+            </tr>
+        </table>
     </div>
     <!-- ERA VIEW SECTION -->
     <div id="eraview">

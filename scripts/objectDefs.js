@@ -207,32 +207,30 @@ var chartParms = [
         adder:'Neogene Period'},
     {ticks:0.5, setNo:32, title:"Quaternary Timeline", color:ALLCHARTS}
 ];
-// Data sets of events corresponding to clickable timelines:
+/*
+ *  ----- Data sets of events corresponding to clickable timelines -----
+ * 
+ * This section defines data which needs to correspond directly with the
+ * tables in index.html. When data changes here, the tables must be manually
+ * adjusted to comply.
+ * NOTE: Occasionally, times appear to be out of order, but are so arranged
+ * to prevent colliding with Timeline Title.
+ */
 dataSets = [
-// All Eons:
-[{x:4400, txt:"Crust forming"}, {x:4000, txt: "Event3"},
-    {x:2500, txt:"Event2"}, {x:200, txt:"Event1"}],
+// All Eons: the Grand Scheme...
+[{x:2500, txt:"C"}, {x:4200, txt: "B"}, {x:4400, txt:"A"}, {x:541, txt:"D"}],
 // Hadean Eon:
 [{x:4400, txt: "early water; zircon crystals (Australia)"},
     {x:4200, txt: "earliest life (1-celled)"}],
-// Archean Eon:
-[{x:3950, txt:"Oldest Rock Belt (NW Territories) & impact events"},
-    {x:3500, txt:"Earliest oxygen; photosynthesis"},
-    {x:2700, txt:"Oldest magnetic rock"},
-    {x:2700, txt:"Pangola ice age"}],
-// Proterozoic Eon:
-[{x:2450, txt:"Great oxygenation event"}, 
-    {x:2450, txt:"Plate tectonics begin"},
-    {x:2400, txt:"Huronian ice age (1st major)"},
-    {x:1700, txt:"Oldest NM Rocks"},
-    {x:1600, txt:"Mazatzql Orogeny"},
-    {x:1480, txt:"Grenville Orogeny"},
-    {x:1500, txt:"1st Multicellular life & sexual reproduction"},
-    {x:1100, txt:"Rodinia Supercontinent"},
-    {x:850, txt:"Sturtian-Varangian ice Age"},
-    {x:850, txt:"Expand Era to see more"}],
+// Major events in Eons:
+[{x:4000, txt:"A"}, {x:3500, txt:"B"}, {x:2700, txt:"C"}],
+[{x:2500, txt:"D"}, {x:1700, txt:"F"}, {x:2300, txt:"E"}, {x:1650, txt:"G"},
+    {x:1500, txt:"H"}, {x:1400, txt:"I"}, {x:1000, txt:"J"},
+    {x:850, txt:"K"}, {x:750, txt:"L"}, {x:650, txt:"M"}, {x:600, txt:"N"},
+    {x:541, txt:"O"}],
 // Phanerozoic Eon [4]
-[{x:30, txt:"Rifting"}],
+[{x:540, txt:"P"}, {x:30, txt:"Q"}],
+
 // Proto Paleo Era [5]
 [{x:1800, txt:"Any"}],
 // Proto Meso Era [6]
