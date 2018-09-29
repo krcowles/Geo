@@ -128,7 +128,7 @@ var epochShapes = {
         {left:0.0117, right:0, color:HOLOCENECOLOR}
     ]
 };
-    
+ 
 var chartParms = [
     // Main viewing area:
     {ticks:250, setNo:0, title:"Event Timeline",color:ALLCHARTS,
@@ -216,9 +216,12 @@ var chartParms = [
  * NOTE: Occasionally, times appear to be out of order, but are so arranged
  * to prevent colliding with Timeline Title.
  */
+var xl_ImportedTimelines = [];
+
 dataSets = [
-// All Eons: the Grand Scheme...
+// MAIN Chart: all eons
 [{x:2500, txt:"C"}, {x:4200, txt: "B"}, {x:4400, txt:"A"}, {x:541, txt:"D"}],
+// EON Charts:
 // Hadean Eon:
 [{x:4400, txt: "early water; zircon crystals (Australia)"},
     {x:4200, txt: "earliest life (1-celled)"}],
@@ -230,7 +233,7 @@ dataSets = [
     {x:541, txt:"O"}],
 // Phanerozoic Eon [4]
 [{x:540, txt:"P"}, {x:30, txt:"Q"}],
-
+// ERA Charts:
 // Proto Paleo Era [5]
 [{x:1800, txt:"Any"}],
 // Proto Meso Era [6]

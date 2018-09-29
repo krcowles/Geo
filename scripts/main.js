@@ -26,6 +26,7 @@ var periods = ['siderian', 'rhyacian', 'orosirian', 'statherian',
 var currEon = 'off';
 var currEra = 'off';
 var currPer = 'off';
+var currScroll;
 var portion; // portion of earth's age being viewed
 var percentchart;
 var resizeFlag = true; // prevents rapid-fire events during resize
@@ -114,6 +115,7 @@ function mainDefs() {
     } else {
         $('#phan').text("Phanerozoic Eon");
     }
+    $('#maintbl').show();
 }
 function getTextWidth(text, font) {
     // Hadean & Phanerozoic Eons require text adjustment w/resizing
@@ -232,6 +234,8 @@ function eonDefs(eon) {
     var adder = chartParms[chartNo].adder;
     $('#eonadder').text(adder);
     $('#eonadder').show();
+    $('#eontbl').show();
+    $(window).scrollTop(currScroll);
 }
 function eraDefs(era) {
     sessionStorage.setItem('dispEra', era);
@@ -275,6 +279,7 @@ function eraDefs(era) {
     var adder = chartParms[chartNo].adder;
     $('#eraadder').text(adder);
     $('#eraadder').show();
+    $(window).scrollTop(currScroll);
 }
 function periodDefs(per) {
     sessionStorage.setItem('dispPer', per);
@@ -346,6 +351,7 @@ function periodDefs(per) {
     var adder = chartParms[chartNo].adder;
     $('#peradder').text(adder);
     $('#peradder').show();
+    $(window).scrollTop(currScroll);
 }
 function resetDisplays(section) {
     var box;
@@ -409,6 +415,10 @@ function drawArea(section, member) {
     }
 }
 function displaySection(loc, content) {
+    // only show the table that is currently active via 'loc':
+    $('div[id$="tbl"]').hide();
+    // maintain current scroll position:
+    currScroll = $(window).scrollTop();
     // everytime a section loc is drawn, everything below it should turn off:
     if (loc === 'main') {
         $('div[id$="box"]').hide();
