@@ -8,10 +8,21 @@
  * Thanks to:
  * https://www.c-sharpcorner.com/article/reading-a-excel-file-using-html5-jquery/
  * For supplying an easy-to-understand-and-apply website on FileReader for XLSX
+ * 
+ * Notes on procedure: 
+ *  There are two distinct areas on the web page: timeline blocks and
+ *  timeline charts. Each has its own JSON object defining the parameters
+ *  used to created the page. Each object is formed/updated from an Excel
+ *  spreadsheet as identified below. To keep from forming objects with
+ *  duplicate data, timeline charts endpoints are derived from the shapes
+ *  data (timelime blocks), which contains each shape's time boundaries.
  */
 var xl_Imported_Timelines = [];
-// list the files to be 'JSON-ized' for use in the main script
+// For charts:
 var event_chart = "chart.xlsx";
+// obj definition (irrelevant values)
+var geo_obj = {ticks:0, setNo:0, title:'', color:'allcharts', adder:''};
+// For shapes:
 var shapes = "ageShapes.xlsx";
 updateObject(event_chart);
 
@@ -61,7 +72,6 @@ function BindTable(jsondata, tableid, chartname) {
             var data = cellValue.trim();
             // set up JSON objects depending on spreadsheet name:
             if (chartname == event_chart) {
-                var setNo = 1;
                 convertToEvents(colIndex, data);
             } else if (chartname === shapes) {
 
@@ -92,14 +102,24 @@ function BindTableHeader(jsondata, tableid) {
     return columnSet;  
 }
 function convertToEvents(xl_column, ev_data) {
-    if (colIndex === 1) {
-        label = event;
-    } else if (colIndex === 2) {
-        age = event;
-        geo_obj = {x:age, txt:label};
-        xl_Imported_Timelines.push(geo_obj);
+    if (xl_column === 0) {
+        geo_obj.ticks = ev_data;
+    } else if (xl_column === 1) {
+        geo_obj.setNo = ev_data;
+    } else if (xl_column === 2) {
+        geo_obj.title = ev_data;
+    } else if (xl_column === 3) {
+        geo_obj.color = ev_data;
+    } else if (xl_column === 4) {
+        geo_obj.adder = ev_data;
+        /* Can't push the object directly onto the array, since only a 'reference'
+         * to the object gets pushed, and changing the object then changes
+         * everything in the array...
+         */
+        xl_Imported_Timelines.push(JSON.parse(JSON.stringify(geo_obj)));
     }
 }
+
 /* the jQuery file upload, which requires the extra step of setting up
  * 'Transport' for binary data uploads:
  * https://www.henryalgus.com/reading-binary-files-using-jquery-ajax/
