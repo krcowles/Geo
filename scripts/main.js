@@ -1,6 +1,15 @@
 // global vars
 var pgwidth;
 var scrollBars = scrollBarWidth();
+// Chart ID
+var HADEAN = 0;
+// 'Percent Chart' Width as Fraction of Page Width:
+var PCHART = 0.75;
+// Section heights:
+var MAINHT = 80;
+var EONHT = 80;
+var ERAHT = 80;
+var PERHT = 80;
 /*
  * Use of the variable 'pgwidth' will always subtract the scrollBars
  * as the detection of scrollbars on the page is a non-trivial problem,
@@ -15,14 +24,13 @@ var toff;  // when boundary starts at an odd number, offset chart ticks
 var setNo; // event definitions (see objectDefs.js)
 var color;
 var mainChartEl;
-var eons = ['hadean', 'archean', 'proto', 'phan'];
-var eras = ['proto_paleo', 'proto_meso', 'proto_neo', 'phan_paleo',
-    'phan_meso', 'phan_ceno'];
-var periods = ['siderian', 'rhyacian', 'orosirian', 'statherian',
-    'calymmian', 'ectasian', 'stenian', 'tonian', 'cryogenian',
-    'ediacaran', 'cambrian', 'ordovician', 'silurian',
-    'devonian', 'carboniferous', 'permian', 'triassic', 'jurassic', 
-    'cretaceous', 'paleogene', 'neogene', 'quaternary'];
+var eons = ['Hadean', 'Archean', 'Proterozoic', 'Phanerozoic'];
+var eras = ['Paleo', 'Meso', 'Neo', 'Paleozoic', 'Mesozoic', 'Cenozoic'];
+var periods = ['Siderian', 'Rhyacian', 'Orosirian', 'Statherian',
+    'Calymmian', 'Ectasian', 'Stenian', 'Tonian', 'Cryogenian',
+    'Ediacaran', 'Cambrian', 'Ordovician', 'Silurian',
+    'Devonian', 'Carboniferous', 'Permian', 'Triassic', 'Jurassic', 
+    'Cretaceous', 'Paleogene', 'Neogene', 'Quaternary'];
 var currEon = 'off';
 var currEra = 'off';
 var currPer = 'off';
@@ -57,7 +65,7 @@ function defineData() {
         labelFont: '10pt Arial', 
         dataPointFont: '8pt Arial',
         renderTypes: [ChartObj.renderType.lines, ChartObj.renderType.points],
-        dataPoints: dataSets[setNo]
+        dataPoints: eventSets[eventId]
     };
     return dataDef;
 }
@@ -65,11 +73,12 @@ function drawChart(canvasId) {
     var chartData = defineData();
     ChartObj.render(canvasId, chartData);
 }
-function setChartProps(chartNo) {
-    ticks = chartParms[chartNo].ticks;
-    setNo = chartNo;
-    title = chartParms[chartNo].title;
-    color = chartParms[chartNo].color;
+function setChartProps(chartId) {
+    ticks = chartParms[chartId].ticks;
+    eventId = chartParms[chartId].evId;
+    title = eventId + " Timeline";
+    colorKey = chartParms[chartId].color;
+    color = colorObj[colorKey];
 }
 // -------- SETUP "MAIN" SECTION OF DISPLAY ----------
 function scrollBarWidth() {
@@ -85,37 +94,36 @@ function mainDefs() {
     // chart properties:
     rightAge = 0;
     leftAge = eage;
-    setChartProps(MAIN);
+    //setChartProps(MAIN);
     toff = 0; // no offset for main chart
     // boxes:
     var scale = pgwidth/eage;  // px per Million Years (MY)
     var bwpx = $('.maindivs').css('border-left-width'); // has 'px' appended
     var bwidth = 2 * parseInt(bwpx);
-    var crypto = Math.floor(pgwidth - eonShapes['proto'].right * scale);
-    $('#crypto').width(crypto - 2);  // border-width for crypto fixed at 1
-    var hadean = Math.floor(pgwidth - eonShapes['hadean'].right * scale);
-    $('#hadean').width(hadean - bwidth);
+    var crypto = Math.floor(pgwidth - eonShapes['Proterozoic'].right * scale);
+    $('#Crypto').width(crypto - 2);  // border-width for crypto fixed at 1
+    var hadean = Math.floor(pgwidth - eonShapes['Hadean'].right * scale);
+    $('#Hadean').width(hadean - bwidth);
     var hsize = getTextWidth("Hadean Eon", "14px verdana");
     // checking textwidth for smoother presentation (no word-wrap)
     if ((hadean - bwidth) < hsize) {
-        $('#hadean').text("Hadean");
+        $('#Hadean').text("Hadean");
     } else {
-        $('#hadean').text("Hadean Eon");
+        $('#Hadean').text("Hadean Eon");
     }
-    var archend = Math.floor(pgwidth - eonShapes['archean'].right * scale);
+    var archend = Math.floor(pgwidth - eonShapes['Archean'].right * scale);
     var arch = archend - hadean;
-    $('#archean').width(arch - bwidth);
+    $('#Archean').width(arch - bwidth);
     var proto = crypto - hadean - arch;
-    $('#proto').width(proto - bwidth);
+    $('#Proterozoic').width(proto - bwidth);
     var phan = pgwidth - crypto;
-    $('#phan').width(phan - bwidth);
+    $('#Phanerozoic').width(phan - bwidth);
     var psize = getTextWidth("Phanerozoic Eon", "14px verdana");
     if ((phan - bwidth) < psize) {
-        $('#phan').text("Phanerozoic");
+        $('#Phanerozoic').text("Phanerozoic");
     } else {
-        $('#phan').text("Phanerozoic Eon");
+        $('#Phanerozoic').text("Phanerozoic Eon");
     }
-    $('#maintbl').show();
 }
 function getTextWidth(text, font) {
     // Hadean & Phanerozoic Eons require text adjustment w/resizing
@@ -190,7 +198,7 @@ function eonDefs(eon) {
     resetDisplays('eon');
     for (var i=0; i<eons.length; i++) {
         if (eons[i] === eon) {
-            var chartNo = i + 1; // 0 => Main Chart
+            var chartNo = i;
             break;
         }
     }
@@ -210,10 +218,11 @@ function eonDefs(eon) {
     var eonparts = $(eondiv).children().length;
     var eonscale = pgwidth/(leftAge - rightAge);
     if (eonparts === 0) { // eon is hadean - it has no children
-        $('#hadeanbox').width(pgwidth - borders);
-        $('#hadeanbox').css('background-color', HADCOLOR);
-        $('#hadeanbox').css('color', 'White')
-        $('#hadeanbox').text("Hadean Eon");
+        $('#Hadeanbox').width(pgwidth - borders);
+        $('#Hadeanbox').css('background-color', colorObj.HADCOLOR);
+        $('#Hadeanbox').css('color', 'White')
+        $('#Hadeanbox').text("Hadean Eon");
+        $('#Hadeanbox').css('text-align', 'center');
     } else {
         var accumbox = 0;
         for (var j=0; j<eonparts; j++) {
@@ -225,7 +234,8 @@ function eonDefs(eon) {
             } else { // last item:
                 subwidth = pgwidth - accumbox;
             }
-            var subcolor = eraShapes[eon][j].color;
+            var colorKey = eraShapes[eon][j].color;
+            subcolor = colorObj[colorKey];
             $(subeon).width(subwidth - borders);
             $(subeon).css('background-color',subcolor);
         }
@@ -247,7 +257,7 @@ function eraDefs(era) {
             if (era.search('proto') === -1) {
                 eraNo -= 3;
             }
-            var chartNo = i + eons.length + 1; // 0 => Main Chart
+            var chartNo = i + eons.length;
             break;
         }
     }
@@ -271,7 +281,8 @@ function eraDefs(era) {
         } else {
             subwidth = pgwidth - accumbox;
         }
-        var subcolor = periodShapes[era][j].color;
+        var colorKey = periodShapes[era][j].color;
+        var subcolor = colorObj[colorKey];
         $(subera).width(subwidth - borders);
         $(subera).css('background-color',subcolor);
     }
@@ -290,26 +301,26 @@ function periodDefs(per) {
             var offset;
             // a bit hacky, but can't come up with a better solution right now
             switch (currEra) {
-                case 'proto_meso':
+                case 'Meso':
                     offset = eons.length;
                     break;
-                case 'proto_neo':
+                case 'Neo':
                     offset = eons.length + 3
                     break;
-                case 'phan_paleo':
+                case 'Paleozoic':
                     offset = 10;
                     break;
-                case 'phan_meso':
+                case 'Mesozoic':
                     offset = 16;
                     break;
-                case 'phan_ceno':
+                case 'Cenozoic':
                     offset = 19;
                     break;
                 default:
                     offset = 0;
             }
             perNo -= offset;
-            var chartNo = i + eons.length + eras.length + 1; // 0 => Main Chart
+            var chartNo = i + eons.length + eras.length;
             break;
         }
     }
@@ -327,7 +338,8 @@ function periodDefs(per) {
     if (perparts === 0) {
         // no children
         $(perdiv).width(pgwidth - borders);
-        var bgcolor = periodShapes[currEra][perNo].color;
+        var colorKey = periodShapes[currEra][perNo].color;
+        var bgcolor = colorObj[colorKey];
         $(perdiv).css('background-color',bgcolor);
         var slgth = per.length;
         var pertext = per.charAt(0).toUpperCase() + per.slice(1,slgth) + " Period";
@@ -342,7 +354,8 @@ function periodDefs(per) {
             } else {
                 subwidth = pgwidth - accumbox;
             }
-            var subcolor = epochShapes[currPer][j].color;
+            var colorKey = epochShapes[currPer][j].color;
+            var subcolor = colorObj[colorKey];
             $(subera).width(subwidth - borders);
             $(subera).css('background-color',subcolor);
         }
@@ -380,9 +393,9 @@ function drawArea(section, member) {
     if (section === 'main') {
         mainDefs();
         // main chart:
-        mainChartEl = document.getElementById('mainline');
-        setChartDims('events', mainChartEl, MAINHT);
-        drawChart('mainline');
+        //mainChartEl = document.getElementById('mainline');
+        //setChartDims('events', mainChartEl, MAINHT);
+        //drawChart('mainline');
     } else if (section === 'eon') {
         currEon = member;
         eonDefs(member); // includes children of member
@@ -462,124 +475,128 @@ $(document).ready( function() {
         var subs = true; // this is a page refresh...
     }
     eage = $('#xopt').text(); // page startup default for earth's age
-    displaySection('main','');
-    if (subs) {
-        // pg refresh: if any settings are on, dispEon must be also
-        currEon = sessionStorage.getItem('dispEon');
-        if (currEon !== 'off') {
-            displaySection('eon', currEon);
-            currEra = sessionStorage.getItem('dispEra');
-            if (currEra !== 'off') {
-                displaySection('era', currEra);
-                currPer = sessionStorage.getItem('dispPer');
-                if (currPer !== 'off') {
-                    displaySection('period', currPer);
+    $timeout = setInterval( function() {
+        if (timing) {
+            displaySection('main','');
+            if (subs) {
+                // pg refresh: if any settings are on, dispEon must be also
+                currEon = sessionStorage.getItem('dispEon');
+                if (currEon !== 'off') {
+                    displaySection('eon', currEon);
+                    currEra = sessionStorage.getItem('dispEra');
+                    if (currEra !== 'off') {
+                        displaySection('era', currEra);
+                        currPer = sessionStorage.getItem('dispPer');
+                        if (currPer !== 'off') {
+                            displaySection('period', currPer);
+                        }
+                    }
                 }
             }
+            clearInterval($timeout);
         }
-    } 
+    }, 5);
     /*
      * EVENT DEFINITIONS
      */
     // Clickable EONS in MAIN VIEW (Always only one set of boxes):
-    $('#hadean').on('click', function() {
-        displaySection('eon', 'hadean');
+    $('#Hadean').on('click', function() {
+        displaySection('eon', 'Hadean');
     });
-    $('#archean').on('click', function() {
-        displaySection('eon', 'archean');
+    $('#Archean').on('click', function() {
+        displaySection('eon', 'Archean');
     });
-    $('#proto').on('click', function() {
-        displaySection('eon', 'proto');
+    $('#Proterozoic').on('click', function() {
+        displaySection('eon', 'Proterozoic');
     });
-    $('#phan').on('click', function() {
-        displaySection('eon', 'phan');
+    $('#Phanerozoic').on('click', function() {
+        displaySection('eon', 'Phanerozoic');
     });
     // Clickable ERAS (Proterozoic & Phanerozoic) IN EON VIEW:
-    $('#proto0').on('click', function() {
-        displaySection('era','proto_paleo');
+    $('#Proterozoic0').on('click', function() {
+        displaySection('era','Paleo');
     });
-    $('#proto1').on('click', function() {
-        displaySection('era', 'proto_meso');
+    $('#Proterozoic1').on('click', function() {
+        displaySection('era', 'Meso');
     });
-    $('#proto2').on('click', function() {
-        displaySection('era', 'proto_neo');
+    $('#Proterozoic2').on('click', function() {
+        displaySection('era', 'Neo');
     });
-    $('#phan0').on('click', function() {
-        displaySection('era', 'phan_paleo');
+    $('#Phanerozoic0').on('click', function() {
+        displaySection('era', 'Paleozoic');
     });
-    $('#phan1').on('click', function() {
-        displaySection('era', 'phan_meso');
+    $('#Phanerozoic1').on('click', function() {
+        displaySection('era', 'Mesozoic');
     });
-    $('#phan2').on('click', function() {
-        displaySection('era', 'phan_ceno');
+    $('#Phanerozoic2').on('click', function() {
+        displaySection('era', 'Cenozoic');
     });
     // Clickable PERIODS in ERA VIEW:
-    $('#proto_paleo0').on('click', function() {
-        displaySection('period', 'siderian');
+    $('#Paleo0').on('click', function() {
+        displaySection('period', 'Siderian');
     });
-    $('#proto_paleo1').on('click', function() {
-        displaySection('period', 'rhyacian');
+    $('#Paleo1').on('click', function() {
+        displaySection('period', 'Rhyacian');
     });
-    $('#proto_paleo2').on('click', function() {
-        displaySection('period', 'orosirian');
+    $('#Paleo2').on('click', function() {
+        displaySection('period', 'Orosirian');
     });
-    $('#proto_paleo3').on('click', function() {
-        displaySection('period', 'statherian');
+    $('#Paleo3').on('click', function() {
+        displaySection('period', 'Statherian');
     });
-    $('#proto_meso0').on('click', function() {
-        displaySection('period', 'calymmian');
+    $('#Meso0').on('click', function() {
+        displaySection('period', 'Calymmian');
     });
-    $('#proto_meso1').on('click', function() {
-        displaySection('period', 'ectasian');
+    $('#Meso1').on('click', function() {
+        displaySection('period', 'Ectasian');
     });
-    $('#proto_meso2').on('click', function() {
-        displaySection('period', 'stenian');
+    $('#Meso2').on('click', function() {
+        displaySection('period', 'Stenian');
     });
-    $('#proto_neo0').on('click', function() {
-        displaySection('period', 'tonian');
+    $('#Neo0').on('click', function() {
+        displaySection('period', 'Tonian');
     });
-    $('#proto_neo1').on('click', function() {
-        displaySection('period', 'cryogenian');
+    $('#Neo1').on('click', function() {
+        displaySection('period', 'Cryogenian');
     });
-    $('#proto_neo2').on('click', function() {
-        displaySection('period', 'ediacaran');
+    $('#Neo2').on('click', function() {
+        displaySection('period', 'Ediacaran');
     });
-
-    $('#phan_paleo0').on('click', function() {
-        displaySection('period', 'cambrian');
+    $('#Paleozoic0').on('click', function() {
+        displaySection('period', 'Cambrian');
     });
-    $('#phan_paleo1').on('click', function() {
-        displaySection('period', 'ordovician');
+    $('#Paleozoic1').on('click', function() {
+        displaySection('period', 'Ordovician');
     });
-    $('#phan_paleo2').on('click', function() {
-        displaySection('period', 'silurian');
+    $('#Paleozoic2').on('click', function() {
+        displaySection('period', 'Silurian');
     });
-    $('#phan_paleo3').on('click', function() {
-        displaySection('period', 'devonian');
+    $('#Paleozoic3').on('click', function() {
+        displaySection('period', 'Devonian');
     });
-    $('#phan_paleo4').on('click', function() {
-        displaySection('period', 'carboniferous');
+    $('#Paleozoic4').on('click', function() {
+        displaySection('period', 'Carboniferous');
     });
-    $('#phan_paleo5').on('click', function() {
-        displaySection('period', 'permian');
+    $('#Paleozoic5').on('click', function() {
+        displaySection('period', 'Permian');
     });
-    $('#phan_meso0').on('click', function() {
-        displaySection('period', 'triassic');
+    $('#Mesozoic0').on('click', function() {
+        displaySection('period', 'Triassic');
     });
-    $('#phan_meso1').on('click', function() {
-        displaySection('period', 'jurassic');
+    $('#Mesozoic1').on('click', function() {
+        displaySection('period', 'Jurassic');
     });
-    $('#phan_meso2').on('click', function() {
-        displaySection('period', 'cretaceous');
+    $('#Mesozoic2').on('click', function() {
+        displaySection('period', 'Cretaceous');
     });
-    $('#phan_ceno0').on('click', function() {
-        displaySection('period', 'paleogene');
+    $('#Cenozoic0').on('click', function() {
+        displaySection('period', 'Paleogene');
     });
-    $('#phan_ceno1').on('click', function() {
-        displaySection('period', 'neogene');
+    $('#Cenozoic1').on('click', function() {
+        displaySection('period', 'Neogene');
     });
-    $('#phan_ceno2').on('click', function() {
-        displaySection('period', 'quaternary');
+    $('#Cenozoic2').on('click', function() {
+        displaySection('period', 'Quaternary');
     });
 
     // RESIZING OF WINDOW:

@@ -10,23 +10,46 @@
  * For supplying an easy-to-understand-and-apply website on FileReader for XLSX
  * 
  * Notes on procedure: 
- *  There are two distinct areas on the web page: timeline blocks and
- *  timeline charts. Each has its own JSON object defining the parameters
- *  used to created the page. Each object is formed/updated from an Excel
- *  spreadsheet as identified below. To keep from forming objects with
- *  duplicate data, timeline charts endpoints are derived from the shapes
- *  data (timelime blocks), which contains each shape's time boundaries.
+ *  There are four 'views' presented: MAIN View (Whole Earth Span),
+ *  EON View, ERA View, and PERIOD View. In each view there are three 
+ *  distinct pieces:
+ *    1) timeline blocks containing, one or more 'boxes'); 
+ *    2) timeline charts of events corresponding to the box, and 
+ *    3) timeline tables - an expanded text version of the chart.
+ *  Each piece has its own JSON object defining the parameters used to 
+ *  populate the DOM. Each object is formed/updated from an Excel
+ *  spreadsheet as identified below. To keep from entering objects with
+ *  duplicate data, timeline chart endpoints and tables are derived from
+ *  the shapes data (timelime blocks), which contains each shape's 
+ *  time boundaries and event list.
  */
-var xl_Imported_Timelines = [];
-// For charts:
-var event_chart = "chart.xlsx";
-// obj definition (irrelevant values)
-var geo_obj = {ticks:0, setNo:0, title:'', color:'allcharts', adder:''};
-// For shapes:
-var shapes = "ageShapes.xlsx";
-updateObject(event_chart);
+var timing = false;
+// Chart paramters:
+var chart_setup = "chart.xlsx";
+var chartParms = [];
+var parmObj = {};
+// Chart & Table Events:
+var events = "events.xlsx";
+var eventSets = {};
+var currBox = '';
+var obj_key;
+var event = {};
+// Shapes:
+var shapes = "shapes.xlsx";
+var eonShapes = {};
+var eraShapes = {};
+var periodShapes = {};
+var epochShapes = {};
+var shapeName = '';
+var shapeBox = '';
+var shape = {};
+updateObject(chart_setup);
+updateObject(events);
+updateObject(shapes);
+// end of updating objects...
 
 function updateObject(xlsx_file) {
+    //var fetch = "../" + xlsx_file;
     var xhr = new XMLHttpRequest();
     xhr.open('GET', xlsx_file, true);
     xhr.responseType = 'blob'; // this allows capturing the file contents as a js blob object
@@ -51,7 +74,7 @@ function updateObject(xlsx_file) {
                         cnt++;  
                     }  
                 });  
-                $('#exceltable').show();  
+                //$('#exceltable').show();  
             }  
         }
     };
@@ -71,14 +94,18 @@ function BindTable(jsondata, tableid, chartname) {
             }
             var data = cellValue.trim();
             // set up JSON objects depending on spreadsheet name:
-            if (chartname == event_chart) {
+            if (chartname == chart_setup) {
+                convertToParms(colIndex, data);
+            } else if (chartname === events) {
                 convertToEvents(colIndex, data);
             } else if (chartname === shapes) {
-
+                convertToShapes(colIndex, data);
             }
-            row$.append($('<td/>').html(data));  
+            row$.append($('<td/>').html(data));
+            if (chartname === shapes) {
+                timing = true;
+            }  
         }
-
         $(tableid).append(row$);  
     }  
 } 
@@ -101,25 +128,86 @@ function BindTableHeader(jsondata, tableid) {
     $(tableid).append(headerTr$);  
     return columnSet;  
 }
-function convertToEvents(xl_column, ev_data) {
+function convertToParms(xl_column, parm) {
     if (xl_column === 0) {
-        geo_obj.ticks = ev_data;
+        parmObj.ticks = parm;
     } else if (xl_column === 1) {
-        geo_obj.setNo = ev_data;
+        parmObj.evId = parm;
     } else if (xl_column === 2) {
-        geo_obj.title = ev_data;
+        parmObj.title = parm;
     } else if (xl_column === 3) {
-        geo_obj.color = ev_data;
+        parmObj.color = parm;
     } else if (xl_column === 4) {
-        geo_obj.adder = ev_data;
+        parmObj.adder = parm;
         /* Can't push the object directly onto the array, since only a 'reference'
          * to the object gets pushed, and changing the object then changes
          * everything in the array...
          */
-        xl_Imported_Timelines.push(JSON.parse(JSON.stringify(geo_obj)));
+        chartParms.push(JSON.parse(JSON.stringify(parmObj)));
     }
 }
+function convertToEvents(xl_column, ev_data) {
+    // Note: times and marker labels may be repeated:
+    if (xl_column === 0) {
+        if (ev_data !== currBox) {
+            // set the object's key (whose value is an array)
+            obj_key = ev_data;
+            eventSets[obj_key] = [];
+            currBox = ev_data;
+        }
+    } else if (xl_column === 1) {
+        event.x = ev_data;
+    } else if (xl_column === 2) {
+        event.mrkr = ev_data;
+    } else if (xl_column === 3) {
+        event.des = ev_data;
+        eventSets[obj_key].push(JSON.parse(JSON.stringify(event)));
+    }
+}
+function convertToShapes(xl_column, shape_dat) {
+    if (xl_column === 0) {
+        if (shape_dat !== shapeName) {
+            shapeName = shape_dat;
+        }
+    } else if(xl_column === 1) {
+        if (shape_dat !== shapeBox) {
+            shapeBox = shape_dat;
+            switch(shapeName) {
+                case "era":
+                    eraShapes[shapeBox] = [];
+                    break;
+                case "period":
+                    periodShapes[shapeBox] = [];
+                    break;
+                case "epoch":
+                    epochShapes[shapeBox] = [];
+            }
+        }   
+    } else if(xl_column === 2) {
+        shape.left = shape_dat;
+    } else if(xl_column === 3) {
+        shape.right = shape_dat;
 
+    } else if (xl_column === 4) {
+        shape.color = shape_dat;
+        switch(shapeName) {
+            case "eon":
+                eonShapes[shapeBox] = JSON.parse(JSON.stringify(shape));
+                break;
+            case "era":
+                eraShapes[shapeBox].push(JSON.parse(JSON.stringify(shape)));
+                break;
+            case "period":
+                periodShapes[shapeBox].push(JSON.parse(JSON.stringify(shape)));
+                break;
+            case "epoch":
+                epochShapes[shapeBox].push(JSON.parse(JSON.stringify(shape)));
+                break;
+            default:
+                console.log("convertToShapes shapeName unrecognized");
+        }
+    }
+}
 /* the jQuery file upload, which requires the extra step of setting up
  * 'Transport' for binary data uploads:
  * https://www.henryalgus.com/reading-binary-files-using-jquery-ajax/
@@ -167,7 +255,7 @@ $.ajaxTransport("+binary", function(options, originalOptions, jqXHR){
     }
 });
 $.ajax({
-    url: event_chart,
+    url: chart_setup,
     type: 'GET',
     dataType: 'binary',
     processData: false,

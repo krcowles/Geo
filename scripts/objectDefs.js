@@ -115,7 +115,7 @@ var epochShapes = {
         {left:100, right:66, color:CUPPERCOLOR}
     ],
     'paleogene': [
-        {left:65, right:56, color:PALEOCENECOLOR},
+        {left:66, right:56, color:PALEOCENECOLOR},
         {left:56, right:34, color:EOCENECOLOR},
         {left:34, right:23, color:OLIGOCENECOLOR}
     ],
@@ -216,8 +216,18 @@ var chartParms = [
  * NOTE: Occasionally, times appear to be out of order, but are so arranged
  * to prevent colliding with Timeline Title.
  */
-var xl_ImportedTimelines = [];
-
+eventData = {
+    Hadean:[
+        {x:2500, mrkr:"C", des:"Item description"}, 
+        {x:4200, mrkr:"B", des:"Yo bubba"}
+    ]
+};
+tableData = {
+    Hadean: [
+        {ev:"A", age:2500, des:"Whatever I want to say"},
+        {ev:"B", age:2700, des:"Item 2"}
+    ]
+}
 dataSets = [
 // MAIN Chart: all eons
 [{x:2500, txt:"C"}, {x:4200, txt: "B"}, {x:4400, txt:"A"}, {x:541, txt:"D"}],
