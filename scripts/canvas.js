@@ -34,7 +34,7 @@ var ChartObj = function() {
             xMax = chartWidth;
             yMax = chartHeight;
             horizon = 0.70 * yMax;
-            MaPerPx = data.span/chartWidth;
+            MaPerPx = (data.left - data.right)/chartWidth;
             context = canvas.getContext("2d");
             renderChart();
         }
@@ -51,7 +51,7 @@ var renderChart = function () {
     renderData(data.renderTypes[1]);
 };
 var renderBackground = function () {
-    context.fillStyle = "BlanchedAlmond";
+    context.fillStyle = data.background;
     // the first two args are the (x,y) coords for the left corner;
     // the last two specify width and height of the fill area:
     context.fillRect(margin.left, margin.top, xMax, yMax);
@@ -89,18 +89,19 @@ var renderLinesAndLabels = function renderLinesAndLabels() {
     // X AXIS: evenly spaced ticks based on tick spec.
     var xInc = data.ticks/MaPerPx; // tick increment in px
     var xEnd = margin.left; //  max value for x axis, in pixels
+    var off = Math.floor(data.tickOffset/MaPerPx); // offset px for ticks
     context.fillStyle = 'Black';
     context.font = "8pt arial";
      // place x-axis labels just below x-axis horizontal line, ie.
      // from the chart top: top y margin + horizon + 16px further down
     var ty = margin.top + horizon + 16;
-    var xPos = chartWidth - xInc; // 1st 250 MA tick
+    var xPos = chartWidth - (xInc - off); // first tick won't show up
     var txt;  // the x-axis tick label
     context.textAlign = "center";
     var j = 1;
     // print out regularly spaced x-axis ticks from right-hand side:
     while (xPos > xEnd) {
-        txt = j * data.ticks;
+        txt = parseInt(j * data.ticks) + parseInt(data.right) - parseInt(data.tickOffset);
         txt = txt.toFixed(0) + "M";
         var tsize = context.measureText(txt).width;
         var ulim = xEnd + xPos;
@@ -127,6 +128,7 @@ var renderData = function renderData(type) {
     var prevX = 0;
     var prevY = 0;
     var yLevel = [12, 22, 32];
+    var uniqueEvents = [];
     /* data points are x [MA], y is height 0, 1, or 2 in order
      * to stagger the labels and hopefully prevent overwriting.
      */
@@ -135,33 +137,46 @@ var renderData = function renderData(type) {
     context.textAlign = "left";
     for (var i = 0; i < data.dataPoints.length; i++) {
         var pt = data.dataPoints[i];
-        // remember, age goes from right to left (oldest)
-        var loc = pt.x - data.start
-        var pxLoc = loc/MaPerPx;
-        var ptX = margin.left + (chartWidth - pxLoc);
-        var ptY = horizon - yLevel[i % 3];
-        var etxt = pt.txt;
-        var epos = ptX + 10;
-        /*
-        if (i > 0 && type == renderType.lines) {
-            //Draw connecting lines
-            drawLine(ptX, ptY, prevX, prevY, 'DarkGreen', 2);
-        }
-        */
-        if (type == renderType.points) {
-            var radgrad = context.createRadialGradient(ptX, ptY, 4, ptX - 2, ptY - 2, 0);
-            radgrad.addColorStop(0, 'Green');
-            radgrad.addColorStop(0.9, 'White');
-            context.beginPath();
-            context.fillStyle = radgrad;
-            //Render circle
-            context.arc(ptX, ptY, 5, 0, 2 * Math.PI, false)
-            context.fill();
-            context.lineWidth = 1;
-            context.strokeStyle = '#000';
-            context.stroke();
-            context.closePath();
-            context.fillText(etxt, epos, ptY+4);
+        var etxt = pt.mrkr;
+        if (etxt !== 'Tbl') { // Tbl is for tables only, not timeline
+            // remember, age goes from right to left (oldest)
+            var ptLoc = pt.x - data.right;
+            var pxMA = ptLoc/MaPerPx;
+            var ptX = margin.left + (chartWidth - pxMA);
+            var ptY = horizon - yLevel[i % 3];
+            
+            var match = false;
+            for (var j=0; j<uniqueEvents.length; j++) {
+                if (etxt === uniqueEvents[j]) {
+                    match = true;
+                    break;
+                }
+            }
+            if (!match) {
+                uniqueEvents.push(etxt);
+                var epos = ptX + 10;
+                /*
+                if (i > 0 && type == renderType.lines) {
+                    //Draw connecting lines
+                    drawLine(ptX, ptY, prevX, prevY, 'DarkGreen', 2);
+                }
+                */
+                if (type == renderType.points) {
+                    var radgrad = context.createRadialGradient(ptX, ptY, 4, ptX - 2, ptY - 2, 0);
+                    radgrad.addColorStop(0, 'Green');
+                    radgrad.addColorStop(0.9, 'White');
+                    context.beginPath();
+                    context.fillStyle = radgrad;
+                    //Render circle
+                    context.arc(ptX, ptY, 5, 0, 2 * Math.PI, false)
+                    context.fill();
+                    context.lineWidth = 1;
+                    context.strokeStyle = '#000';
+                    context.stroke();
+                    context.closePath();
+                    context.fillText(etxt, epos, ptY+4);
+                }
+            }
         }
         prevX = ptX;
         prevY = ptY;

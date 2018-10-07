@@ -5,63 +5,183 @@ body {
     background-color: white;
     font-size: 14px;
 }
+.scrollbar-measure {
+    width: 100px;
+    height: 100px;
+    overflow: scroll;
+    position: absolute;
+    top: -9999px;
+}
+#src {
+    margin-left: 12px;
+    font-size: 16px;
+}
+#url {
+    color: blue;
+    text-decoration: underline;
+}
 #xopt {
     display: none;
 }
 #inst {
     margin-left: 12px;
     color: brown;
+    text-decoration: underline;
 }
-#crypto {
+/* The 'main' section view CSS items: */
+#maintext, #eontext, #eratext, #periodtext {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: 12px;
+    font-size: 18px;
+}
+#maintext {
+    margin-top: 12px;
+}
+#Crypto {
     text-align: center;
     border-style: dotted;
-    border-color: gray;
+    border-color: blue;
     border-width: 1px;
     border-color: gray;
     color: gray;
     height: 22px;
     padding-top: 4px;
 }
-.edivs {
+#eons {
+    height: 24px;
+    margin: 0px;
+}
+.maindivs, .eondivs, .eradivs, .perioddivs {
     float: left;
     height: 24px;
     text-align: center;
     border-style: inset;
     border-width: 2px;
     margin: 0px;
+    padding: 0;
+    padding-top: 6px;
+}
+#Hadean {
+    background-color: FireBrick;
+    color: White;
+    border-color: Gray;
+}
+#Archean {
+    background-color: Crimson;
+    color: White;
+    border-color: Gray;
+}
+#Proterozoic {
+    background-color: #ff3333; /* 60% Red */
+    border-color: Gray;
+}
+#Phanerozoic {
+    background-color: PowderBlue;
+    border-color: Gray;
+}
+#overall {
+    text-align: center;
+    font-size: 16px;
+    margin-top: 18px;
+}
+#percent {
+    color: blue;
+}
+#box0 {
+    float: left;
+    height: 30px;
+    margin-top: 4px;
+}
+#box1, #box3 {
+    float: left;
+    background-color: lightgray;
+    border: 1px;
+    height: 30px;
+    margin-top: 4px;
+}
+#box2 {
+    float: left;
+    background-color: darkblue;
+    border: 1px;
+    height: 30px;
+    margin-top: 4px;
+}
+/* Table formatting */
+table {
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    border-style: groove;
+    border-color: DarkBlue;
+    border-width: 3px;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 2px 6px 1px 6px;
+}
+th {
+    border-style: solid;
+    border-width: 1px;
+    border-color: DarkBlue;
+    color: DarkGreen;
+    border-bottom-width: medium;
+}
+td {
+    border-style: solid;
+    border-width: 1px;
+}
+tr.even {
+    background-color: lightgray;
+}
+#eontbl {
+    display: none;
+}
+#eratbl {
+    display: none;
+}
+#periodtbl {
+    display: none;
+}
+
+/* The 'eon' section view CSS items: */
+.clearfix {
+    clear: both;
+}
+.eonht {
+    height: 24px;
+    padding-top: 6px;
+}
+.clicks {
     cursor: pointer;
-    padding-top: 4px;
 }
-#hadean {
-    background-color: aliceblue;
-}
-#archean {
-    background-color: honeydew;
-}
-#proto {
-    background-color: cornsilk;
-}
-#phan {
-    background-color: #ffe6e9;
-}
-#mainline {
-    width: 100%;
-}
-#eonic {
+#hadeanbox, #archeanbox, #protobox, #phanbox {
     display: none;
-    margin-left: 24px;
-    color: brown;
-    font-size: 18px;
+    text-align: center;
 }
-#eric {
-    display: none;
-    margin-left: 24px;
-    color: brown;
-    font-size: 18px;
+#hadeanbox {
+    border-style: inset;
+    border-width: 2px;
+    margin-top: 8px;
 }
-#peric {
-    display: none;
-    margin-left: 24px;
+#eonadder, #eraadder, #peradder {
     color: brown;
-    font-size: 18px;
+}
+/* The 'era' section view CSS items: */
+.eradivs {
+    height: 28px;
+    border-color: gray;
+}
+.eraht {
+    padding-top: 6px;
+}
+/* The 'period' section view CSS items: */
+.perht {
+    height: 24px;
+    padding-top: 6px;
+    text-align: center;
+    border-style: inset;
+    border-width: 2px;
+    margin: 0px;
 }
