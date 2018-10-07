@@ -137,42 +137,45 @@ var renderData = function renderData(type) {
     context.textAlign = "left";
     for (var i = 0; i < data.dataPoints.length; i++) {
         var pt = data.dataPoints[i];
-        // remember, age goes from right to left (oldest)
-        var ptLoc = pt.x - data.right;
-        var pxMA = ptLoc/MaPerPx;
-        var ptX = margin.left + (chartWidth - pxMA);
-        var ptY = horizon - yLevel[i % 3];
         var etxt = pt.mrkr;
-        var match = false;
-        for (var j=0; j<etxt.length; j++) {
-            if (etxt === uniqueEvents[j]) {
-                match = true;
-                break;
+        if (etxt !== 'Tbl') { // Tbl is for tables only, not timeline
+            // remember, age goes from right to left (oldest)
+            var ptLoc = pt.x - data.right;
+            var pxMA = ptLoc/MaPerPx;
+            var ptX = margin.left + (chartWidth - pxMA);
+            var ptY = horizon - yLevel[i % 3];
+            
+            var match = false;
+            for (var j=0; j<uniqueEvents.length; j++) {
+                if (etxt === uniqueEvents[j]) {
+                    match = true;
+                    break;
+                }
             }
-        }
-        if (!match) {
-            uniqueEvents.push(etxt);
-            var epos = ptX + 10;
-            /*
-            if (i > 0 && type == renderType.lines) {
-                //Draw connecting lines
-                drawLine(ptX, ptY, prevX, prevY, 'DarkGreen', 2);
-            }
-            */
-            if (type == renderType.points) {
-                var radgrad = context.createRadialGradient(ptX, ptY, 4, ptX - 2, ptY - 2, 0);
-                radgrad.addColorStop(0, 'Green');
-                radgrad.addColorStop(0.9, 'White');
-                context.beginPath();
-                context.fillStyle = radgrad;
-                //Render circle
-                context.arc(ptX, ptY, 5, 0, 2 * Math.PI, false)
-                context.fill();
-                context.lineWidth = 1;
-                context.strokeStyle = '#000';
-                context.stroke();
-                context.closePath();
-                context.fillText(etxt, epos, ptY+4);
+            if (!match) {
+                uniqueEvents.push(etxt);
+                var epos = ptX + 10;
+                /*
+                if (i > 0 && type == renderType.lines) {
+                    //Draw connecting lines
+                    drawLine(ptX, ptY, prevX, prevY, 'DarkGreen', 2);
+                }
+                */
+                if (type == renderType.points) {
+                    var radgrad = context.createRadialGradient(ptX, ptY, 4, ptX - 2, ptY - 2, 0);
+                    radgrad.addColorStop(0, 'Green');
+                    radgrad.addColorStop(0.9, 'White');
+                    context.beginPath();
+                    context.fillStyle = radgrad;
+                    //Render circle
+                    context.arc(ptX, ptY, 5, 0, 2 * Math.PI, false)
+                    context.fill();
+                    context.lineWidth = 1;
+                    context.strokeStyle = '#000';
+                    context.stroke();
+                    context.closePath();
+                    context.fillText(etxt, epos, ptY+4);
+                }
             }
         }
         prevX = ptX;

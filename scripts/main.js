@@ -80,6 +80,31 @@ function setChartProps(chartId) {
     colorKey = chartParms[chartId].color;
     color = colorObj[colorKey];
 }
+function formTable(section, type) {
+    var field;
+    var sectionTbl = "#" + section + "tbl";
+    var $hdr = $(sectionTbl).find('thead tr');
+    var hcell = type + " Event Description"
+    $hdr.find('th').eq(2).text(hcell);
+    for (k in eventSets) {
+        if (k === type) {
+            for (var j=0; j<eventSets[k].length; j++) {
+                var $tblrow = $('<tr/>');
+                field = eventSets[k][j].x;
+                $tblrow.append($('<td/>').html(field));
+                field = eventSets[k][j].mrkr;
+                if (field === 'Tbl') {
+                    field = type + " Boundary";
+                }
+                $tblrow.append($('<td/>').html(field));
+                field = eventSets[k][j].des;
+                $tblrow.append($('<td/>').html(field));
+                $(sectionTbl).append($tblrow);
+            }
+            break;
+        } 
+    }
+}
 // -------- SETUP "MAIN" SECTION OF DISPLAY ----------
 function scrollBarWidth() {
     // see: https://davidwalsh.name/detect-scrollbar-width
@@ -244,9 +269,11 @@ function eonDefs(eon) {
     var adder = chartParms[chartNo].adder;
     $('#eonadder').text(adder);
     $('#eonadder').show();
+    formTable("eon", eon);
     $('#eontbl').show();
     $(window).scrollTop(currScroll);
 }
+// --------- ERA DISPLAY ----------
 function eraDefs(era) {
     sessionStorage.setItem('dispEra', era);
     resetDisplays('era');
@@ -254,7 +281,7 @@ function eraDefs(era) {
         if (eras[i] === era) {
             var eraNo = i;
             // hacky, but lacking a better approach right now
-            if (era.search('proto') === -1) {
+            if (era.search('zoic') !== -1) {
                 eraNo -= 3;
             }
             var chartNo = i + eons.length;
@@ -290,8 +317,11 @@ function eraDefs(era) {
     var adder = chartParms[chartNo].adder;
     $('#eraadder').text(adder);
     $('#eraadder').show();
+    formTable("era", era);
+    $('#eratbl').show();
     $(window).scrollTop(currScroll);
 }
+// ---------- PERIOD DISPLAY ----------
 function periodDefs(per) {
     sessionStorage.setItem('dispPer', per);
     resetDisplays('period');
@@ -364,6 +394,8 @@ function periodDefs(per) {
     var adder = chartParms[chartNo].adder;
     $('#peradder').text(adder);
     $('#peradder').show();
+    formTable("period", per);
+    $('#periodtbl').show();
     $(window).scrollTop(currScroll);
 }
 function resetDisplays(section) {
@@ -391,13 +423,11 @@ function getTickOffset(tint, lbound) {
 function drawArea(section, member) {
     // section = viewing area; member = member to display
     if (section === 'main') {
-        mainDefs();
-        // main chart:
-        //mainChartEl = document.getElementById('mainline');
-        //setChartDims('events', mainChartEl, MAINHT);
-        //drawChart('mainline');
+        mainDefs(section);
+        wipeTables();
     } else if (section === 'eon') {
         currEon = member;
+        wipeTables(section);
         eonDefs(member); // includes children of member
         // eon chart:
         var eonDiv = 'eonline';
@@ -408,6 +438,7 @@ function drawArea(section, member) {
         $("#" + eonDiv).show();
     } else if (section === 'era') {
         currEra = member;
+        wipeTables(section);
         eraDefs(member); // includes children of member
         // era chart:
         var eraDiv = 'eraline';
@@ -418,6 +449,7 @@ function drawArea(section, member) {
         $("#" + eraDiv).show();
     } else if (section === 'period') {
         currPer = member;
+        wipeTables(section);
         periodDefs(member);
         var perDiv = 'periodline';
         var periodChartId = 'period';
@@ -426,6 +458,16 @@ function drawArea(section, member) {
         drawChart(periodChartId);
         $("#" + perDiv).show();
     }
+}
+function wipeTables(section) {
+    $('#periodtbl').find('tbody tr').remove();
+    $('#periodtbl').hide();
+    if (section === 'period') return;
+    $('#eratbl').find('tbody tr').remove();
+    $('#eratbl').hide();
+    if (section === 'era') return;
+    $('#eontbl').find('tbody tr').remove();
+    $('#eontbl').hide();
 }
 function displaySection(loc, content) {
     // only show the table that is currently active via 'loc':
@@ -475,6 +517,13 @@ $(document).ready( function() {
         var subs = true; // this is a page refresh...
     }
     eage = $('#xopt').text(); // page startup default for earth's age
+    /* 
+     * Even though the xlsx-reader.js script has been loaded, asynchronous
+     * reading of the files and conversion into objects needed by this
+     * routine is not ready for page load. Hence, the variable 'timing' 
+     * must be set by the reader before this routine can proceed: 
+     * i.e. the setInterval statement following.
+     */
     $timeout = setInterval( function() {
         if (timing) {
             displaySection('main','');
@@ -496,6 +545,7 @@ $(document).ready( function() {
             clearInterval($timeout);
         }
     }, 5);
+
     /*
      * EVENT DEFINITIONS
      */
@@ -531,7 +581,8 @@ $(document).ready( function() {
     $('#Phanerozoic2').on('click', function() {
         displaySection('era', 'Cenozoic');
     });
-    // Clickable PERIODS in ERA VIEW:
+    // Clickable PERIODS in ERA VIEW:'
+    /* Non-clcickable:
     $('#Paleo0').on('click', function() {
         displaySection('period', 'Siderian');
     });
@@ -562,6 +613,7 @@ $(document).ready( function() {
     $('#Neo2').on('click', function() {
         displaySection('period', 'Ediacaran');
     });
+    */
     $('#Paleozoic0').on('click', function() {
         displaySection('period', 'Cambrian');
     });

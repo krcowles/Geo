@@ -86,7 +86,7 @@ function BindTable(jsondata, tableid, chartname) {
     var columns = BindTableHeader(jsondata, tableid);
     // Every jsondata item is a row of the table:
     for (var i = 0; i < jsondata.length; i++) {  
-        var row$ = $('<tr/>'); 
+        //var row$ = $('<tr/>');
         for (var colIndex = 0; colIndex < columns.length; colIndex++) {  
             var cellValue = jsondata[i][columns[colIndex]];  
             if (cellValue == null) {
@@ -101,12 +101,12 @@ function BindTable(jsondata, tableid, chartname) {
             } else if (chartname === shapes) {
                 convertToShapes(colIndex, data);
             }
-            row$.append($('<td/>').html(data));
+            //row$.append($('<td/>').html(data));
             if (chartname === shapes) {
                 timing = true;
             }  
         }
-        $(tableid).append(row$);  
+        //$(tableid).append(row$);  
     }  
 } 
 // Function used to get all column names from JSON and bind the html table header:
@@ -147,7 +147,7 @@ function convertToParms(xl_column, parm) {
     }
 }
 function convertToEvents(xl_column, ev_data) {
-    // Note: times and marker labels may be repeated:
+    // Note: times and marker labels may be repeated in .xlsx file
     if (xl_column === 0) {
         if (ev_data !== currBox) {
             // set the object's key (whose value is an array)

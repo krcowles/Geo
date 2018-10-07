@@ -109,7 +109,9 @@ body {
 }
 /* Table formatting */
 table {
-    margin-left: 12px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
     width: 60%;
     border-style: groove;
     border-color: DarkBlue;
@@ -132,6 +134,15 @@ td {
 }
 tr.even {
     background-color: lightgray;
+}
+#eontbl {
+    display: none;
+}
+#eratbl {
+    display: none;
+}
+#periodtbl {
+    display: none;
 }
 
 /* The 'eon' section view CSS items: */
