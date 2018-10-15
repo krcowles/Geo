@@ -6,7 +6,6 @@ var HADEAN = 0;
 // 'Percent Chart' Width as Fraction of Page Width:
 var PCHART = 0.75;
 // Section heights:
-var MAINHT = 80;
 var EONHT = 80;
 var ERAHT = 80;
 var PERHT = 80;
@@ -168,21 +167,16 @@ function drawPortion() {
     $('#box3').show();
     if (currEon !== 'off') {
         if (currEra !== 'off') {
+            var box1 = portionPx * (eage - leftAge)/eage;
+            var box2 = (leftAge - rightAge)/eage;
+            portion = 100 * box2;
+            box2 *= portionPx;
+            box3 = portionPx - (box1 + box2);
             if (currPer !== 'off') { // period as percentage
-                var box1 = portionPx * (eage - leftAge)/eage;
-                var box2 = (leftAge - rightAge)/eage;
-                portion = 100 * box2
                 portion = portion.toFixed(3);
-                box2 *= portionPx;
-                box3 = portionPx - (box1 + box2);
                 $('#segment').text('Period');
             } else { // era as percentage
-                var box1 = portionPx * (eage - leftAge)/eage;
-                var box2 = (leftAge - rightAge)/eage;
-                var portion = 100 * box2;
                 portion = portion.toFixed(2);
-                box2 *= portionPx;
-                box3 = portionPx - (box1 + box2);
                 $('#segment').text("Era");
             }
         } else { // eon as percentage
@@ -582,38 +576,6 @@ $(document).ready( function() {
         displaySection('era', 'Cenozoic');
     });
     // Clickable PERIODS in ERA VIEW:'
-    /* Non-clcickable:
-    $('#Paleo0').on('click', function() {
-        displaySection('period', 'Siderian');
-    });
-    $('#Paleo1').on('click', function() {
-        displaySection('period', 'Rhyacian');
-    });
-    $('#Paleo2').on('click', function() {
-        displaySection('period', 'Orosirian');
-    });
-    $('#Paleo3').on('click', function() {
-        displaySection('period', 'Statherian');
-    });
-    $('#Meso0').on('click', function() {
-        displaySection('period', 'Calymmian');
-    });
-    $('#Meso1').on('click', function() {
-        displaySection('period', 'Ectasian');
-    });
-    $('#Meso2').on('click', function() {
-        displaySection('period', 'Stenian');
-    });
-    $('#Neo0').on('click', function() {
-        displaySection('period', 'Tonian');
-    });
-    $('#Neo1').on('click', function() {
-        displaySection('period', 'Cryogenian');
-    });
-    $('#Neo2').on('click', function() {
-        displaySection('period', 'Ediacaran');
-    });
-    */
     $('#Paleozoic0').on('click', function() {
         displaySection('period', 'Cambrian');
     });
@@ -649,6 +611,12 @@ $(document).ready( function() {
     });
     $('#Cenozoic2').on('click', function() {
         displaySection('period', 'Quaternary');
+    });
+    $('#holo').on('mouseover', function() {
+        $(this).css('cursor','pointer');
+    });
+    $('#holo').on('click', function() {
+        alert("Display not yet implemented");
     });
 
     // RESIZING OF WINDOW:
