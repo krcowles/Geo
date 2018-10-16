@@ -44,18 +44,34 @@
         <div id="box3"></div>
     </div>
     <div class="clearfix"></div>
+
     <!-- EON VIEW SECTION -->
-    <div class="clearfix" id="eonview">
+    <div id="eonview">
         <p id="eontext">EON View: <span id="eonadder"></span></p>
+        <div id="eonline">
+            <canvas id="eon"></canvas>
+        </div>
+        <table id="eontbl">
+            <thead>
+                <tr>
+                    <th>Earth Age</th>
+                    <th>Timeline Label</th>
+                    <th>Event Description</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <p id="eonboxes" class="boxtext">The <span id="eoneras"></span>
+            Eon is made up of the following Eras:</p>
         <div id="Hadeanbox" class="eonht"></div>
         <div id="Archeanbox" class="eonht">
-            <div id="Archean0" class="eondivs">Eo Era</div>
-            <div id="Archean1" class="eondivs">Paleo Era</div>
+            <div id="Archean0" class="eondivs hilite">Eo Era</div>
+            <div id="Archean1" class="eondivs hilite">Paleo Era</div>
             <div id="Archean2" class="eondivs">Meso Era</div>
             <div id="Archean3" class="eondivs">Neo Era</div>
         </div>
         <div id="Proterozoicbox" class="eonht">
-            <div id="Proterozoic0" class="eondivs clicks">Paleo Era</div>
+            <div id="Proterozoic0" class="eondivs clicks hilite">Paleo Era</div>
             <div id="Proterozoic1" class="eondivs clicks">Meso Era</div>
             <div id="Proterozoic2" class="eondivs clicks">Neo Era</div>
         </div>
@@ -64,23 +80,26 @@
             <div id="Phanerozoic1" class="eondivs clicks">Mesozoic Era</div>
             <div id="Phanerozoic2" class="eondivs clicks">Cenozoic Era</div>
         </div>
-        <div id="eonline" class="clearfix">
-            <canvas id="eon"></canvas>
-        </div>
+        <div id="eonend">&nbsp;</div>
     </div>
-    <table id="eontbl">
-        <thead>
-            <tr>
-                <th>Earth Age</th>
-                <th>Timeline Label</th>
-                <th>Event Description</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
     <!-- ERA VIEW SECTION -->
     <div id="eraview">
         <p id="eratext">ERA View: <span id="eraadder"></span></p>
+        <div id="eraline">
+            <canvas id="era"></canvas>
+        </div>
+        <table id="eratbl">
+            <thead>
+                <tr>
+                    <th>Earth Age</th>
+                    <th>Timeline Label</th>
+                    <th>Event Description</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <p id="eraboxes" class="boxtext">The <span id="eraperiods"></span>
+            Era is made up of the following Periods:</p>
         <div id="Paleobox" class="eraht">
             <div id="Paleo0" class="eradivs">Siderian Period</div>
             <div id="Paleo1" class="eradivs">Rhyacian Perioc</div>
@@ -116,23 +135,27 @@
             <div id="Cenozoic2" class="eradivs clicks" style=
                 "word-wrap:break-word;font-size:12px;">Quaternary</div>
         </div>
-        <div id="eraline">
-            <canvas id="era"></canvas>
-        </div>
+        <div id="eraend">&nbsp;</div>
     </div>
-    <table id="eratbl">
-        <thead>
-            <tr>
-                <th>Earth Age</th>
-                <th>Timeline Label</th>
-                <th>Event Description</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    
     <!-- PERIOD VIEW SECTION -->
     <div id="periodview">
         <p id="periodtext">PERIOD View: <span id="peradder"></span></p>
+        <div id="periodline">
+            <canvas id="period"></canvas>
+        </div>
+        <table id="periodtbl">
+            <thead>
+                <tr>
+                    <th>Earth Age</th>
+                    <th>Timeline Label</th>
+                    <th>Event Description</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <p id="periodboxes" class="boxtext">The <span id="periodepochs"></span>
+            Period is made up of the following Epochs:</p>
         <div id="Siderianbox" class="perht">Siderian Period</div>
         <div id="Rhyacianbox" class="perht">Rhyacian Period</div>
         <div id="Orosirianbox" class="perht">Orosirian Period</div>
@@ -206,19 +229,7 @@
                 <span id="holo" style="float:right;">Holocene Epoch (11,700 yrs) -></span></div>
             <div id="Quaternary1" class="perioddivs" style="clear:both;">H</div>
         </div>
-        <div id="periodline">
-            <canvas id="period"></canvas>
-        </div>
-        <table id="periodtbl">
-            <thead>
-                <tr>
-                    <th>Earth Age</th>
-                    <th>Timeline Label</th>
-                    <th>Event Description</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <div id="periodend">&nbsp;</div>
     </div>
 </div>  <!-- MAIN -->
 <script src="scripts/jquery-1.12.1.js"></script>

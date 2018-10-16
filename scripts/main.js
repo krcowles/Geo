@@ -18,7 +18,7 @@ var eage;  // estimated earth age (read from html #xopt)
 var title;
 var rightAge;
 var leftAge;
-var ticks; // Spacing of ticks in mya
+var ticks; // Spacing of ticks in MYA
 var toff;  // when boundary starts at an odd number, offset chart ticks
 var setNo; // event definitions (see objectDefs.js)
 var color;
@@ -47,7 +47,6 @@ function setChartDims(divId, canvasEl, ht) {
     var div = "#" + divId;
     $(div).width(pgwidth);
     canvasEl.width = pgwidth;
-    //var parentHeight = canvasEl.parentNode.offsetHeight;
     canvasEl.height = ht;
 }
 function defineData() {
@@ -115,13 +114,12 @@ function scrollBarWidth() {
     return barwidth;
 }
 function mainDefs() {
-    // chart properties:
+    // main chart properties:
     rightAge = 0;
     leftAge = eage;
-    //setChartProps(MAIN);
     toff = 0; // no offset for main chart
     // boxes:
-    var scale = pgwidth/eage;  // px per Million Years (MY)
+    var scale = pgwidth/eage;  // px per Million Years Ago (MYA)
     var bwpx = $('.maindivs').css('border-left-width'); // has 'px' appended
     var bwidth = 2 * parseInt(bwpx);
     var crypto = Math.floor(pgwidth - eonShapes['Proterozoic'].right * scale);
@@ -212,7 +210,6 @@ function drawPortion() {
 }
 // ---------- EON DISPLAY ----------
 function eonDefs(eon) {
-    // because pgwidth can change when scroll bars appear:
     sessionStorage.setItem('dispEon', eon);
     resetDisplays('eon');
     for (var i=0; i<eons.length; i++) {
@@ -240,7 +237,7 @@ function eonDefs(eon) {
         $('#Hadeanbox').width(pgwidth - borders);
         $('#Hadeanbox').css('background-color', colorObj.HADCOLOR);
         $('#Hadeanbox').css('color', 'White')
-        $('#Hadeanbox').text("Hadean Eon");
+        $('#Hadeanbox').text("No Eras");
         $('#Hadeanbox').css('text-align', 'center');
     } else {
         var accumbox = 0;
@@ -262,9 +259,9 @@ function eonDefs(eon) {
     $(eondiv).show();
     var adder = chartParms[chartNo].adder;
     $('#eonadder').text(adder);
-    $('#eonadder').show();
     formTable("eon", eon);
-    $('#eontbl').show();
+    $('#eoneras').text(eon);
+    $('#eonview').slideDown(600);
     $(window).scrollTop(currScroll);
 }
 // --------- ERA DISPLAY ----------
@@ -310,9 +307,9 @@ function eraDefs(era) {
     $(eradiv).show();
     var adder = chartParms[chartNo].adder;
     $('#eraadder').text(adder);
-    $('#eraadder').show();
     formTable("era", era);
-    $('#eratbl').show();
+    $('#eraperiods').text(era);
+    $('#eraview').slideDown(600);
     $(window).scrollTop(currScroll);
 }
 // ---------- PERIOD DISPLAY ----------
@@ -387,9 +384,9 @@ function periodDefs(per) {
     $(perdiv).show();
     var adder = chartParms[chartNo].adder;
     $('#peradder').text(adder);
-    $('#peradder').show();
     formTable("period", per);
-    $('#periodtbl').show();
+    $('#periodepochs').text(per);
+    $('#periodview').slideDown(600);
     $(window).scrollTop(currScroll);
 }
 function resetDisplays(section) {
@@ -418,7 +415,7 @@ function drawArea(section, member) {
     // section = viewing area; member = member to display
     if (section === 'main') {
         mainDefs(section);
-        wipeTables();
+        wipeTables(section);
     } else if (section === 'eon') {
         currEon = member;
         wipeTables(section);
@@ -455,44 +452,29 @@ function drawArea(section, member) {
 }
 function wipeTables(section) {
     $('#periodtbl').find('tbody tr').remove();
-    $('#periodtbl').hide();
     if (section === 'period') return;
     $('#eratbl').find('tbody tr').remove();
-    $('#eratbl').hide();
     if (section === 'era') return;
     $('#eontbl').find('tbody tr').remove();
-    $('#eontbl').hide();
 }
 function displaySection(loc, content) {
     // only show the table that is currently active via 'loc':
-    $('div[id$="tbl"]').hide();
+    //$('div[id$="tbl"]').hide();
     // maintain current scroll position:
     currScroll = $(window).scrollTop();
     // everytime a section loc is drawn, everything below it should turn off:
     if (loc === 'main') {
-        $('div[id$="box"]').hide();
-        $('div[id="eonline"]').hide();
-        $('scan[id="eonadder"]').hide();
-        $('div[id="eraline"]').hide();
-        $('span[id="eraadder"]').hide();
-        $('div[id="periodline"]').hide();
-        $('span[id="peradder"]').hide();
+        $('div[id$="view"]').hide();
         currEon = 'off';
         currEra = 'off';
         currPer = 'off';
     } else if(loc === 'eon') {
-        $('div[id="eraview"] div[id$="box"]').hide();
-        $('div[id="eraline"]').hide();
-        $('span[id="eraadder"]').hide();
-        $('div[id="periodview"] div[id$="box"]').hide();
-        $('div[id="periodline"]').hide();
-        $('span[id="peradder"]').hide();
+        $('div[id="eraview"]').hide();
+        $('div[id="periodview"]').hide();
         currEra = 'off';
         currPer = 'off';
     } else if(loc === 'era') {
-        $('div[id="periodview"] div[id$="box"]').hide();
-        $('div[id="periodline"]').hide();
-        $('span[id="peradder"]').hide();
+        $('div[id="periodview"]').hide();
         currPer = 'off';
     }
     drawArea(loc, content);
@@ -512,11 +494,11 @@ $(document).ready( function() {
     }
     eage = $('#xopt').text(); // page startup default for earth's age
     /* 
-     * Even though the xlsx-reader.js script has been loaded, asynchronous
+     * Even though the xlsx-reader.js script is already loaded, asynchronous
      * reading of the files and conversion into objects needed by this
-     * routine is not ready for page load. Hence, the variable 'timing' 
-     * must be set by the reader before this routine can proceed: 
-     * i.e. the setInterval statement following.
+     * routine is not completed when main.js is loaded. Hence, the variable
+     * 'timing' must be set by the 'reader' before this routine can proceed: 
+     * 'setInterval' examines the state of the 'timing' variable.
      */
     $timeout = setInterval( function() {
         if (timing) {

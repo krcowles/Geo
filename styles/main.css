@@ -131,17 +131,12 @@ td {
     border-style: solid;
     border-width: 1px;
 }
-tr.even {
+table tr:nth-child(odd) td {
     background-color: honeydew;
 }
-#eontbl {
-    display: none;
-}
-#eratbl {
-    display: none;
-}
-#periodtbl {
-    display: none;
+.boxtext {
+    margin-left: 12px;
+    margin-bottom: 0px;
 }
 
 /* The 'eon' section view CSS items: */
@@ -155,17 +150,20 @@ tr.even {
 .clicks {
     cursor: pointer;
 }
-#hadeanbox, #archeanbox, #protobox, #phanbox {
+#Hadeanbox, #Archeanbox, #Proterozoicbox, #Phanerozoicbox {
     display: none;
     text-align: center;
 }
-#hadeanbox {
+#Hadeanbox {
     border-style: inset;
     border-width: 2px;
     margin-top: 8px;
 }
 #eonadder, #eraadder, #peradder {
     color: brown;
+}
+div[id$="end"] {
+    margin: 4px;
 }
 /* The 'era' section view CSS items: */
 .eradivs {
