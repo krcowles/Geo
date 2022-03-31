@@ -11,13 +11,18 @@
 </head>
 <body>
 <div id="src">The timeline presented corresponds with the 
-    <a href="http://www.stratigraphy.org/ICSchart/ChronostratChart2017-02.pdf">
+    <a href="http://www.stratigraphy.org/ICSchart/ChronostratChart2017-02.pdf"
+        target="_blank">
     International Chronostratigraphic Chart</a> (w/similar colors)<br />
 </div>
+
+<hr class="msect" />
 <div id="main">
+    <!-- MAIN VIEW: WHOLE EARTH SPAN -->
     <p id="xopt">4500</p> <!-- value in MYrs for age of earth -->
-    <p id="inst">Click to Expand (When Enabled)</p>
-    <p id="maintext">MAIN View (Earth's Entire History)</p>
+    <p id="maintext">MAIN View (Earth's Entire History): 4500 Million Years</p>
+    <p id="explan">Click on any Eon to view details. You may further expand Eras
+        and Periods as presented</p>
     <div id="Crypto">
         Cryptozoic (aka PreCambrian) SuperEON
     </div>
@@ -36,14 +41,15 @@
         </div>
     </div>
     <div id="overall">The <span id="segment"></span> you are viewing is
-            <span id="percent"></span> of earth's age
+            <span id="percent"></span> of earth's age [bar => 4500 Million Years]
         <br />
         <div id="box0"></div>
         <div id="box1"></div>
         <div id="box2"></div>
         <div id="box3"></div>
     </div>
-    <div class="clearfix"></div>
+    <div class="clearfix"></div><br />
+    <hr class="msect"/>
 
     <!-- EON VIEW SECTION -->
     <div id="eonview">
@@ -54,7 +60,7 @@
         <table id="eontbl">
             <thead>
                 <tr>
-                    <th>Earth Age</th>
+                    <th>MYrs Ago</th>
                     <th>Timeline Label</th>
                     <th>Event Description</th>
                 </tr>
@@ -91,7 +97,7 @@
         <table id="eratbl">
             <thead>
                 <tr>
-                    <th>Earth Age</th>
+                    <th>MYrs Ago</th>
                     <th>Timeline Label</th>
                     <th>Event Description</th>
                 </tr>
@@ -147,7 +153,7 @@
         <table id="periodtbl">
             <thead>
                 <tr>
-                    <th>Earth Age</th>
+                    <th>MYrs Ago</th>
                     <th>Timeline Label</th>
                     <th>Event Description</th>
                 </tr>
@@ -231,7 +237,8 @@
         </div>
         <div id="periodend">&nbsp;</div>
     </div>
-</div>  <!-- MAIN -->
+</div>  <!-- END of MAIN -->
+
 <script src="scripts/jquery-1.12.1.js"></script>
 <script src="scripts/colors.js"></script>
 <script src="scripts/xlsx.core.min.js"></script>

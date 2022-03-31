@@ -1,14 +1,24 @@
+
+/**
+ * @fileoverview This script relies on data asynchronously obtained via
+ * xlsx-reader.js and xlsx.core.min.js, which access Excel charts containing
+ * key information for charting.
+ * 
+ * @author Ken Cowles
+ * @version 1.0 
+ * 
+ */
 // global vars
 var pgwidth;
 var scrollBars = scrollBarWidth();
 // Chart ID
-var HADEAN = 0;
+const HADEAN = 0;
 // 'Percent Chart' Width as Fraction of Page Width:
-var PCHART = 0.75;
+const PCHART = 0.75;
 // Section heights:
-var EONHT = 80;
-var ERAHT = 80;
-var PERHT = 80;
+const ERAHT = 80;
+const PERHT = 80;
+const EONHT = 80;
 /*
  * Use of the variable 'pgwidth' will always subtract the scrollBars
  * as the detection of scrollbars on the page is a non-trivial problem,
@@ -36,19 +46,32 @@ var currPer = 'off';
 var currScroll;
 var portion; // portion of earth's age being viewed
 var percentchart;
-var resizeFlag = true; // prevents rapid-fire events during resize
+var subs; // detects if page refresh and retains sub-displays if so
+var resizeFlag = true; // prevents rapi-fire events during resize
 
-/*    
- * FUNCTION DEFINITIONS
-*/
-// ----------- CHARTING ----------
+// ------------ FUNCTION DEFINITIONS ------------ //
+/**
+ * This function sets up the dimensions for the charts, when they are invoked
+ * @param {string}            divId    The #id for the associated div with chart et al
+ * @param {HTMLCanvasElement} canvasEl The canvas element for the chart
+ * @param {number}            ht       The height of the chart
+ * 
+ * @returns {null} 
+ */
+// ----------- CHARTING ---------- //
 function setChartDims(divId, canvasEl, ht) {
     // At this point, all charts are full width of the page
     var div = "#" + divId;
     $(div).width(pgwidth);
     canvasEl.width = pgwidth;
     canvasEl.height = ht;
+    return;
 }
+/**
+ * This function creates the data object required by the charting function
+ * 
+ * @returns {object}
+ */
 function defineData() {
     // data object for the chart:
     var dataDef = {
@@ -67,22 +90,46 @@ function defineData() {
     };
     return dataDef;
 }
+/**
+ * The invocation function for chart drawing
+ * 
+ * @param {string} canvasId  The canvas element's id for the chart
+ * 
+ * @returns {null}
+ */
 function drawChart(canvasId) {
     var chartData = defineData();
     ChartObj.render(canvasId, chartData);
+    return;
 }
+/**
+ * Charting properties are set for the chart in the argument
+ * 
+ * @param {string} chartId The chart element's id
+ * 
+ * @returns {null}
+ */
 function setChartProps(chartId) {
     ticks = chartParms[chartId].ticks;
     eventId = chartParms[chartId].evId;
     title = eventId + " Timeline";
     colorKey = chartParms[chartId].color;
     color = colorObj[colorKey];
+    return;
 }
+/**
+ * The creation of the html for the table of the section
+ * 
+ * @param {string} section  The table's id
+ * @param {string} type     The table's type
+ * 
+ * @returns {null}
+ */
 function formTable(section, type) {
     var field;
     var sectionTbl = "#" + section + "tbl";
     var $hdr = $(sectionTbl).find('thead tr');
-    var hcell = type + " Event Description"
+    var hcell = type + " Event Description";
     $hdr.find('th').eq(2).text(hcell);
     for (k in eventSets) {
         if (k === type) {
@@ -102,8 +149,14 @@ function formTable(section, type) {
             break;
         } 
     }
+    return;
 }
-// -------- SETUP "MAIN" SECTION OF DISPLAY ----------
+// -------- SETUP "MAIN" SECTION OF DISPLAY ---------- //
+/**
+ * This function will determine the widht of the scroll bar for the browser
+ * 
+ * @returns {number} scroll bar width
+ */
 function scrollBarWidth() {
     // see: https://davidwalsh.name/detect-scrollbar-width
     var scrollDiv = document.createElement("div");
@@ -113,6 +166,11 @@ function scrollBarWidth() {
     document.body.removeChild(scrollDiv);
     return barwidth;
 }
+/**
+ * The main section of the page is always displayed
+ * 
+ * @returns {null}
+ */
 function mainDefs() {
     // main chart properties:
     rightAge = 0;
@@ -146,7 +204,17 @@ function mainDefs() {
     } else {
         $('#Phanerozoic').text("Phanerozoic Eon");
     }
+    return;
 }
+/**
+ * This function is utilized to determine when to display an abbreviated
+ * name as text
+ * 
+ * @param {string} text The text to be displayed in a box
+ * @param {string} font The font characteristics
+ *  
+ * @returns {number} text width
+ */
 function getTextWidth(text, font) {
     // Hadean & Phanerozoic Eons require text adjustment w/resizing
     var canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
@@ -155,7 +223,16 @@ function getTextWidth(text, font) {
     var metrics = context.measureText(text);
     return metrics.width;
 }
-function drawPortion() {
+/**
+ * Drawing the portion to be displayed in the bar chart as a percentage of age
+ * 
+ * @param {string} type 'Eon', 'Era', etc
+ * @param {sgring} name Specific name of above
+ * 
+ * @returns {null}
+ */
+function drawPortion(type, name) {
+    var segval = name + ' ' + type;
     var portionPx = PCHART * pgwidth;
     var marg = (pgwidth - portionPx)/2;
     $('#box0').width(marg);
@@ -172,10 +249,10 @@ function drawPortion() {
             box3 = portionPx - (box1 + box2);
             if (currPer !== 'off') { // period as percentage
                 portion = portion.toFixed(3);
-                $('#segment').text('Period');
+                $('#segment').text(segval);
             } else { // era as percentage
                 portion = portion.toFixed(2);
-                $('#segment').text("Era");
+                $('#segment').text(segval);
             }
         } else { // eon as percentage
             if (leftAge === eage) {
@@ -194,7 +271,7 @@ function drawPortion() {
             } else {
                 var box3 = portionPx - (box1 + box2);
             }
-            $('#segment').text("Eon");
+            $('#segment').text(segval);
         }
         $('#box1').width(box1);
         $('#box2').width(box2);
@@ -207,8 +284,16 @@ function drawPortion() {
         $('#segment').text("span");
     }
     $('#percent').text(portion + "%");
+    return;
 }
 // ---------- EON DISPLAY ----------
+/**
+ * Display the Eon box, chart, and table
+ * 
+ * @param {string} eon Eon name 
+ * 
+ * @returns {null}
+ */
 function eonDefs(eon) {
     sessionStorage.setItem('dispEon', eon);
     resetDisplays('eon');
@@ -263,8 +348,16 @@ function eonDefs(eon) {
     $('#eoneras').text(eon);
     $('#eonview').slideDown(600);
     $(window).scrollTop(currScroll);
+    return;
 }
 // --------- ERA DISPLAY ----------
+/**
+ * Display the Era box chart, chart, and table
+ * 
+ * @param {string} era Era name
+ * 
+ * @returns {null}
+ */
 function eraDefs(era) {
     sessionStorage.setItem('dispEra', era);
     resetDisplays('era');
@@ -311,8 +404,15 @@ function eraDefs(era) {
     $('#eraperiods').text(era);
     $('#eraview').slideDown(600);
     $(window).scrollTop(currScroll);
+    return;
 }
 // ---------- PERIOD DISPLAY ----------
+/**
+ * Display the period box, chart, and table
+ * @param {string} per Period name
+ * 
+ * @returns {null}
+ */
 function periodDefs(per) {
     sessionStorage.setItem('dispPer', per);
     resetDisplays('period');
@@ -388,7 +488,15 @@ function periodDefs(per) {
     $('#periodepochs').text(per);
     $('#periodview').slideDown(600);
     $(window).scrollTop(currScroll);
+    return;
 }
+/**
+ * Turn off this section box chart
+ * 
+ * @param {string} section 
+ * 
+ * @returns {null}
+ */
 function resetDisplays(section) {
     var box;
     if (section === 'eon') {
@@ -407,12 +515,18 @@ function resetDisplays(section) {
             $(box).hide();
         }
     }
+    return;
 }
-function getTickOffset(tint, lbound) {
-    return lbound % tint;
-}
+/**
+ * This function is responsible for displaying the required elements for the
+ * 'area' (main, eon, era, period) and supplied area's 'member' name
+ * 
+ * @param {string} section viewing area
+ * @param {string} member  member of view to display
+ * 
+ * @returns {null}
+ */
 function drawArea(section, member) {
-    // section = viewing area; member = member to display
     if (section === 'main') {
         mainDefs(section);
         wipeTables(section);
@@ -449,14 +563,33 @@ function drawArea(section, member) {
         drawChart(periodChartId);
         $("#" + perDiv).show();
     }
+    return;
 }
+/**
+ * Remove the specified table
+ * 
+ * @param {string} section 
+ * 
+ * @returns {null}
+ */
 function wipeTables(section) {
     $('#periodtbl').find('tbody tr').remove();
     if (section === 'period') return;
     $('#eratbl').find('tbody tr').remove();
     if (section === 'era') return;
     $('#eontbl').find('tbody tr').remove();
+    return;
 }
+/**
+ * This function will initiate the display process for the arguments
+ * 'loc' [main line, eon view, era view], and passes 'content' [specific
+ * name of the item] to separate functions.
+ * 
+ * @param {string} loc 
+ * @param {string} content 
+ * 
+ * @returns {null}
+ */
 function displaySection(loc, content) {
     // only show the table that is currently active via 'loc':
     //$('div[id$="tbl"]').hide();
@@ -478,7 +611,8 @@ function displaySection(loc, content) {
         currPer = 'off';
     }
     drawArea(loc, content);
-    drawPortion();
+    drawPortion(loc, content);
+    return;
 }
 
 $(document).ready( function() {
@@ -488,39 +622,35 @@ $(document).ready( function() {
         sessionStorage.setItem('dispEon', 'off');
         sessionStorage.setItem('dispEra', 'off');
         sessionStorage.setItem('dispPer', 'off');
-        var subs = false;
+        subs = false;
     } else {
-        var subs = true; // this is a page refresh...
+        subs = true; // this is a page refresh...
     }
     eage = $('#xopt').text(); // page startup default for earth's age
     /* 
      * Even though the xlsx-reader.js script is already loaded, asynchronous
      * reading of the files and conversion into objects needed by this
-     * routine is not completed when main.js is loaded. Hence, the variable
-     * 'timing' must be set by the 'reader' before this routine can proceed: 
-     * 'setInterval' examines the state of the 'timing' variable.
+     * routine is not completed when main.js is loaded. The former script
+     * sets up deferred objects which can be used to detect completion.
      */
-    $timeout = setInterval( function() {
-        if (timing) {
-            displaySection('main','');
-            if (subs) {
-                // pg refresh: if any settings are on, dispEon must be also
-                currEon = sessionStorage.getItem('dispEon');
-                if (currEon !== 'off') {
-                    displaySection('eon', currEon);
-                    currEra = sessionStorage.getItem('dispEra');
-                    if (currEra !== 'off') {
-                        displaySection('era', currEra);
-                        currPer = sessionStorage.getItem('dispPer');
-                        if (currPer !== 'off') {
-                            displaySection('period', currPer);
-                        }
+    $.when(chartDef, eventDef, shapeDef).then(function() {
+        displaySection('main','');
+        if (subs) {
+            // pg refresh: if any settings are on, dispEon must be also
+            currEon = sessionStorage.getItem('dispEon');
+            if (currEon !== 'off') {
+                displaySection('eon', currEon);
+                currEra = sessionStorage.getItem('dispEra');
+                if (currEra !== 'off') {
+                    displaySection('era', currEra);
+                    currPer = sessionStorage.getItem('dispPer');
+                    if (currPer !== 'off') {
+                        displaySection('period', currPer);
                     }
                 }
             }
-            clearInterval($timeout);
         }
-    }, 5);
+     });  
 
     /*
      * EVENT DEFINITIONS

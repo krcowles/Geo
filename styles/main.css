@@ -5,12 +5,17 @@ body {
     background-color: white;
     font-size: 14px;
 }
+/* Used in main.js to determine scrollbar width */
 .scrollbar-measure {
     width: 100px;
     height: 100px;
     overflow: scroll;
     position: absolute;
     top: -9999px;
+}
+/* <hr> properties */
+.msect {
+    border: 5px solid darkred;
 }
 #src {
     font-size: 16px;
@@ -19,34 +24,22 @@ body {
 #xopt {
     display: none;
 }
-#inst {
+#explan {
     margin-left: 12px;
-    color: brown;
-    text-decoration: underline;
+    margin-top: 0;
 }
-/* The 'main' section view CSS items: */
-#maintext, #eontext, #eratext, #periodtext {
+/*
+ * Pertains to all sections:
+ */
+ #maintext, #eontext, #eratext, #periodtext {
     margin-top: 20px;
     margin-bottom: 10px;
     margin-left: 12px;
     font-size: 18px;
 }
-#maintext {
-    margin-top: 12px;
-}
-#Crypto {
-    text-align: center;
-    border-style: dotted;
-    border-color: blue;
-    border-width: 1px;
-    border-color: gray;
-    color: gray;
-    height: 22px;
-    padding-top: 4px;
-}
-#eons {
-    height: 24px;
-    margin: 0px;
+.boxtext {
+    margin-left: 12px;
+    margin-bottom: 0px;
 }
 .maindivs, .eondivs, .eradivs, .perioddivs {
     float: left;
@@ -58,8 +51,66 @@ body {
     padding: 0;
     padding-top: 6px;
 }
+.clearfix {
+    clear: both;
+}
+#eonadder, #eraadder, #peradder {
+    color: brown;
+}
+div[id$="end"] {
+    margin: 4px;
+}
 .hilite {
     color: white;
+}
+table {
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    border-style: groove;
+    border-color: DarkBlue;
+    border-width: 3px;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 2px 6px 1px 6px;
+}
+th {
+    border-style: solid;
+    border-width: 1px;
+    border-color: DarkBlue;
+    color: DarkGreen;
+    border-bottom-width: medium;
+}
+td {
+    border-style: solid;
+    border-width: 1px;
+}
+table tr:nth-child(odd) td {
+    background-color: honeydew;
+}
+.clicks {
+    cursor: pointer;
+}
+/*
+ * The 'main' section view CSS items:
+ */
+#maintext {
+    margin-top: 12px;
+}
+#Crypto {
+    text-align: center;
+    border-style: dotted;
+    border-width: 1px;
+    border-color: gray;
+    color: gray;
+    height: 22px;
+    padding-top: 4px;
+}
+#eons {
+    height: 24px;
+    margin: 0px;
 }
 #Hadean {
     background-color: FireBrick;
@@ -72,7 +123,7 @@ body {
     border-color: Gray;
 }
 #Proterozoic {
-    background-color: #ff3333; /* 60% Red */
+    background-color: #ff3333;
     border-color: Gray;
 }
 #Phanerozoic {
@@ -106,49 +157,12 @@ body {
     height: 30px;
     margin-top: 4px;
 }
-/* Table formatting */
-table {
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 60%;
-    border-style: groove;
-    border-color: DarkBlue;
-    border-width: 3px;
-    border-collapse: collapse;
-}
-th, td {
-    padding: 2px 6px 1px 6px;
-}
-th {
-    border-style: solid;
-    border-width: 1px;
-    border-color: DarkBlue;
-    color: DarkGreen;
-    border-bottom-width: medium;
-}
-td {
-    border-style: solid;
-    border-width: 1px;
-}
-table tr:nth-child(odd) td {
-    background-color: honeydew;
-}
-.boxtext {
-    margin-left: 12px;
-    margin-bottom: 0px;
-}
-
-/* The 'eon' section view CSS items: */
-.clearfix {
-    clear: both;
-}
+/* 
+ * The 'eon' section view CSS items
+ */
 .eonht {
     height: 24px;
     padding-top: 6px;
-}
-.clicks {
-    cursor: pointer;
 }
 #Hadeanbox, #Archeanbox, #Proterozoicbox, #Phanerozoicbox {
     display: none;
@@ -159,13 +173,9 @@ table tr:nth-child(odd) td {
     border-width: 2px;
     margin-top: 8px;
 }
-#eonadder, #eraadder, #peradder {
-    color: brown;
-}
-div[id$="end"] {
-    margin: 4px;
-}
-/* The 'era' section view CSS items: */
+/*
+ * The 'era' section view CSS items:
+ */
 .eradivs {
     height: 28px;
     border-color: gray;
@@ -173,7 +183,9 @@ div[id$="end"] {
 .eraht {
     padding-top: 6px;
 }
-/* The 'period' section view CSS items: */
+/*
+ * The 'period' section view CSS items:
+ */
 .perht {
     height: 24px;
     padding-top: 6px;

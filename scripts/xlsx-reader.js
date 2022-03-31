@@ -1,4 +1,5 @@
-/*  --- IMPORTANT ---
+/**
+ *  --- IMPORTANT ---
  * Script 'xlsx.core.min.js' must already be loaded; this supplies the
  * XLSX utilities for converting uploaded binaries into readable data.
  * 
@@ -9,7 +10,7 @@
  * https://www.c-sharpcorner.com/article/reading-a-excel-file-using-html5-jquery/
  * For supplying an easy-to-understand-and-apply website on FileReader for XLSX
  * 
- * Notes on procedure: 
+ * @fileoverview Notes on procedure: 
  *  There are four 'views' presented: MAIN View (Whole Earth Span),
  *  EON View, ERA View, and PERIOD View. In each view there are three 
  *  distinct pieces:
@@ -22,8 +23,9 @@
  *  duplicate data, timeline chart endpoints and tables are derived from
  *  the shapes data (timelime blocks), which contains each shape's 
  *  time boundaries and event list.
+ * @author Ken Cowles
+ * @version 1.0
  */
-var timing = false;
 // Chart paramters:
 var chart_setup = "chart.xlsx";
 var chartParms = [];
@@ -33,7 +35,7 @@ var events = "events.xlsx";
 var eventSets = {};
 var currBox = '';
 var obj_key;
-var event = {};
+var event_member = {};
 // Shapes:
 var shapes = "shapes.xlsx";
 var eonShapes = {};
@@ -43,18 +45,29 @@ var epochShapes = {};
 var shapeName = '';
 var shapeBox = '';
 var shape = {};
-updateObject(chart_setup);
-updateObject(events);
-updateObject(shapes);
-// end of updating objects...
+// Establish display data
+var chartDef = $.Deferred();
+updateObject(chart_setup, chartDef);
+var eventDef = $.Deferred();
+updateObject(events, eventDef);
+var shapeDef = $.Deferred();
+updateObject(shapes, shapeDef);
 
-function updateObject(xlsx_file) {
-    //var fetch = "../" + xlsx_file;
+/**
+ * This function establishes data for main.js by reading the associated
+ * Excel workbook and extracting key information.
+ * 
+ * @param {string}         xlsx_file file.xlsx
+ * @param {JQueryDeferred} deferred  asynchronous promise
+ * 
+ * @returns {null}
+ */
+function updateObject(xlsx_file, deferred) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', xlsx_file, true);
     xhr.responseType = 'blob'; // this allows capturing the file contents as a js blob object
     xhr.onload = function(ev) {
-        if (this.status == 200) {
+        if (this.status == 200 || this.status == 304) {
             var xl_blob = this.response;
             reader = new FileReader();
             reader.readAsArrayBuffer(xl_blob);
@@ -67,26 +80,36 @@ function updateObject(xlsx_file) {
                 // This is used for restricting the script to consider only first sheet of excel
                 var cnt = 0; 
                 sheet_name_list.forEach(function (y) { // Iterate through all sheets 
-                    // Convert the cell value to Json  
+                    // Convert the cell values of the sheet to JSON  
                     var exceljson = XLSX.utils.sheet_to_json(workbook.Sheets[y]);  
                     if (exceljson.length > 0 && cnt == 0) {  
-                        BindTable(exceljson, '#exceltable', xlsx_file);  
+                        BindTable(exceljson, '#exceltable', xlsx_file, deferred);  
                         cnt++;  
                     }  
-                });  
-                //$('#exceltable').show();  
+                });    
             }  
+        } else {
+            alert("Trouble reading " + xlsx_file);
         }
     };
     xhr.send();
+    return;
 }
-// Function used to convert the JSON array to Html Table:  
-function BindTable(jsondata, tableid, chartname) {
+/**
+ * This function will convert Excel jsondata to html 
+ * 
+ * @param {JSON}           jsondata  data obtained from Excel workbook
+ * @param {string}         tableid   html table for section
+ * @param {string}         chartname to be applied to chart
+ * @param {JQueryDeferred} deferred  promise
+ * 
+ * @returns {null}
+ */ 
+function BindTable(jsondata, tableid, chartname, deferred) {
     // Gets all the column headings of Excel:
     var columns = BindTableHeader(jsondata, tableid);
     // Every jsondata item is a row of the table:
     for (var i = 0; i < jsondata.length; i++) {  
-        //var row$ = $('<tr/>');
         for (var colIndex = 0; colIndex < columns.length; colIndex++) {  
             var cellValue = jsondata[i][columns[colIndex]];  
             if (cellValue == null) {
@@ -95,21 +118,25 @@ function BindTable(jsondata, tableid, chartname) {
             var data = cellValue.trim();
             // set up JSON objects depending on spreadsheet name:
             if (chartname == chart_setup) {
-                convertToParms(colIndex, data);
+                convertToParms(colIndex, data);  
             } else if (chartname === events) {
                 convertToEvents(colIndex, data);
             } else if (chartname === shapes) {
                 convertToShapes(colIndex, data);
             }
-            //row$.append($('<td/>').html(data));
-            if (chartname === shapes) {
-                timing = true;
-            }  
         }
-        //$(tableid).append(row$);  
-    }  
+    }
+    deferred.resolve();
+    return;  
 } 
-// Function used to get all column names from JSON and bind the html table header:
+/**
+ * Get all column names from JSON and bind the html table header:
+ *
+ * @param {JSON}   jsondata Excel data from workbook
+ * @param {string} tableid  html table id
+ * 
+ * @returns {string[]} columnSet 
+ */
 function BindTableHeader(jsondata, tableid) {  
     var columnSet = [];  
     var headerTr$ = $('<tr/>');  
@@ -117,7 +144,7 @@ function BindTableHeader(jsondata, tableid) {
         var rowHash = jsondata[i];  
         for (var key in rowHash) {  
             if (rowHash.hasOwnProperty(key)) { 
-                // Adding each unique column names to a variable array 
+                // Adding each unique column name to a variable array 
                 if ($.inArray(key, columnSet) == -1) {  
                     columnSet.push(key);  
                     headerTr$.append($('<th/>').html(key));  
@@ -128,6 +155,14 @@ function BindTableHeader(jsondata, tableid) {
     $(tableid).append(headerTr$);  
     return columnSet;  
 }
+/**
+ * Convert the data to a parm object and push onto chartParms
+ * 
+ * @param {number} xl_column column number in spreadsheet
+ * @param {string} parm      parameter to be added
+ * 
+ * @returns {null}
+ */
 function convertToParms(xl_column, parm) {
     if (xl_column === 0) {
         parmObj.ticks = parm;
@@ -145,7 +180,16 @@ function convertToParms(xl_column, parm) {
          */
         chartParms.push(JSON.parse(JSON.stringify(parmObj)));
     }
+    return;
 }
+/**
+ *  Convert the data to an event object and add to eventSets
+ * 
+ * @param {number} xl_column Column number on the spreadsheet
+ * @param {string} ev_data   data for event
+ * 
+ * @returns {null}
+ */
 function convertToEvents(xl_column, ev_data) {
     // Note: times and marker labels may be repeated in .xlsx file
     if (xl_column === 0) {
@@ -156,14 +200,22 @@ function convertToEvents(xl_column, ev_data) {
             currBox = ev_data;
         }
     } else if (xl_column === 1) {
-        event.x = ev_data;
+        event_member.x = ev_data;
     } else if (xl_column === 2) {
-        event.mrkr = ev_data;
+        event_member.mrkr = ev_data;
     } else if (xl_column === 3) {
-        event.des = ev_data;
-        eventSets[obj_key].push(JSON.parse(JSON.stringify(event)));
+        event_member.des = ev_data;
+        eventSets[obj_key].push(JSON.parse(JSON.stringify(event_member)));
     }
+    return;
 }
+/**
+ * Convert the data to a shape object and add to section's Shape object
+ * @param {number} xl_column column number in spreadsheet
+ * @param {string} shape_dat name of shape
+ * 
+ * @returns {null}
+ */
 function convertToShapes(xl_column, shape_dat) {
     if (xl_column === 0) {
         if (shape_dat !== shapeName) {
@@ -207,6 +259,7 @@ function convertToShapes(xl_column, shape_dat) {
                 console.log("convertToShapes shapeName unrecognized");
         }
     }
+    return;
 }
 /* the jQuery file upload, which requires the extra step of setting up
  * 'Transport' for binary data uploads:
